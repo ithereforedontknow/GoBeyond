@@ -3,12 +3,14 @@ import { Package } from "lucide-react";
 import { CheckCircle2 } from "lucide-react";
 import { PLANS } from "../../data/constants";
 import useInView from "../../hooks/useInView";
-import Label from "../mini/Label";
+import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
 
 function Pricing({ t, scrollTo }) {
-  const [billing, setBilling] = useState("monthly");
+  const [tab, setTab] = useState("Project-Based");
   const [ref, inView] = useInView();
+  const tabs = ["Project-Based", "Retainer"];
+
   return (
     <section
       id="pricing"
@@ -20,72 +22,76 @@ function Pricing({ t, scrollTo }) {
     >
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ marginBottom: 48 }}>
-          <Label t={t} icon={Package}>
+          <SectionLabel t={t} icon={Package}>
             Pricing
-          </Label>
+          </SectionLabel>
           <AccentLine t={t} />
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-end",
-              gap: 24,
+              gap: 32,
               flexWrap: "wrap",
             }}
           >
-            <h2
-              style={{
-                fontSize: "clamp(2rem,3.8vw,2.9rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
-                color: t.heading,
-                fontFamily: "Epilogue, sans-serif",
-              }}
-            >
-              Simple, transparent
-              <br />
-              pricing.
-            </h2>
-            {/* Toggle */}
+            <div>
+              <h2
+                style={{
+                  fontSize: "clamp(2rem,3.8vw,2.9rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.025em",
+                  color: t.heading,
+                  fontFamily: "Epilogue, sans-serif",
+                  marginBottom: 10,
+                }}
+              >
+                Flexible pricing
+                <br />
+                for every need.
+              </h2>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: t.faint,
+                  maxWidth: 380,
+                  lineHeight: 1.7,
+                }}
+              >
+                Pricing is tailored to each project's scope and requirements.
+                The tiers below give you a clear sense of what's included —
+                reach out for a custom quote.
+              </p>
+            </div>
+            {/* Tab toggle */}
             <div
               style={{
                 display: "flex",
                 border: `1px solid ${t.borderStrong}`,
                 borderRadius: 8,
                 overflow: "hidden",
+                alignSelf: "flex-start",
               }}
             >
-              {["monthly", "annual"].map((tab) => (
+              {tabs.map((tb) => (
                 <button
-                  key={tab}
-                  onClick={() => setBilling(tab)}
+                  key={tb}
+                  onClick={() => setTab(tb)}
                   style={{
-                    padding: "9px 20px",
+                    padding: "9px 22px",
                     fontSize: 13,
                     fontWeight: 700,
                     cursor: "pointer",
                     border: "none",
                     fontFamily: "Inter, sans-serif",
-                    textTransform: "capitalize",
+                    whiteSpace: "nowrap",
                     transition: "background 0.2s, color 0.2s",
-                    background: billing === tab ? t.accent : t.cardBg,
-                    color: billing === tab ? t.accentText : t.muted,
+                    background: tab === tb ? t.accent : t.cardBg,
+                    color: tab === tb ? t.accentText : t.muted,
                   }}
                 >
-                  {tab}
-                  {tab === "annual" && (
-                    <span
-                      style={{
-                        marginLeft: 5,
-                        fontSize: 10,
-                        color: billing === tab ? "#555" : t.accent,
-                        fontWeight: 800,
-                      }}
-                    >
-                      –20%
-                    </span>
-                  )}
+                  {tb}
                 </button>
               ))}
             </div>
@@ -102,20 +108,20 @@ function Pricing({ t, scrollTo }) {
           }}
           className="card-grid"
         >
-          {PLANS[billing].map((p, i) => (
+          {PLANS[tab].map((p, i) => (
             <div
-              key={`${billing}-${i}`}
+              key={`${tab}-${i}`}
               style={{
                 position: "relative",
                 borderRadius: 12,
-                padding: "36px 32px",
+                padding: "36px 30px",
                 display: "flex",
                 flexDirection: "column",
                 background: p.highlight ? t.accent : t.cardBg,
                 border: p.highlight
                   ? `2px solid ${t.accent}`
                   : `1px solid ${t.border}`,
-                boxShadow: p.highlight ? `0 20px 60px ${t.accent}25` : "none",
+                boxShadow: p.highlight ? `0 20px 60px ${t.accent}22` : "none",
                 transition: `opacity 0.7s ${i * 0.13}s, transform 0.7s ${i * 0.13}s`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(28px)",
@@ -140,11 +146,11 @@ function Pricing({ t, scrollTo }) {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  Most Popular
+                  Recommended
                 </div>
               )}
 
-              <div style={{ marginBottom: 28 }}>
+              <div style={{ marginBottom: 26 }}>
                 <h3
                   style={{
                     fontSize: 18,
@@ -159,8 +165,9 @@ function Pricing({ t, scrollTo }) {
                 <p
                   style={{
                     fontSize: 12,
-                    marginBottom: 18,
-                    color: p.highlight ? "#555" : t.faint,
+                    marginBottom: 20,
+                    color: p.highlight ? "#4a4a2a" : t.faint,
+                    lineHeight: 1.5,
                   }}
                 >
                   {p.desc}
@@ -170,7 +177,7 @@ function Pricing({ t, scrollTo }) {
                 >
                   <span
                     style={{
-                      fontSize: "clamp(2rem,3vw,2.5rem)",
+                      fontSize: "clamp(1.8rem,3vw,2.4rem)",
                       fontWeight: 800,
                       lineHeight: 1,
                       fontFamily: "Epilogue, sans-serif",
@@ -184,10 +191,23 @@ function Pricing({ t, scrollTo }) {
                       style={{
                         fontSize: 12,
                         marginBottom: 3,
-                        color: p.highlight ? "#555" : t.faint,
+                        color: p.highlight ? "#4a4a2a" : t.faint,
                       }}
                     >
                       {p.period}
+                    </span>
+                  )}
+                  {p.price === "TBD" && (
+                    <span
+                      style={{
+                        fontSize: 11,
+                        marginBottom: 3,
+                        fontWeight: 600,
+                        color: p.highlight ? "#4a4a2a" : t.faint,
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      — quoted per project
                     </span>
                   )}
                 </div>
@@ -196,12 +216,12 @@ function Pricing({ t, scrollTo }) {
               <ul
                 style={{
                   flex: 1,
-                  marginBottom: 28,
+                  marginBottom: 26,
                   listStyle: "none",
                   padding: 0,
                   display: "flex",
                   flexDirection: "column",
-                  gap: 12,
+                  gap: 11,
                 }}
               >
                 {p.features.map((f, j) => (
@@ -209,7 +229,7 @@ function Pricing({ t, scrollTo }) {
                     key={j}
                     style={{
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "flex-start",
                       gap: 10,
                       fontSize: 13,
                     }}
@@ -217,12 +237,16 @@ function Pricing({ t, scrollTo }) {
                     <CheckCircle2
                       size={14}
                       style={{
-                        color: p.highlight ? "#555" : t.accent,
+                        color: p.highlight ? "#4a4a2a" : t.accent,
                         flexShrink: 0,
+                        marginTop: 1,
                       }}
                     />
                     <span
-                      style={{ color: p.highlight ? t.accentText : t.body }}
+                      style={{
+                        color: p.highlight ? t.accentText : t.body,
+                        lineHeight: 1.5,
+                      }}
                     >
                       {f}
                     </span>
@@ -240,12 +264,12 @@ function Pricing({ t, scrollTo }) {
                   fontWeight: 700,
                   cursor: "pointer",
                   fontFamily: "Inter, sans-serif",
-                  transition: "background 0.2s",
+                  transition: "opacity 0.2s",
                   background: p.highlight ? t.heading : t.accent,
                   color: p.highlight ? t.pageBg : t.accentText,
                   border: "none",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.86")}
                 onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
                 {p.cta}
@@ -253,6 +277,36 @@ function Pricing({ t, scrollTo }) {
             </div>
           ))}
         </div>
+
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: 12,
+            color: t.faint,
+            marginTop: 28,
+            fontFamily: "Inter, sans-serif",
+            lineHeight: 1.7,
+          }}
+        >
+          All pricing is finalized through a discovery session.{" "}
+          <button
+            onClick={() => scrollTo("contact")}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: t.accent,
+              fontWeight: 600,
+              fontSize: 12,
+              fontFamily: "Inter, sans-serif",
+              textDecoration: "underline",
+              textUnderlineOffset: 3,
+            }}
+          >
+            Get in touch
+          </button>{" "}
+          and we'll build a quote around your exact needs.
+        </p>
       </div>
     </section>
   );

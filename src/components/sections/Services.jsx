@@ -2,7 +2,7 @@ import SectionPill from "../ui/SectionPill";
 import { Award } from "lucide-react";
 import { SERVICES } from "../../data/constants";
 import useInView from "../../hooks/useInView";
-import Label from "../mini/Label";
+import Label from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
 
 const BADGE_CLR = {
@@ -48,9 +48,9 @@ function Services({ t }) {
                 maxWidth: 320,
               }}
             >
-              End-to-end IT
+              Three divisions.
               <br />
-              solutions.
+              One partner.
             </h2>
             <p
               style={{
@@ -60,8 +60,8 @@ function Services({ t }) {
                 maxWidth: 360,
               }}
             >
-              From idea to infrastructure — GoBeyond covers every layer of your
-              technology stack so your team can focus on what matters.
+              From intelligent digital tools to custom systems and building
+              plans — GoBeyond covers the full spectrum of innovation.
             </p>
           </div>
         </div>

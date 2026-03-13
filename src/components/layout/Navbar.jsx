@@ -30,13 +30,12 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
           justifyContent: "space-between",
         }}
       >
-        {/* Logo */}
         <button
           onClick={() => scrollTo("hero")}
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 9,
             background: "none",
             border: "none",
             cursor: "pointer",
@@ -68,17 +67,16 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
           </span>
         </button>
 
-        {/* Desktop nav */}
         <div style={{ display: "flex", gap: 2 }} className="hidden-mobile">
           {NAV_LINKS.map((l) => (
             <button
-              key={l}
-              onClick={() => scrollTo(l.toLowerCase())}
+              key={l.id}
+              onClick={() => scrollTo(l.id)}
               style={{
                 background: "none",
                 border: "none",
                 cursor: "pointer",
-                padding: "8px 14px",
+                padding: "8px 13px",
                 borderRadius: 6,
                 fontSize: 13,
                 fontWeight: 500,
@@ -95,12 +93,11 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
                 e.currentTarget.style.background = "transparent";
               }}
             >
-              {l}
+              {l.label}
             </button>
           ))}
         </div>
 
-        {/* Desktop CTA */}
         <div
           style={{ display: "flex", gap: 10, alignItems: "center" }}
           className="hidden-mobile"
@@ -120,17 +117,19 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
               color: t.muted,
               transition: "border-color 0.2s",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = t.accent)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = t.border)}
           >
             {dark ? <Sun size={14} /> : <Moon size={14} />}
           </button>
           <button
-            onClick={() => scrollTo("pricing")}
+            onClick={() => scrollTo("contact")}
             style={{
               background: t.accent,
               color: t.accentText,
               border: "none",
               borderRadius: 6,
-              padding: "9px 18px",
+              padding: "9px 20px",
               fontSize: 13,
               fontWeight: 700,
               cursor: "pointer",
@@ -142,11 +141,10 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
             }
             onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
           >
-            Get Started
+            Get In Touch
           </button>
         </div>
 
-        {/* Mobile */}
         <div
           style={{ display: "flex", gap: 8, alignItems: "center" }}
           className="show-mobile"
@@ -193,9 +191,9 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {NAV_LINKS.map((l) => (
               <button
-                key={l}
+                key={l.id}
                 onClick={() => {
-                  scrollTo(l.toLowerCase());
+                  scrollTo(l.id);
                   setOpen(false);
                 }}
                 style={{
@@ -211,12 +209,12 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
                   fontFamily: "Inter, sans-serif",
                 }}
               >
-                {l}
+                {l.label}
               </button>
             ))}
             <button
               onClick={() => {
-                scrollTo("pricing");
+                scrollTo("contact");
                 setOpen(false);
               }}
               style={{
@@ -232,7 +230,7 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              Get Started
+              Get In Touch
             </button>
           </div>
         </div>
@@ -240,5 +238,4 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
     </nav>
   );
 }
-
 export default Navbar;

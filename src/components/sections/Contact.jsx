@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Mail, Send } from "lucide-react";
 import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { CONTACT_INFO } from "../../data/constants";
-import Label from "../mini/Label";
+import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
+
 function ContactForm({ t }) {
   const [form, setForm] = useState({ name: "", email: "", msg: "" });
   const [errors, setErrors] = useState({});
@@ -56,8 +57,8 @@ function ContactForm({ t }) {
             width: 60,
             height: 60,
             borderRadius: 12,
-            background: `${t.accent}20`,
-            border: `1px solid ${t.accent}50`,
+            background: `${t.accent}1a`,
+            border: `1px solid ${t.accent}45`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -77,7 +78,7 @@ function ContactForm({ t }) {
         >
           Message sent!
         </h3>
-        <p style={{ fontSize: 13, color: t.muted }}>
+        <p style={{ fontSize: 13, color: t.muted, lineHeight: 1.6 }}>
           We'll be in touch within one business day.
         </p>
         <button
@@ -102,7 +103,7 @@ function ContactForm({ t }) {
       </div>
     );
 
-  const labelStyle = {
+  const lbl = {
     display: "block",
     fontSize: 10,
     textTransform: "uppercase",
@@ -116,32 +117,32 @@ function ContactForm({ t }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       {[
-        { label: "Full Name", key: "name", type: "text", ph: "Jane Smith" },
+        { label: "Full Name", key: "name", type: "text", ph: "Juan dela Cruz" },
         {
           label: "Email Address",
           key: "email",
           type: "email",
-          ph: "jane@company.com",
+          ph: "juan@company.com",
         },
       ].map((field) => (
         <div key={field.key}>
-          <label style={labelStyle}>{field.label}</label>
+          <label style={lbl}>{field.label}</label>
           <input
             type={field.type}
             value={form[field.key]}
             onChange={(e) => handleChange(field.key, e.target.value)}
             placeholder={field.ph}
             style={inputStyle(field.key)}
-            onFocus={(e) => {
-              e.target.style.borderColor = errors[field.key]
+            onFocus={(e) =>
+              (e.target.style.borderColor = errors[field.key]
                 ? "#f87171"
-                : t.accent;
-            }}
-            onBlur={(e) => {
-              e.target.style.borderColor = errors[field.key]
+                : t.accent)
+            }
+            onBlur={(e) =>
+              (e.target.style.borderColor = errors[field.key]
                 ? "#f87171"
-                : t.borderStrong;
-            }}
+                : t.borderStrong)
+            }
           />
           {errors[field.key] && (
             <div
@@ -161,21 +162,21 @@ function ContactForm({ t }) {
         </div>
       ))}
       <div>
-        <label style={labelStyle}>Message</label>
+        <label style={lbl}>Message</label>
         <textarea
           rows={4}
           value={form.msg}
           onChange={(e) => handleChange("msg", e.target.value)}
-          placeholder="Tell us about your project..."
+          placeholder="Tell us about your project or inquiry..."
           style={{ ...inputStyle("msg"), resize: "none" }}
-          onFocus={(e) => {
-            e.target.style.borderColor = errors.msg ? "#f87171" : t.accent;
-          }}
-          onBlur={(e) => {
-            e.target.style.borderColor = errors.msg
+          onFocus={(e) =>
+            (e.target.style.borderColor = errors.msg ? "#f87171" : t.accent)
+          }
+          onBlur={(e) =>
+            (e.target.style.borderColor = errors.msg
               ? "#f87171"
-              : t.borderStrong;
-          }}
+              : t.borderStrong)
+          }
         />
         {errors.msg && (
           <div
@@ -259,9 +260,9 @@ function Contact({ t }) {
           className="contact-grid"
         >
           <div>
-            <Label t={t} icon={Mail}>
+            <SectionLabel t={t} icon={Mail}>
               Get In Touch
-            </Label>
+            </SectionLabel>
             <AccentLine t={t} />
             <h2
               style={{
@@ -270,7 +271,7 @@ function Contact({ t }) {
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
                 color: t.heading,
-                marginBottom: 16,
+                marginBottom: 10,
                 fontFamily: "Epilogue, sans-serif",
               }}
             >
@@ -281,14 +282,15 @@ function Contact({ t }) {
             <p
               style={{
                 fontSize: 14,
-                lineHeight: 1.7,
+                lineHeight: 1.75,
                 color: t.muted,
-                maxWidth: 360,
+                maxWidth: 380,
                 marginBottom: 44,
               }}
             >
-              Whether you're ready to start a project, want a product demo, or
-              just have questions — our team responds within a business day.
+              Whether you have a project in mind, want to understand our
+              services better, or simply want to explore what's possible — we'd
+              love to hear from you.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
               {CONTACT_INFO.map((c, i) => (
@@ -302,7 +304,7 @@ function Contact({ t }) {
                       height: 42,
                       borderRadius: 10,
                       border: `1px solid ${t.border}`,
-                      background: `${t.accent}18`,
+                      background: `${t.accent}14`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -360,7 +362,7 @@ function Contact({ t }) {
               Send us a message
             </h3>
             <p style={{ fontSize: 12, color: t.faint, marginBottom: 28 }}>
-              All fields required.
+              All fields required. We respond within one business day.
             </p>
             <ContactForm t={t} />
           </div>

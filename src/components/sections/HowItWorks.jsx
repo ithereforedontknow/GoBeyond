@@ -1,8 +1,7 @@
-import SectionPill from "../ui/SectionPill";
 import { Zap } from "lucide-react";
 import { HOW_IT_WORKS } from "../../data/constants";
 import useInView from "../../hooks/useInView";
-import Label from "../mini/Label";
+import Label from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
 
 function HowItWorks({ t }) {
@@ -41,9 +40,9 @@ function HowItWorks({ t }) {
                 maxWidth: 320,
               }}
             >
-              From idea to
+              Our 5-Step
               <br />
-              production.
+              approach.
             </h2>
             <p
               style={{
@@ -53,7 +52,8 @@ function HowItWorks({ t }) {
                 maxWidth: 300,
               }}
             >
-              Three clear phases. No black-box process, no surprises.
+              A structured methodology that takes every project from insight to
+              impact — and keeps improving after delivery.
             </p>
           </div>
         </div>

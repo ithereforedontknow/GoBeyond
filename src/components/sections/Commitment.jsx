@@ -1,15 +1,13 @@
-import SectionPill from "../ui/SectionPill";
-import { Zap } from "lucide-react";
-import { FEATURES } from "../../data/constants";
+import { Award } from "lucide-react";
+import useInView from "../../hooks/useInView";
 import Label from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
-import useInView from "../../hooks/useInView";
-
-function Features({ t }) {
+import { COMMITMENTS } from "../../data/constants";
+function Commitment({ t, scrollTo }) {
   const [ref, inView] = useInView();
   return (
     <section
-      id="features"
+      id="pricing"
       style={{
         borderTop: `1px solid ${t.border}`,
         padding: "100px 0",
@@ -18,8 +16,8 @@ function Features({ t }) {
     >
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ marginBottom: 56 }}>
-          <Label t={t} icon={Zap}>
-            What We Deliver
+          <Label t={t} icon={Award}>
+            Our Commitment
           </Label>
           <AccentLine t={t} />
           <div
@@ -39,48 +37,46 @@ function Features({ t }) {
                 letterSpacing: "-0.025em",
                 color: t.heading,
                 fontFamily: "Epilogue, sans-serif",
-                maxWidth: 320,
+                maxWidth: 340,
               }}
             >
-              Why businesses
+              What we stand
               <br />
-              choose GoBeyond.
+              behind, always.
             </h2>
             <p
               style={{
                 fontSize: 14,
                 lineHeight: 1.7,
                 color: t.muted,
-                maxWidth: 300,
+                maxWidth: 340,
               }}
             >
-              We don't simply deliver services — we create solutions that go
-              beyond expectations.
+              These aren't just values on a wall. They shape every decision we
+              make and every solution we deliver.
             </p>
           </div>
         </div>
-
         <div
           ref={ref}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateColumns: "repeat(2, 1fr)",
             gap: 16,
           }}
           className="card-grid"
         >
-          {FEATURES.map((f, i) => (
+          {COMMITMENTS.map((c, i) => (
             <div
               key={i}
               style={{
-                padding: "32px 28px",
+                padding: "36px 32px",
                 border: `1px solid ${t.border}`,
                 borderRadius: 12,
                 background: t.cardBg,
-                transition: `opacity 0.65s ${i * 0.08}s, transform 0.65s ${i * 0.08}s`,
+                transition: `opacity 0.65s ${i * 0.1}s, transform 0.65s ${i * 0.1}s`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(24px)",
-                cursor: "default",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = t.accent;
@@ -91,38 +87,58 @@ function Features({ t }) {
             >
               <div
                 style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: 10,
-                  background: `${t.accent}20`,
-                  border: `1px solid ${t.accent}40`,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  width: 8,
+                  height: 8,
+                  borderRadius: "50%",
+                  background: t.accent,
                   marginBottom: 20,
                 }}
-              >
-                <f.icon size={20} style={{ color: t.accent }} />
-              </div>
+              />
               <h3
                 style={{
-                  fontSize: 15,
-                  fontWeight: 700,
+                  fontSize: 17,
+                  fontWeight: 800,
                   color: t.heading,
-                  marginBottom: 8,
+                  marginBottom: 10,
                   fontFamily: "Epilogue, sans-serif",
                 }}
               >
-                {f.title}
+                {c.title}
               </h3>
-              <p style={{ fontSize: 13, lineHeight: 1.65, color: t.muted }}>
-                {f.desc}
+              <p style={{ fontSize: 13, lineHeight: 1.7, color: t.muted }}>
+                {c.desc}
               </p>
             </div>
           ))}
+        </div>
+        <div style={{ marginTop: 40, textAlign: "center" }}>
+          <button
+            onClick={() => scrollTo("contact")}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: t.accent,
+              color: t.accentText,
+              border: "none",
+              borderRadius: 8,
+              padding: "14px 32px",
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = t.accentDark)
+            }
+            onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
+          >
+            Start a conversation <ArrowRight size={15} />
+          </button>
         </div>
       </div>
     </section>
   );
 }
-export default Features;
+export default Commitment;

@@ -5,10 +5,11 @@ function AccentLine({ t }) {
         width: 32,
         height: 3,
         background: t.accent,
-        margin: "20px 0",
+        margin: "18px 0 22px",
         borderRadius: 2,
       }}
     />
   );
 }
+
 export default AccentLine;

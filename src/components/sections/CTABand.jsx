@@ -1,7 +1,8 @@
 import { Flame } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import { ExternalLink } from "lucide-react";
-import Label from "../mini/Label";
+import SectionLabel from "../mini/SectionLabel";
+
 function CTABand({ t, scrollTo }) {
   return (
     <section
@@ -17,7 +18,7 @@ function CTABand({ t, scrollTo }) {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `radial-gradient(${t.accent}12 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(${t.accent}0f 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
           pointerEvents: "none",
         }}
@@ -31,7 +32,7 @@ function CTABand({ t, scrollTo }) {
           width: 700,
           height: 350,
           borderRadius: "50%",
-          background: `radial-gradient(ellipse, ${t.accent}10 0%, transparent 65%)`,
+          background: `radial-gradient(ellipse, ${t.accent}0d 0%, transparent 65%)`,
           pointerEvents: "none",
         }}
       />
@@ -46,9 +47,9 @@ function CTABand({ t, scrollTo }) {
           zIndex: 1,
         }}
       >
-        <Label t={t} icon={Flame}>
-          Ready When You Are
-        </Label>
+        <SectionLabel t={t} icon={Flame}>
+          Ready to Begin
+        </SectionLabel>
         <h2
           style={{
             fontSize: "clamp(2.4rem,5.5vw,3.8rem)",
@@ -56,22 +57,24 @@ function CTABand({ t, scrollTo }) {
             lineHeight: 1.05,
             letterSpacing: "-0.03em",
             color: t.heading,
-            margin: "24px 0 16px",
+            margin: "22px 0 14px",
             fontFamily: "Epilogue, sans-serif",
           }}
         >
-          Ready to go <span style={{ color: t.accent }}>beyond</span>?
+          Have a project
+          <br />
+          <span style={{ color: t.accent }}>in mind?</span>
         </h2>
         <p
           style={{
             fontSize: 17,
-            lineHeight: 1.7,
+            lineHeight: 1.75,
             color: t.muted,
-            maxWidth: 380,
+            maxWidth: 420,
             margin: "0 auto 36px",
           }}
         >
-          Start your free trial today. No credit card required.
+          Tell us what you're trying to solve. We'll take it from there.
         </p>
         <div
           style={{
@@ -82,7 +85,7 @@ function CTABand({ t, scrollTo }) {
           }}
         >
           <button
-            onClick={() => scrollTo("pricing")}
+            onClick={() => scrollTo("contact")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -107,10 +110,10 @@ function CTABand({ t, scrollTo }) {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            Get Started Free <ArrowRight size={16} />
+            Start a Conversation <ArrowRight size={16} />
           </button>
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={() => scrollTo("solutions")}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -118,7 +121,7 @@ function CTABand({ t, scrollTo }) {
               background: "transparent",
               color: t.muted,
               border: "none",
-              padding: "14px 20px",
+              padding: "14px 16px",
               fontSize: 14,
               fontWeight: 600,
               cursor: "pointer",
@@ -128,7 +131,7 @@ function CTABand({ t, scrollTo }) {
             onMouseEnter={(e) => (e.currentTarget.style.color = t.heading)}
             onMouseLeave={(e) => (e.currentTarget.style.color = t.muted)}
           >
-            Talk to Sales <ExternalLink size={13} />
+            View Our Solutions <ExternalLink size={13} />
           </button>
         </div>
       </div>

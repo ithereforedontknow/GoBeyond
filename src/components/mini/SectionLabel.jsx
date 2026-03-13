@@ -1,4 +1,4 @@
-function Label({ t, icon: Icon, children }) {
+function SectionLabel({ t, icon: Icon, children }) {
   return (
     <div
       style={{
@@ -27,4 +27,5 @@ function Label({ t, icon: Icon, children }) {
     </div>
   );
 }
-export default Label;
+
+export default SectionLabel;

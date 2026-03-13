@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-function useInView(threshold = 0.12) {
+function useInView(threshold = 0.1) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {

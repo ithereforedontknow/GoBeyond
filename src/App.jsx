@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
+import { T } from "./data/constants";
+import Navbar from "./components/layout/Navbar";
 import Hero from "./components/sections/Hero";
-import LogoStrip from "./components/sections/LogoStrip";
-import HowItWorks from "./components/sections/HowItWorks";
-import Features from "./components/sections/Features";
-import Services from "./components/sections/Services";
+import MarqueeStrip from "./components/sections/MarqueeStrip";
+import Solutions from "./components/sections/Solutions";
+import Approach from "./components/sections/Approach";
+// import WhyUs from "./components/sections/WhyUs";
 import Pricing from "./components/sections/Pricing";
 import FAQ from "./components/sections/FAQ";
 import Contact from "./components/sections/Contact";
 import CTABand from "./components/sections/CTABand";
 import Footer from "./components/layout/Footer";
-import Navbar from "./components/layout/Navbar";
-import { T } from "./data/constants";
+
 export default function App() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(
+    () => window.matchMedia("(prefers-color-scheme: dark)").matches,
+  );
   const [scrolled, setScrolled] = useState(false);
   const t = dark ? T.dark : T.light;
 
@@ -21,7 +24,12 @@ export default function App() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const handler = (e) => setDark(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
   const scrollTo = (id) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -43,30 +51,32 @@ export default function App() {
         html { scroll-behavior: smooth; }
 
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        *::selection { background: #ccea4a33; }
+        *::selection { background: #ccea4a2e; }
 
-        /* Responsive helpers */
         .hidden-mobile { display: flex !important; }
-        .show-mobile   { display: none !important; }
+        .show-mobile   { display: none  !important; }
 
         @media (max-width: 768px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile   { display: flex !important; }
-          .hero-grid     { grid-template-columns: 1fr !important; gap: 48px !important; }
-          .hero-mockup   { display: none !important; }
-          .steps-grid    { grid-template-columns: 1fr !important; }
-          .steps-grid > div { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.15); }
-          .card-grid     { grid-template-columns: 1fr !important; }
-          .faq-grid      { grid-template-columns: 1fr !important; }
-          .contact-grid  { grid-template-columns: 1fr !important; }
-          .footer-grid   { grid-template-columns: 1fr 1fr !important; }
+          .hidden-mobile  { display: none !important; }
+          .show-mobile    { display: flex !important; }
+          .hero-grid      { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .hero-mockup    { display: none !important; }
+          .approach-grid  { grid-template-columns: 1fr !important; }
+          .approach-grid > div { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.12); }
+          .card-grid      { grid-template-columns: 1fr !important; }
+          .solution-row   { grid-template-columns: 1fr !important; }
+          .solution-row > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.12); }
+          .faq-grid       { grid-template-columns: 1fr !important; }
+          .contact-grid   { grid-template-columns: 1fr !important; }
+          .footer-grid    { grid-template-columns: 1fr 1fr !important; }
         }
 
-        @media (max-width: 1024px) and (min-width: 769px) {
-          .card-grid  { grid-template-columns: repeat(2, 1fr) !important; }
-          .steps-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        @media (max-width: 1100px) and (min-width: 769px) {
+          .approach-grid { grid-template-columns: repeat(3, 1fr) !important; }
+          .card-grid     { grid-template-columns: repeat(2, 1fr) !important; }
+          .solution-row  { grid-template-columns: 1fr !important; }
+          .solution-row > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.12); }
         }
       `}</style>
 
@@ -78,10 +88,10 @@ export default function App() {
         scrollTo={scrollTo}
       />
       <Hero t={t} dark={dark} scrollTo={scrollTo} />
-      <LogoStrip t={t} dark={dark} />
-      <HowItWorks t={t} />
-      <Features t={t} />
-      <Services t={t} />
+      <MarqueeStrip t={t} />
+      <Solutions t={t} scrollTo={scrollTo} />
+      <Approach t={t} />
+      {/* <WhyUs t={t} />*/}
       <Pricing t={t} scrollTo={scrollTo} />
       <FAQ t={t} />
       <Contact t={t} />

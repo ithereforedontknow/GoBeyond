@@ -9,11 +9,12 @@ import {
   Bell,
   Users,
   LayoutDashboard,
+  Award,
 } from "lucide-react";
 
 import { STATS } from "../../data/constants";
 
-function DashboardMockup({ dark, t }) {
+function HeroMockup({ dark }) {
   const bg = dark ? "#0e0e0e" : "#ffffff";
   const panel = dark ? "#141414" : "#f7f7f7";
   const card = dark ? "#1a1a1a" : "#ffffff";
@@ -32,12 +33,11 @@ function DashboardMockup({ dark, t }) {
         userSelect: "none",
       }}
     >
-      {/* Glow */}
       <div
         style={{
           position: "absolute",
           inset: -40,
-          background: `radial-gradient(ellipse at 55% 50%, ${acc}22 0%, transparent 65%)`,
+          background: `radial-gradient(ellipse at 55% 50%, ${acc}1e 0%, transparent 65%)`,
           filter: "blur(20px)",
           pointerEvents: "none",
         }}
@@ -50,8 +50,8 @@ function DashboardMockup({ dark, t }) {
           overflow: "hidden",
           border: `1px solid ${bdr}`,
           boxShadow: dark
-            ? "0 40px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(204,234,74,0.06)"
-            : "0 40px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06)",
+            ? "0 40px 80px rgba(0,0,0,0.88), 0 0 0 1px rgba(204,234,74,0.05)"
+            : "0 40px 80px rgba(0,0,0,0.09), 0 0 0 1px rgba(0,0,0,0.05)",
           background: bg,
         }}
       >
@@ -121,7 +121,7 @@ function DashboardMockup({ dark, t }) {
               width: 52,
             }}
           >
-            {[LayoutDashboard, Activity, BarChart3, Settings2, Users].map(
+            {[LayoutDashboard, Activity, BarChart3, Award, Users].map(
               (Icon, i) => (
                 <div
                   key={i}
@@ -210,9 +210,9 @@ function DashboardMockup({ dark, t }) {
               }}
             >
               {[
-                { label: "Uptime", val: "99.98%", color: acc },
-                { label: "Requests", val: "4.2M", color: "#60a5fa" },
-                { label: "Alerts", val: "0 open", color: "#4ade80" },
+                { label: "Projects", val: "12 Active", color: acc },
+                { label: "On Track", val: "100%", color: "#4ade80" },
+                { label: "Clients", val: "8 Live", color: "#60a5fa" },
               ].map((s, i) => (
                 <div
                   key={i}
@@ -225,7 +225,7 @@ function DashboardMockup({ dark, t }) {
                 >
                   <div
                     style={{
-                      fontSize: 13,
+                      fontSize: 12,
                       fontWeight: 700,
                       color: s.color,
                       fontFamily: "Epilogue, sans-serif",
@@ -267,9 +267,9 @@ function DashboardMockup({ dark, t }) {
                 }}
               >
                 <span style={{ fontSize: 9, fontWeight: 600, color: txt }}>
-                  Deployments
+                  Deliverables This Month
                 </span>
-                <span style={{ fontSize: 8, color: muted }}>Last 7 days</span>
+                <span style={{ fontSize: 8, color: muted }}>Last 7 weeks</span>
               </div>
               <div
                 style={{
@@ -279,7 +279,7 @@ function DashboardMockup({ dark, t }) {
                   height: 44,
                 }}
               >
-                {[35, 60, 45, 80, 55, 95, 70].map((h, i) => (
+                {[30, 55, 40, 75, 50, 90, 65].map((h, i) => (
                   <div
                     key={i}
                     style={{
@@ -293,7 +293,7 @@ function DashboardMockup({ dark, t }) {
               </div>
             </div>
 
-            {/* Log */}
+            {/* Live log */}
             <div
               style={{
                 borderRadius: 10,
@@ -317,7 +317,6 @@ function DashboardMockup({ dark, t }) {
                     borderRadius: "50%",
                     background: "#4ade80",
                     display: "block",
-                    animation: "pulse 2s infinite",
                   }}
                 />
                 <span
@@ -328,17 +327,20 @@ function DashboardMockup({ dark, t }) {
                     letterSpacing: "0.08em",
                   }}
                 >
-                  Live Events
+                  Recent Activity
                 </span>
               </div>
               {[
-                { text: "prod-api-v2.14 deployed successfully", color: acc },
                 {
-                  text: "SSL certificate renewed · gobeyond.ph",
+                  text: "Digital tool prototype — Phase 2 approved",
+                  color: acc,
+                },
+                {
+                  text: "Client website launched · gobeyond.ph/work",
                   color: "#60a5fa",
                 },
                 {
-                  text: "Daily backup completed · db-primary",
+                  text: "Building plan revision · Lot 4 Block 3 completed",
                   color: "#4ade80",
                 },
               ].map((line, i) => (
@@ -378,7 +380,7 @@ function DashboardMockup({ dark, t }) {
         </div>
       </div>
 
-      {/* Badges */}
+      {/* Floating badges */}
       <div
         style={{
           position: "absolute",
@@ -393,7 +395,7 @@ function DashboardMockup({ dark, t }) {
           background: dark ? "#141414" : "#fff",
           boxShadow: dark
             ? "0 10px 30px rgba(0,0,0,0.7)"
-            : "0 10px 30px rgba(0,0,0,0.10)",
+            : "0 10px 30px rgba(0,0,0,0.09)",
         }}
       >
         <div
@@ -418,10 +420,10 @@ function DashboardMockup({ dark, t }) {
               fontFamily: "Epilogue, sans-serif",
             }}
           >
-            99.98% Uptime
+            3 Divisions. 1 Partner.
           </div>
           <div style={{ fontSize: 9, color: "#4ade80", fontWeight: 600 }}>
-            ● All systems go
+            ● All projects on track
           </div>
         </div>
       </div>
@@ -452,7 +454,7 @@ function DashboardMockup({ dark, t }) {
             fontFamily: "Inter, sans-serif",
           }}
         >
-          Deployed just now
+          New project kicked off
         </span>
       </div>
     </div>
@@ -474,27 +476,24 @@ function Hero({ t, dark, scrollTo }) {
         background: t.pageBg,
       }}
     >
-      {/* Dot grid */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `radial-gradient(${dark ? "rgba(204,234,74,0.10)" : "rgba(0,0,0,0.07)"} 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(${dark ? "rgba(204,234,74,0.09)" : "rgba(0,0,0,0.06)"} 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
           pointerEvents: "none",
         }}
       />
-
-      {/* Lime glow blob */}
       <div
         style={{
           position: "absolute",
           top: "-10%",
-          right: "-10%",
+          right: "-8%",
           width: 600,
           height: 600,
           borderRadius: "50%",
-          background: `radial-gradient(circle, ${t.accent}18 0%, transparent 65%)`,
+          background: `radial-gradient(circle, ${t.accent}14 0%, transparent 65%)`,
           pointerEvents: "none",
         }}
       />
@@ -519,7 +518,6 @@ function Hero({ t, dark, scrollTo }) {
           className="hero-grid"
         >
           <div>
-            {/* Eyebrow */}
             <div
               style={{
                 display: "inline-flex",
@@ -550,38 +548,50 @@ function Hero({ t, dark, scrollTo }) {
                   fontFamily: "Inter, sans-serif",
                 }}
               >
-                IT Solutions Built for Humans · PH-Based
+                Innovation · Digital · Systems · Plans
               </span>
             </div>
 
             <h1
               style={{
-                fontSize: "clamp(2.8rem,5.5vw,4.2rem)",
+                fontSize: "clamp(2.8rem,5.5vw,4.4rem)",
                 fontWeight: 800,
                 lineHeight: 1.03,
                 letterSpacing: "-0.03em",
                 color: t.heading,
-                marginBottom: 24,
+                marginBottom: 10,
                 fontFamily: "Epilogue, sans-serif",
               }}
             >
-              The IT partner
+              Go Further.
               <br />
-              that <span style={{ color: t.accent }}>actually cares</span>
+              Go Smarter.
+            </h1>
+            <h1
+              style={{
+                fontSize: "clamp(2.8rem,5.5vw,4.4rem)",
+                fontWeight: 800,
+                lineHeight: 1.03,
+                letterSpacing: "-0.03em",
+                color: t.accent,
+                marginBottom: 28,
+                fontFamily: "Epilogue, sans-serif",
+              }}
+            >
+              Go Beyond.
             </h1>
 
             <p
               style={{
                 fontSize: 17,
-                lineHeight: 1.7,
+                lineHeight: 1.75,
                 color: t.muted,
-                maxWidth: 420,
-                marginBottom: 36,
+                maxWidth: 440,
+                marginBottom: 40,
               }}
             >
-              GoBeyond builds SaaS products, manages cloud infrastructure,
-              automates with AI, and secures your systems — with a team that
-              communicates like humans, not ticket numbers.
+              We build digital tools, custom systems, and building plans —
+              whatever your problem needs, under one roof.
             </p>
 
             <div
@@ -593,7 +603,7 @@ function Hero({ t, dark, scrollTo }) {
               }}
             >
               <button
-                onClick={() => scrollTo("pricing")}
+                onClick={() => scrollTo("solutions")}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -618,10 +628,10 @@ function Hero({ t, dark, scrollTo }) {
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                See Pricing <ArrowRight size={16} />
+                Explore Solutions <ArrowRight size={16} />
               </button>
               <button
-                onClick={() => scrollTo("services")}
+                onClick={() => scrollTo("approach")}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -646,11 +656,10 @@ function Hero({ t, dark, scrollTo }) {
                   e.currentTarget.style.background = "transparent";
                 }}
               >
-                <Play size={13} style={{ fill: "currentColor" }} /> Our Services
+                <Play size={13} style={{ fill: "currentColor" }} /> Our Approach
               </button>
             </div>
 
-            {/* Stats */}
             <div style={{ display: "flex", gap: 36, flexWrap: "wrap" }}>
               {STATS.map((s, i) => (
                 <div key={i}>
@@ -685,11 +694,12 @@ function Hero({ t, dark, scrollTo }) {
           </div>
 
           <div className="hero-mockup">
-            <DashboardMockup dark={dark} t={t} />
+            <HeroMockup dark={dark} />
           </div>
         </div>
       </div>
     </section>
   );
 }
+
 export default Hero;

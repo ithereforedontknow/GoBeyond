@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { FAQS } from "../../data/constants";
-import Label from "../mini/Label";
+import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
+
 function FAQ({ t }) {
   const [open, setOpen] = useState(null);
   return (
@@ -24,9 +25,8 @@ function FAQ({ t }) {
           }}
           className="faq-grid"
         >
-          {/* Sticky left */}
-          <div style={{ position: "sticky", top: 100 }}>
-            <Label t={t}>FAQ</Label>
+          <div style={{ position: "sticky", top: 96 }}>
+            <SectionLabel t={t}>FAQ</SectionLabel>
             <AccentLine t={t} />
             <h2
               style={{
@@ -43,12 +43,11 @@ function FAQ({ t }) {
               <br />
               questions?
             </h2>
-            <p style={{ fontSize: 14, lineHeight: 1.7, color: t.muted }}>
-              We've got answers. If something's missing, just reach out.
+            <p style={{ fontSize: 14, lineHeight: 1.75, color: t.muted }}>
+              We've got answers. If something's still unclear, just reach out.
             </p>
           </div>
 
-          {/* Accordion */}
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {FAQS.map((f, i) => (
               <div
@@ -57,7 +56,7 @@ function FAQ({ t }) {
                   border: `1px solid ${open === i ? t.accent : t.border}`,
                   borderRadius: 10,
                   overflow: "hidden",
-                  background: open === i ? `${t.accent}0a` : t.cardBg,
+                  background: open === i ? `${t.accent}08` : t.cardBg,
                   transition: "border-color 0.25s, background 0.25s",
                 }}
               >
@@ -82,6 +81,7 @@ function FAQ({ t }) {
                       color: t.heading,
                       paddingRight: 24,
                       fontFamily: "Inter, sans-serif",
+                      lineHeight: 1.4,
                     }}
                   >
                     {f.q}
@@ -107,11 +107,11 @@ function FAQ({ t }) {
                     <div
                       style={{
                         padding: "0 22px 18px",
+                        paddingTop: 14,
                         fontSize: 13,
-                        lineHeight: 1.7,
+                        lineHeight: 1.75,
                         color: t.muted,
                         borderTop: `1px solid ${t.border}`,
-                        paddingTop: 14,
                       }}
                     >
                       {f.a}
