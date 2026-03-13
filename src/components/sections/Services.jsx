@@ -1,70 +1,190 @@
 import SectionPill from "../ui/SectionPill";
 import { Award } from "lucide-react";
 import { SERVICES } from "../../data/constants";
+import useInView from "../../hooks/useInView";
+import Label from "../mini/Label";
+import AccentLine from "../mini/AccentLine";
 
-function Services({ t, scrollTo }) {
-  const badgeClass = (b) =>
-    b === "Most Popular" ? t.badgePop : b === "New" ? t.badgeNew : t.badgeHot;
+const BADGE_CLR = {
+  "Most Popular": { bg: "#ccea4a22", border: "#ccea4a55", text: "#ccea4a" },
+  New: { bg: "#60a5fa18", border: "#60a5fa44", text: "#60a5fa" },
+  Hot: { bg: "#f87171 18", border: "#f8717144", text: "#f87171" },
+};
+
+function Services({ t }) {
+  const [ref, inView] = useInView();
   return (
-    <section id="services" className={`py-28 border-t ${t.border}`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div>
-            <SectionPill
-              color={t.pillOrange}
-              icon={Award}
-              label="Our Services"
-            />
-            <h2 className={`text-4xl md:text-5xl font-bold ${t.heading}`}>
+    <section
+      id="services"
+      style={{
+        borderTop: `1px solid ${t.border}`,
+        padding: "100px 0",
+        background: t.pageBg,
+      }}
+    >
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ marginBottom: 56 }}>
+          <Label t={t} icon={Award}>
+            Our Services
+          </Label>
+          <AccentLine t={t} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              gap: 24,
+              flexWrap: "wrap",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "clamp(2rem,3.8vw,2.9rem)",
+                fontWeight: 800,
+                lineHeight: 1.05,
+                letterSpacing: "-0.025em",
+                color: t.heading,
+                fontFamily: "Epilogue, sans-serif",
+                maxWidth: 320,
+              }}
+            >
               End-to-end IT
               <br />
-              <span className="text-orange-500">solutions</span>
+              solutions.
             </h2>
-          </div>
-          <p className={`max-w-sm text-sm leading-relaxed ${t.muted}`}>
-            From idea to infrastructure — GoBeyond covers every layer of your
-            technology stack so your team can focus on what matters.
-          </p>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {SERVICES.map((s, i) => (
-            <div
-              key={i}
-              className={`group relative border rounded-2xl p-7 card-hover cursor-default ${t.serviceCard} ${t.shadow}`}
+            <p
+              style={{
+                fontSize: 14,
+                lineHeight: 1.7,
+                color: t.muted,
+                maxWidth: 360,
+              }}
             >
-              {s.badge && (
-                <span
-                  className={`absolute top-5 right-5 text-xs font-semibold px-2.5 py-1 rounded-full border ${badgeClass(s.badge)}`}
-                >
-                  {s.badge}
-                </span>
-              )}
+              From idea to infrastructure — GoBeyond covers every layer of your
+              technology stack so your team can focus on what matters.
+            </p>
+          </div>
+        </div>
+
+        <div
+          ref={ref}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+          }}
+          className="card-grid"
+        >
+          {SERVICES.map((s, i) => {
+            const bc = s.badge ? BADGE_CLR[s.badge] : null;
+            return (
               <div
-                className={`w-11 h-11 rounded-xl border flex items-center justify-center mb-5 ${t.featureA}`}
+                key={i}
+                style={{
+                  position: "relative",
+                  padding: "32px 28px",
+                  border: `1px solid ${t.border}`,
+                  borderRadius: 12,
+                  background: t.cardBg,
+                  transition: `opacity 0.65s ${i * 0.08}s, transform 0.65s ${i * 0.08}s, border-color 0.2s`,
+                  opacity: inView ? 1 : 0,
+                  transform: inView ? "translateY(0)" : "translateY(24px)",
+                  cursor: "default",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = t.accent;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = t.border;
+                }}
               >
-                <s.icon size={20} className="text-orange-500" />
-              </div>
-              <h3 className={`text-base font-semibold mb-2 ${t.heading}`}>
-                {s.name}
-              </h3>
-              <p className={`text-sm mb-5 leading-relaxed ${t.muted}`}>
-                {s.desc}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {s.tags.map((tag, j) => (
+                {bc && (
                   <span
-                    key={j}
-                    className={`text-xs border rounded-md px-2.5 py-0.5 ${t.tag}`}
+                    style={{
+                      position: "absolute",
+                      top: 20,
+                      right: 20,
+                      fontSize: 9,
+                      fontWeight: 700,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      padding: "4px 10px",
+                      borderRadius: 20,
+                      background: bc.bg,
+                      border: `1px solid ${bc.border}`,
+                      color: bc.text,
+                      fontFamily: "Inter, sans-serif",
+                    }}
                   >
-                    {tag}
+                    {s.badge}
                   </span>
-                ))}
+                )}
+
+                <div
+                  style={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: 10,
+                    background: `${t.accent}18`,
+                    border: `1px solid ${t.accent}38`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: 20,
+                  }}
+                >
+                  <s.icon size={19} style={{ color: t.accent }} />
+                </div>
+                <h3
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    color: t.heading,
+                    marginBottom: 8,
+                    paddingRight: s.badge ? 64 : 0,
+                    fontFamily: "Epilogue, sans-serif",
+                  }}
+                >
+                  {s.name}
+                </h3>
+                <p
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 1.65,
+                    color: t.muted,
+                    marginBottom: 20,
+                  }}
+                >
+                  {s.desc}
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                  {s.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        padding: "4px 8px",
+                        borderRadius: 4,
+                        background: t.tagBg,
+                        color: t.tagText,
+                        border: `1px solid ${t.border}`,
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
+
 export default Services;

@@ -1,51 +1,134 @@
 import { Flame } from "lucide-react";
 import { ArrowRight } from "lucide-react";
 import { ExternalLink } from "lucide-react";
-
-function CTABand({ dark, t, scrollTo }) {
+import Label from "../mini/Label";
+function CTABand({ t, scrollTo }) {
   return (
     <section
-      className={`py-28 border-t relative overflow-hidden ${t.border} ${dark ? "bg-stone-900/50 dot-grid-dark" : "bg-gradient-to-br from-orange-50 via-[#fffaf7] to-amber-50 dot-grid-light"}`}
+      style={{
+        borderTop: `1px solid ${t.border}`,
+        padding: "100px 0",
+        background: t.pageBg,
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full blur-3xl pointer-events-none"
         style={{
-          background: dark ? "rgba(234,88,12,0.06)" : "rgba(234,88,12,0.09)",
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `radial-gradient(${t.accent}12 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+          pointerEvents: "none",
         }}
       />
-      <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
-        <div
-          className={`inline-flex items-center gap-2 border rounded-full px-4 py-1.5 mb-7 ${t.pillOrange}`}
-        >
-          <Flame size={12} className="text-orange-500" />
-          <span className="text-xs font-semibold tracking-wide">
-            Ready when you are
-          </span>
-        </div>
+      <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%,-50%)",
+          width: 700,
+          height: 350,
+          borderRadius: "50%",
+          background: `radial-gradient(ellipse, ${t.accent}10 0%, transparent 65%)`,
+          pointerEvents: "none",
+        }}
+      />
+
+      <div
+        style={{
+          maxWidth: 720,
+          margin: "0 auto",
+          padding: "0 24px",
+          textAlign: "center",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <Label t={t} icon={Flame}>
+          Ready When You Are
+        </Label>
         <h2
-          className={`text-4xl md:text-6xl font-bold mb-5 leading-tight ${t.heading}`}
+          style={{
+            fontSize: "clamp(2.4rem,5.5vw,3.8rem)",
+            fontWeight: 800,
+            lineHeight: 1.05,
+            letterSpacing: "-0.03em",
+            color: t.heading,
+            margin: "24px 0 16px",
+            fontFamily: "Epilogue, sans-serif",
+          }}
         >
-          Ready to go <span className="hero-gradient">beyond</span>?
+          Ready to go <span style={{ color: t.accent }}>beyond</span>?
         </h2>
-        <p className={`text-lg mb-10 max-w-xl mx-auto ${t.muted}`}>
-          Start your free trial today. No credit card required. Cancel anytime.
+        <p
+          style={{
+            fontSize: 17,
+            lineHeight: 1.7,
+            color: t.muted,
+            maxWidth: 380,
+            margin: "0 auto 36px",
+          }}
+        >
+          Start your free trial today. No credit card required.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div
+          style={{
+            display: "flex",
+            gap: 12,
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <button
             onClick={() => scrollTo("pricing")}
-            className="group flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold px-10 py-4 rounded-xl transition-all text-base shadow-xl shadow-orange-200/50"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: t.accent,
+              color: t.accentText,
+              border: "none",
+              borderRadius: 8,
+              padding: "14px 32px",
+              fontSize: 15,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              transition: "background 0.2s, transform 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = t.accentDark;
+              e.currentTarget.style.transform = "translateY(-2px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = t.accent;
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
-            Get Started Free{" "}
-            <ArrowRight
-              size={18}
-              className="group-hover:translate-x-1 transition-transform"
-            />
+            Get Started Free <ArrowRight size={16} />
           </button>
           <button
             onClick={() => scrollTo("contact")}
-            className={`flex items-center gap-2 px-6 py-4 transition-colors text-sm font-medium hover:text-orange-500 ${t.muted}`}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 7,
+              background: "transparent",
+              color: t.muted,
+              border: "none",
+              padding: "14px 20px",
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = t.heading)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = t.muted)}
           >
-            Talk to Sales <ExternalLink size={14} />
+            Talk to Sales <ExternalLink size={13} />
           </button>
         </div>
       </div>

@@ -1,40 +1,77 @@
 import { TECH_LOGOS } from "../../data/constants";
 
-function LogoStrip({ dark, t }) {
+function LogoStrip({ t, dark }) {
   const doubled = [...TECH_LOGOS, ...TECH_LOGOS];
   return (
     <div
-      className={`py-10 border-y overflow-hidden ${dark ? "border-stone-800 bg-stone-900/40" : "border-stone-200/60 bg-[#faf6f2]"}`}
+      style={{
+        borderTop: `1px solid ${t.border}`,
+        borderBottom: `1px solid ${t.border}`,
+        padding: "36px 0",
+        overflow: "hidden",
+        background: t.altBg,
+      }}
     >
       <p
-        className={`text-center text-xs uppercase tracking-widest font-semibold mb-6 ${t.label}`}
+        style={{
+          textAlign: "center",
+          fontSize: 10,
+          textTransform: "uppercase",
+          letterSpacing: "0.18em",
+          fontWeight: 700,
+          color: t.faint,
+          marginBottom: 22,
+          fontFamily: "Inter, sans-serif",
+        }}
       >
         Battle-tested stack · trusted integrations
       </p>
-      <div className="relative">
-        <div
-          className="flex gap-6 marquee-track"
-          style={{ width: "max-content" }}
-        >
-          {doubled.map((logo, i) => (
-            <div
-              key={i}
-              className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl border select-none ${dark ? "bg-stone-900 border-stone-800" : "bg-white border-stone-100 shadow-sm"}`}
+      <div
+        style={{
+          display: "flex",
+          gap: 16,
+          width: "max-content",
+          animation: "marquee 32s linear infinite",
+        }}
+      >
+        {doubled.map((logo, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 9,
+              padding: "9px 18px",
+              borderRadius: 8,
+              border: `1px solid ${t.border}`,
+              background: t.cardBg,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span
+              style={{
+                width: 9,
+                height: 9,
+                borderRadius: "50%",
+                background: logo.color,
+                flexShrink: 0,
+              }}
+            />
+            <span
+              style={{
+                fontSize: 13,
+                fontWeight: 600,
+                color: t.body,
+                fontFamily: "Inter, sans-serif",
+              }}
             >
-              <span
-                className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                style={{ background: logo.color }}
-              />
-              <span
-                className={`text-sm font-semibold whitespace-nowrap ${dark ? "text-stone-300" : "text-stone-600"}`}
-              >
-                {logo.name}
-              </span>
-            </div>
-          ))}
-        </div>
+              {logo.name}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
+
 export default LogoStrip;

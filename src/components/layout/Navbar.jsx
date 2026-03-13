@@ -1,30 +1,99 @@
-import { Blocks, Menu, X } from "lucide-react";
-import ThemeToggle from "../ui/ThemeToggle";
+import { Blocks, Menu, X, Sun, Moon } from "lucide-react";
 import { NAV_LINKS } from "../../data/constants";
-
-function Navbar({ dark, setDark, menuOpen, setMenuOpen, scrollTo, t }) {
+import { useState } from "react";
+function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
+  const [open, setOpen] = useState(false);
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${t.navBg}`}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        background: scrolled ? t.navBg : "transparent",
+        borderBottom: scrolled
+          ? `1px solid ${t.border}`
+          : "1px solid transparent",
+        backdropFilter: "blur(12px)",
+        transition: "background 0.4s, border-color 0.4s",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          padding: "0 24px",
+          height: 64,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         {/* Logo */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-md">
-            <Blocks size={16} className="text-white" />
+        <button
+          onClick={() => scrollTo("hero")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          <div
+            style={{
+              width: 30,
+              height: 30,
+              background: t.accent,
+              borderRadius: 6,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Blocks size={15} style={{ color: t.accentText }} />
           </div>
-          <span className={`text-xl font-bold tracking-tight ${t.heading}`}>
-            Go<span className="text-orange-500">Beyond</span>
+          <span
+            style={{
+              fontSize: 17,
+              fontWeight: 800,
+              color: t.heading,
+              fontFamily: "Epilogue, sans-serif",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Go<span style={{ color: t.accent }}>Beyond</span>
           </span>
-        </div>
+        </button>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-8">
+        {/* Desktop nav */}
+        <div style={{ display: "flex", gap: 2 }} className="hidden-mobile">
           {NAV_LINKS.map((l) => (
             <button
               key={l}
               onClick={() => scrollTo(l.toLowerCase())}
-              className={`text-sm font-medium transition-colors hover:text-orange-500 ${t.muted}`}
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: "8px 14px",
+                borderRadius: 6,
+                fontSize: 13,
+                fontWeight: 500,
+                color: t.muted,
+                fontFamily: "Inter, sans-serif",
+                transition: "color 0.2s, background 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = t.heading;
+                e.currentTarget.style.background = t.tagBg;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = t.muted;
+                e.currentTarget.style.background = "transparent";
+              }}
             >
               {l}
             </button>
@@ -32,38 +101,115 @@ function Navbar({ dark, setDark, menuOpen, setMenuOpen, scrollTo, t }) {
         </div>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-3">
-          <ThemeToggle dark={dark} setDark={setDark} t={t} />
+        <div
+          style={{ display: "flex", gap: 10, alignItems: "center" }}
+          className="hidden-mobile"
+        >
+          <button
+            onClick={() => setDark(!dark)}
+            style={{
+              width: 34,
+              height: 34,
+              borderRadius: 6,
+              border: `1px solid ${t.border}`,
+              background: t.cardBg,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: t.muted,
+              transition: "border-color 0.2s",
+            }}
+          >
+            {dark ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
           <button
             onClick={() => scrollTo("pricing")}
-            className="text-sm font-semibold bg-orange-500 hover:bg-orange-400 text-white px-5 py-2.5 rounded-xl transition-all shadow-md shadow-orange-200/40"
+            style={{
+              background: t.accent,
+              color: t.accentText,
+              border: "none",
+              borderRadius: 6,
+              padding: "9px 18px",
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: "pointer",
+              fontFamily: "Inter, sans-serif",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = t.accentDark)
+            }
+            onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
           >
             Get Started
           </button>
         </div>
 
         {/* Mobile */}
-        <div className="md:hidden flex items-center gap-2">
-          <ThemeToggle dark={dark} setDark={setDark} size="sm" t={t} />
+        <div
+          style={{ display: "flex", gap: 8, alignItems: "center" }}
+          className="show-mobile"
+        >
           <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className={`${t.muted} hover:text-orange-500`}
+            onClick={() => setDark(!dark)}
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 6,
+              border: `1px solid ${t.border}`,
+              background: t.cardBg,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: t.muted,
+            }}
           >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            {dark ? <Sun size={13} /> : <Moon size={13} />}
+          </button>
+          <button
+            onClick={() => setOpen(!open)}
+            style={{
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: t.body,
+            }}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
-      {menuOpen && (
+      {open && (
         <div
-          className={`md:hidden border-t px-6 py-6 shadow-lg ${t.mobileMenu}`}
+          style={{
+            background: t.pageBg,
+            borderTop: `1px solid ${t.border}`,
+            padding: "16px 24px 20px",
+          }}
         >
-          <div className="flex flex-col gap-4">
+          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {NAV_LINKS.map((l) => (
               <button
                 key={l}
-                onClick={() => scrollTo(l.toLowerCase())}
-                className={`text-left py-1 font-medium transition-colors hover:text-orange-500 ${t.body}`}
+                onClick={() => {
+                  scrollTo(l.toLowerCase());
+                  setOpen(false);
+                }}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  padding: "10px 12px",
+                  borderRadius: 6,
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: t.body,
+                  fontFamily: "Inter, sans-serif",
+                }}
               >
                 {l}
               </button>
@@ -71,9 +217,20 @@ function Navbar({ dark, setDark, menuOpen, setMenuOpen, scrollTo, t }) {
             <button
               onClick={() => {
                 scrollTo("pricing");
-                setMenuOpen(false);
+                setOpen(false);
               }}
-              className="mt-2 bg-orange-500 hover:bg-orange-400 text-white font-semibold py-3 rounded-xl shadow-md"
+              style={{
+                background: t.accent,
+                color: t.accentText,
+                border: "none",
+                borderRadius: 6,
+                padding: "11px 0",
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: "pointer",
+                marginTop: 10,
+                fontFamily: "Inter, sans-serif",
+              }}
             >
               Get Started
             </button>
@@ -83,4 +240,5 @@ function Navbar({ dark, setDark, menuOpen, setMenuOpen, scrollTo, t }) {
     </nav>
   );
 }
+
 export default Navbar;

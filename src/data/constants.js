@@ -20,6 +20,17 @@ import {
   MapPin,
   Clock,
 } from "lucide-react";
+
+// ─── PALETTE ────────────────────────────────────────────────────────────────
+// Accent:  #ccea4a  (acid yellow-green)
+// Light:   #f7f7f7  (off-white)
+// Dark bg: #0a0a0a  (near-black — never pure #000 on a surface)
+// We tint pure black/white slightly everywhere
+// Text on dark:  #f7f7f7 / #999
+// Text on light: #0a0a0a / #555
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+
 export const NAV_LINKS = ["Features", "Services", "Pricing", "FAQ", "Contact"];
 
 export const STATS = [
@@ -40,7 +51,7 @@ export const TECH_LOGOS = [
   { name: "OpenAI", color: "#10A37F" },
   { name: "Google Cloud", color: "#4285F4" },
   { name: "Docker", color: "#2496ED" },
-  { name: "Vercel", color: "#000000" },
+  { name: "Vercel", color: "#888" },
   { name: "Supabase", color: "#3ECF8E" },
 ];
 
@@ -70,43 +81,31 @@ export const FEATURES = [
     icon: Cloud,
     title: "Cloud Infrastructure",
     desc: "Elastic, auto-scaling cloud environments built for uptime and speed.",
-    cycle: "featureA",
-    color: "text-orange-500",
   },
   {
     icon: Shield,
     title: "Enterprise Security",
     desc: "Zero-trust architecture, SOC 2 compliance, and real-time threat detection.",
-    cycle: "featureB",
-    color: "text-amber-500",
   },
   {
     icon: Code2,
     title: "Custom SaaS Dev",
     desc: "From MVP to scale — full-stack teams that ship fast and iterate faster.",
-    cycle: "featureC",
-    color: "text-rose-500",
   },
   {
     icon: BarChart3,
     title: "Analytics & BI",
     desc: "Turn raw data into decisions with live dashboards and predictive models.",
-    cycle: "featureA",
-    color: "text-orange-500",
   },
   {
     icon: Cpu,
     title: "AI Automation",
     desc: "LLM-powered workflows that replace repetitive tasks and cut overhead.",
-    cycle: "featureB",
-    color: "text-amber-500",
   },
   {
     icon: Headphones,
     title: "24/7 Support",
     desc: "Dedicated engineers on call around the clock — no bots, real people.",
-    cycle: "featureC",
-    color: "text-rose-500",
   },
 ];
 
@@ -160,6 +159,7 @@ export const PLANS = {
     {
       name: "Starter",
       price: "$299",
+      period: "/mo",
       desc: "Perfect for early-stage startups.",
       features: [
         "1 SaaS project",
@@ -174,6 +174,7 @@ export const PLANS = {
     {
       name: "Growth",
       price: "$899",
+      period: "/mo",
       desc: "Built for scaling teams.",
       features: [
         "3 SaaS projects",
@@ -190,6 +191,7 @@ export const PLANS = {
     {
       name: "Enterprise",
       price: "Custom",
+      period: "",
       desc: "For large orgs and complex needs.",
       features: [
         "Unlimited projects",
@@ -208,6 +210,7 @@ export const PLANS = {
     {
       name: "Starter",
       price: "$239",
+      period: "/mo",
       desc: "Perfect for early-stage startups.",
       features: [
         "1 SaaS project",
@@ -222,6 +225,7 @@ export const PLANS = {
     {
       name: "Growth",
       price: "$719",
+      period: "/mo billed yearly",
       desc: "Built for scaling teams.",
       features: [
         "3 SaaS projects",
@@ -238,6 +242,7 @@ export const PLANS = {
     {
       name: "Enterprise",
       price: "Custom",
+      period: "",
       desc: "For large orgs and complex needs.",
       features: [
         "Unlimited projects",
@@ -281,30 +286,6 @@ export const FAQS = [
   },
 ];
 
-export const TESTIMONIALS = [
-  {
-    name: "Sarah K.",
-    role: "CTO, Lumen Labs",
-    quote:
-      "GoBeyond shipped our entire SaaS MVP in 8 weeks. The team feels like in-house engineers, not outsourced contractors.",
-    rating: 5,
-  },
-  {
-    name: "Marco R.",
-    role: "Founder, Nexstep",
-    quote:
-      "Their AI automation module cut our manual processing time by 70%. ROI was immediate and measurable.",
-    rating: 5,
-  },
-  {
-    name: "Diana T.",
-    role: "VP Engineering, Arcflow",
-    quote:
-      "Best DevOps team we've worked with. Zero downtime migration from legacy AWS setup to full Kubernetes.",
-    rating: 5,
-  },
-];
-
 export const CONTACT_INFO = [
   { icon: Mail, label: "Email", value: "hello@gobeyond.ph" },
   { icon: Phone, label: "Phone", value: "+63 2 8888 BEYOND" },
@@ -328,3 +309,41 @@ export const FOOTER_COLS = [
     links: ["Privacy Policy", "Terms of Service", "Security", "Compliance"],
   },
 ];
+export const T = {
+  light: {
+    pageBg: "#f7f7f7",
+    altBg: "#ededed",
+    cardBg: "#ffffff",
+    border: "rgba(0,0,0,0.10)",
+    borderStrong: "rgba(0,0,0,0.18)",
+    heading: "#0a0a0a",
+    body: "#333333",
+    muted: "#666666",
+    faint: "#999999",
+    accent: "#ccea4a",
+    accentDark: "#b8d63a", // hover state
+    accentText: "#0a0a0a", // text ON accent bg
+    tagBg: "rgba(0,0,0,0.05)",
+    tagText: "#444",
+    navBg: "rgba(247,247,247,0.94)",
+    inputBg: "#efefef",
+  },
+  dark: {
+    pageBg: "#0a0a0a",
+    altBg: "#111111",
+    cardBg: "#141414",
+    border: "rgba(255,255,255,0.08)",
+    borderStrong: "rgba(255,255,255,0.14)",
+    heading: "#f7f7f7",
+    body: "#c8c8c8",
+    muted: "#888888",
+    faint: "#555555",
+    accent: "#ccea4a",
+    accentDark: "#b8d63a",
+    accentText: "#0a0a0a",
+    tagBg: "rgba(255,255,255,0.06)",
+    tagText: "#aaa",
+    navBg: "rgba(10,10,10,0.94)",
+    inputBg: "#1c1c1c",
+  },
+};

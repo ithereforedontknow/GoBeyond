@@ -1,104 +1,252 @@
 import { useState } from "react";
 import { Package } from "lucide-react";
 import { CheckCircle2 } from "lucide-react";
-import SectionPill from "../ui/SectionPill";
 import { PLANS } from "../../data/constants";
+import useInView from "../../hooks/useInView";
+import Label from "../mini/Label";
+import AccentLine from "../mini/AccentLine";
+
 function Pricing({ t, scrollTo }) {
-  const [activeTab, setActiveTab] = useState("monthly");
+  const [billing, setBilling] = useState("monthly");
+  const [ref, inView] = useInView();
   return (
     <section
       id="pricing"
-      className={`py-28 border-t ${t.sectionAlt} ${t.border}`}
+      style={{
+        borderTop: `1px solid ${t.border}`,
+        padding: "100px 0",
+        background: t.altBg,
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-12">
-          <SectionPill color={t.pillOrange} icon={Package} label="Pricing" />
-          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${t.heading}`}>
-            Simple, <span className="text-orange-500">transparent</span> pricing
-          </h2>
-          <p className={`mb-8 ${t.muted}`}>No hidden fees. Cancel anytime.</p>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ marginBottom: 48 }}>
+          <Label t={t} icon={Package}>
+            Pricing
+          </Label>
+          <AccentLine t={t} />
           <div
-            className={`inline-flex items-center border rounded-xl p-1 gap-1 shadow-sm ${t.toggleBg}`}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              gap: 24,
+              flexWrap: "wrap",
+            }}
           >
-            {["monthly", "annual"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all capitalize ${activeTab === tab ? "bg-orange-500 text-white shadow-sm" : t.muted}`}
-              >
-                {tab}
-                {tab === "annual" && (
-                  <span className="ml-1.5 text-xs text-amber-500">-20%</span>
-                )}
-              </button>
-            ))}
+            <h2
+              style={{
+                fontSize: "clamp(2rem,3.8vw,2.9rem)",
+                fontWeight: 800,
+                lineHeight: 1.05,
+                letterSpacing: "-0.025em",
+                color: t.heading,
+                fontFamily: "Epilogue, sans-serif",
+              }}
+            >
+              Simple, transparent
+              <br />
+              pricing.
+            </h2>
+            {/* Toggle */}
+            <div
+              style={{
+                display: "flex",
+                border: `1px solid ${t.borderStrong}`,
+                borderRadius: 8,
+                overflow: "hidden",
+              }}
+            >
+              {["monthly", "annual"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setBilling(tab)}
+                  style={{
+                    padding: "9px 20px",
+                    fontSize: 13,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    border: "none",
+                    fontFamily: "Inter, sans-serif",
+                    textTransform: "capitalize",
+                    transition: "background 0.2s, color 0.2s",
+                    background: billing === tab ? t.accent : t.cardBg,
+                    color: billing === tab ? t.accentText : t.muted,
+                  }}
+                >
+                  {tab}
+                  {tab === "annual" && (
+                    <span
+                      style={{
+                        marginLeft: 5,
+                        fontSize: 10,
+                        color: billing === tab ? "#555" : t.accent,
+                        fontWeight: 800,
+                      }}
+                    >
+                      –20%
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="grid md:grid-cols-3 gap-6 items-stretch">
-          {PLANS[activeTab].map((p, i) => (
+
+        <div
+          ref={ref}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: 16,
+            alignItems: "stretch",
+          }}
+          className="card-grid"
+        >
+          {PLANS[billing].map((p, i) => (
             <div
-              key={i}
-              className={`relative rounded-2xl p-8 flex flex-col transition-all ${
-                p.highlight
-                  ? "bg-gradient-to-b from-orange-500 to-orange-600 border-2 border-orange-400 shadow-2xl shadow-orange-300/30"
-                  : `border ${t.pricingCard} ${t.shadow}`
-              }`}
+              key={`${billing}-${i}`}
+              style={{
+                position: "relative",
+                borderRadius: 12,
+                padding: "36px 32px",
+                display: "flex",
+                flexDirection: "column",
+                background: p.highlight ? t.accent : t.cardBg,
+                border: p.highlight
+                  ? `2px solid ${t.accent}`
+                  : `1px solid ${t.border}`,
+                boxShadow: p.highlight ? `0 20px 60px ${t.accent}25` : "none",
+                transition: `opacity 0.7s ${i * 0.13}s, transform 0.7s ${i * 0.13}s`,
+                opacity: inView ? 1 : 0,
+                transform: inView ? "translateY(0)" : "translateY(28px)",
+              }}
             >
               {p.highlight && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-amber-400 text-stone-900 text-xs font-bold px-4 py-1 rounded-full shadow-sm">
-                  MOST POPULAR
+                <div
+                  style={{
+                    position: "absolute",
+                    top: -14,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    background: t.heading,
+                    color: t.pageBg,
+                    fontSize: 9,
+                    fontWeight: 800,
+                    letterSpacing: "0.15em",
+                    textTransform: "uppercase",
+                    padding: "5px 14px",
+                    borderRadius: 20,
+                    fontFamily: "Inter, sans-serif",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Most Popular
                 </div>
               )}
-              <div className="mb-6">
+
+              <div style={{ marginBottom: 28 }}>
                 <h3
-                  className={`text-lg font-bold mb-1 ${p.highlight ? "text-white" : t.heading}`}
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 800,
+                    marginBottom: 4,
+                    fontFamily: "Epilogue, sans-serif",
+                    color: p.highlight ? t.accentText : t.heading,
+                  }}
                 >
                   {p.name}
                 </h3>
                 <p
-                  className={`text-xs mb-4 ${p.highlight ? "text-orange-200" : t.label}`}
+                  style={{
+                    fontSize: 12,
+                    marginBottom: 18,
+                    color: p.highlight ? "#555" : t.faint,
+                  }}
                 >
                   {p.desc}
                 </p>
-                <div className="flex items-end gap-1">
+                <div
+                  style={{ display: "flex", alignItems: "flex-end", gap: 6 }}
+                >
                   <span
-                    className={`text-4xl font-bold ${p.highlight ? "text-white" : t.heading}`}
+                    style={{
+                      fontSize: "clamp(2rem,3vw,2.5rem)",
+                      fontWeight: 800,
+                      lineHeight: 1,
+                      fontFamily: "Epilogue, sans-serif",
+                      color: p.highlight ? t.accentText : t.heading,
+                    }}
                   >
                     {p.price}
                   </span>
-                  {p.price !== "Custom" && (
+                  {p.period && (
                     <span
-                      className={`text-sm mb-1 ${p.highlight ? "text-orange-200" : t.label}`}
+                      style={{
+                        fontSize: 12,
+                        marginBottom: 3,
+                        color: p.highlight ? "#555" : t.faint,
+                      }}
                     >
-                      /{activeTab === "monthly" ? "mo" : "mo billed yearly"}
+                      {p.period}
                     </span>
                   )}
                 </div>
               </div>
-              <ul className="flex-1 space-y-3 mb-8">
+
+              <ul
+                style={{
+                  flex: 1,
+                  marginBottom: 28,
+                  listStyle: "none",
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                }}
+              >
                 {p.features.map((f, j) => (
-                  <li key={j} className="flex items-center gap-3 text-sm">
+                  <li
+                    key={j}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      fontSize: 13,
+                    }}
+                  >
                     <CheckCircle2
-                      size={15}
-                      className={
-                        p.highlight
-                          ? "text-orange-200 shrink-0"
-                          : "text-orange-500 shrink-0"
-                      }
+                      size={14}
+                      style={{
+                        color: p.highlight ? "#555" : t.accent,
+                        flexShrink: 0,
+                      }}
                     />
-                    <span className={p.highlight ? "text-orange-50" : t.body}>
+                    <span
+                      style={{ color: p.highlight ? t.accentText : t.body }}
+                    >
                       {f}
                     </span>
                   </li>
                 ))}
               </ul>
+
               <button
                 onClick={() => scrollTo("contact")}
-                className={`w-full py-3 rounded-xl font-semibold text-sm transition-all ${
-                  p.highlight
-                    ? "bg-white text-orange-600 hover:bg-orange-50"
-                    : "bg-orange-500 hover:bg-orange-400 text-white shadow-md shadow-orange-100/50"
-                }`}
+                style={{
+                  width: "100%",
+                  padding: "13px 0",
+                  borderRadius: 8,
+                  fontSize: 14,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontFamily: "Inter, sans-serif",
+                  transition: "background 0.2s",
+                  background: p.highlight ? t.heading : t.accent,
+                  color: p.highlight ? t.pageBg : t.accentText,
+                  border: "none",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
               >
                 {p.cta}
               </button>
@@ -109,4 +257,5 @@ function Pricing({ t, scrollTo }) {
     </section>
   );
 }
+
 export default Pricing;

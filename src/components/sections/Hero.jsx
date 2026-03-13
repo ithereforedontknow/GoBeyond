@@ -12,47 +12,95 @@ import {
 } from "lucide-react";
 
 import { STATS } from "../../data/constants";
-function DashboardMockup({ dark }) {
-  const bg = dark ? "#1c1008" : "#ffffff";
-  const panel = dark ? "#231408" : "#faf6f2";
-  const card = dark ? "#231408" : "#ffffff";
-  const bdr = dark ? "#3d2010" : "#f0e8df";
-  const txt = dark ? "#f5f0eb" : "#1c1917";
-  const muted = dark ? "#78716c" : "#a8a29e";
-  const coral = "#ea580c";
-  const amber = "#d97706";
+
+function DashboardMockup({ dark, t }) {
+  const bg = dark ? "#0e0e0e" : "#ffffff";
+  const panel = dark ? "#141414" : "#f7f7f7";
+  const card = dark ? "#1a1a1a" : "#ffffff";
+  const bdr = dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)";
+  const txt = dark ? "#f0f0f0" : "#111";
+  const muted = dark ? "#555" : "#aaa";
+  const acc = "#ccea4a";
 
   return (
-    <div className="relative w-full max-w-lg mx-auto select-none">
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        maxWidth: 480,
+        margin: "0 auto",
+        userSelect: "none",
+      }}
+    >
+      {/* Glow */}
       <div
-        className="absolute -inset-6 rounded-3xl opacity-40 blur-3xl pointer-events-none"
         style={{
-          background:
-            "radial-gradient(ellipse at 55% 45%, #ea580c44 0%, transparent 70%)",
+          position: "absolute",
+          inset: -40,
+          background: `radial-gradient(ellipse at 55% 50%, ${acc}22 0%, transparent 65%)`,
+          filter: "blur(20px)",
+          pointerEvents: "none",
         }}
       />
 
       <div
-        className="relative rounded-2xl overflow-hidden border"
         style={{
-          background: bg,
-          borderColor: bdr,
+          position: "relative",
+          borderRadius: 16,
+          overflow: "hidden",
+          border: `1px solid ${bdr}`,
           boxShadow: dark
-            ? "0 32px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(234,88,12,0.12)"
-            : "0 32px 64px rgba(234,88,12,0.14), 0 0 0 1px rgba(234,88,12,0.07)",
+            ? "0 40px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(204,234,74,0.06)"
+            : "0 40px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.06)",
+          background: bg,
         }}
       >
         {/* Chrome */}
         <div
-          className="flex items-center gap-1.5 px-4 py-3 border-b"
-          style={{ borderColor: bdr, background: panel }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            padding: "10px 14px",
+            borderBottom: `1px solid ${bdr}`,
+            background: panel,
+          }}
         >
-          <span className="w-3 h-3 rounded-full bg-red-400" />
-          <span className="w-3 h-3 rounded-full bg-yellow-400" />
-          <span className="w-3 h-3 rounded-full bg-green-400" />
+          <span
+            style={{
+              width: 11,
+              height: 11,
+              borderRadius: "50%",
+              background: "#ff5f57",
+            }}
+          />
+          <span
+            style={{
+              width: 11,
+              height: 11,
+              borderRadius: "50%",
+              background: "#ffbd2e",
+            }}
+          />
+          <span
+            style={{
+              width: 11,
+              height: 11,
+              borderRadius: "50%",
+              background: "#28ca41",
+            }}
+          />
           <div
-            className="ml-3 flex-1 h-5 rounded-md flex items-center px-3"
-            style={{ background: bdr }}
+            style={{
+              marginLeft: 10,
+              flex: 1,
+              height: 20,
+              borderRadius: 4,
+              background: bdr,
+              display: "flex",
+              alignItems: "center",
+              padding: "0 10px",
+            }}
           >
             <span style={{ fontSize: 9, color: muted }}>
               app.gobeyond.ph/dashboard
@@ -60,20 +108,37 @@ function DashboardMockup({ dark }) {
           </div>
         </div>
 
-        <div className="flex" style={{ height: 310 }}>
+        <div style={{ display: "flex", height: 310 }}>
           {/* Sidebar */}
           <div
-            className="flex flex-col gap-1.5 p-2.5 border-r"
-            style={{ borderColor: bdr, background: panel, width: 52 }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 6,
+              padding: 10,
+              borderRight: `1px solid ${bdr}`,
+              background: panel,
+              width: 52,
+            }}
           >
             {[LayoutDashboard, Activity, BarChart3, Settings2, Users].map(
               (Icon, i) => (
                 <div
                   key={i}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center"
-                  style={{ background: i === 0 ? coral : "transparent" }}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 10,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: i === 0 ? acc : "transparent",
+                  }}
                 >
-                  <Icon size={14} style={{ color: i === 0 ? "#fff" : muted }} />
+                  <Icon
+                    size={14}
+                    style={{ color: i === 0 ? "#0a0a0a" : muted }}
+                  />
                 </div>
               ),
             )}
@@ -81,45 +146,90 @@ function DashboardMockup({ dark }) {
 
           {/* Body */}
           <div
-            className="flex-1 p-4 overflow-hidden"
-            style={{ background: bg }}
+            style={{ flex: 1, padding: 16, overflow: "hidden", background: bg }}
           >
-            <div className="flex items-center justify-between mb-4">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 14,
+              }}
+            >
               <div>
                 <div
-                  className="h-3 w-28 rounded-md mb-1.5"
-                  style={{ background: bdr }}
+                  style={{
+                    height: 11,
+                    width: 110,
+                    borderRadius: 4,
+                    background: bdr,
+                    marginBottom: 6,
+                  }}
                 />
                 <div
-                  className="h-2 w-20 rounded-md"
-                  style={{ background: dark ? "#3d2010" : "#f5ede6" }}
+                  style={{
+                    height: 8,
+                    width: 80,
+                    borderRadius: 4,
+                    background: bdr,
+                  }}
                 />
               </div>
-              <div className="flex gap-2 items-center">
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <div
-                  className="w-7 h-7 rounded-full flex items-center justify-center"
-                  style={{ background: bdr }}
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    background: bdr,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   <Bell size={11} style={{ color: muted }} />
                 </div>
-                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-400 to-rose-500" />
+                <div
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    background: `linear-gradient(135deg, ${acc}, #a8c430)`,
+                  }}
+                />
               </div>
             </div>
 
             {/* KPIs */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: 8,
+                marginBottom: 14,
+              }}
+            >
               {[
-                { label: "Uptime", val: "99.98%", color: coral },
-                { label: "Requests", val: "4.2M", color: amber },
-                { label: "Alerts", val: "0 open", color: "#16a34a" },
+                { label: "Uptime", val: "99.98%", color: acc },
+                { label: "Requests", val: "4.2M", color: "#60a5fa" },
+                { label: "Alerts", val: "0 open", color: "#4ade80" },
               ].map((s, i) => (
                 <div
                   key={i}
-                  className="rounded-xl p-2.5 border"
-                  style={{ background: card, borderColor: bdr }}
+                  style={{
+                    borderRadius: 10,
+                    padding: 10,
+                    border: `1px solid ${bdr}`,
+                    background: card,
+                  }}
                 >
                   <div
-                    style={{ fontSize: 13, fontWeight: 700, color: s.color }}
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 700,
+                      color: s.color,
+                      fontFamily: "Epilogue, sans-serif",
+                    }}
                   >
                     {s.val}
                   </div>
@@ -129,7 +239,7 @@ function DashboardMockup({ dark }) {
                       color: muted,
                       marginTop: 2,
                       textTransform: "uppercase",
-                      letterSpacing: "0.05em",
+                      letterSpacing: "0.06em",
                     }}
                   >
                     {s.label}
@@ -138,66 +248,109 @@ function DashboardMockup({ dark }) {
               ))}
             </div>
 
-            {/* Bar chart */}
+            {/* Chart */}
             <div
-              className="rounded-xl border p-3 mb-3"
-              style={{ background: card, borderColor: bdr }}
+              style={{
+                borderRadius: 10,
+                border: `1px solid ${bdr}`,
+                padding: 12,
+                marginBottom: 10,
+                background: card,
+              }}
             >
-              <div className="flex items-center justify-between mb-2">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 8,
+                }}
+              >
                 <span style={{ fontSize: 9, fontWeight: 600, color: txt }}>
                   Deployments
                 </span>
                 <span style={{ fontSize: 8, color: muted }}>Last 7 days</span>
               </div>
-              <div className="flex items-end gap-1" style={{ height: 44 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  gap: 4,
+                  height: 44,
+                }}
+              >
                 {[35, 60, 45, 80, 55, 95, 70].map((h, i) => (
                   <div
                     key={i}
-                    className="flex-1 rounded-sm"
                     style={{
+                      flex: 1,
+                      borderRadius: 3,
                       height: `${h}%`,
-                      background:
-                        i === 5
-                          ? `linear-gradient(to top, ${coral}, #fb923c)`
-                          : dark
-                            ? "#3d2010"
-                            : "#fde8dc",
+                      background: i === 5 ? acc : dark ? "#282828" : "#e8e8e8",
                     }}
                   />
                 ))}
               </div>
             </div>
 
-            {/* Live log */}
+            {/* Log */}
             <div
-              className="rounded-xl border p-3"
-              style={{ background: panel, borderColor: bdr }}
+              style={{
+                borderRadius: 10,
+                border: `1px solid ${bdr}`,
+                padding: 10,
+                background: panel,
+              }}
             >
-              <div className="flex items-center gap-1.5 mb-2">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  marginBottom: 8,
+                }}
+              >
                 <span
-                  className="w-1.5 h-1.5 rounded-full pulse-ring"
-                  style={{ background: "#4ade80" }}
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: "#4ade80",
+                    display: "block",
+                    animation: "pulse 2s infinite",
+                  }}
                 />
                 <span
                   style={{
                     fontSize: 8,
                     color: muted,
                     textTransform: "uppercase",
-                    letterSpacing: "0.06em",
+                    letterSpacing: "0.08em",
                   }}
                 >
                   Live Events
                 </span>
               </div>
               {[
-                { text: "prod-api-v2.14 deployed successfully", color: coral },
-                { text: "SSL certificate renewed · gobeyond.ph", color: amber },
+                { text: "prod-api-v2.14 deployed successfully", color: acc },
+                {
+                  text: "SSL certificate renewed · gobeyond.ph",
+                  color: "#60a5fa",
+                },
                 {
                   text: "Daily backup completed · db-primary",
-                  color: "#16a34a",
+                  color: "#4ade80",
                 },
               ].map((line, i) => (
-                <div key={i} className="flex items-center gap-2 mb-1">
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginBottom: 5,
+                  }}
+                >
                   <span
                     style={{
                       width: 5,
@@ -225,115 +378,304 @@ function DashboardMockup({ dark }) {
         </div>
       </div>
 
-      {/* Floating badges */}
+      {/* Badges */}
       <div
-        className="absolute -bottom-5 -right-5 rounded-2xl border px-4 py-3 flex items-center gap-3"
         style={{
-          background: dark ? "#231408" : "#ffffff",
-          borderColor: bdr,
+          position: "absolute",
+          bottom: -16,
+          right: -16,
+          borderRadius: 12,
+          border: `1px solid ${bdr}`,
+          padding: "10px 14px",
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          background: dark ? "#141414" : "#fff",
           boxShadow: dark
-            ? "0 8px 24px rgba(0,0,0,0.5)"
-            : "0 8px 24px rgba(234,88,12,0.14)",
+            ? "0 10px 30px rgba(0,0,0,0.7)"
+            : "0 10px 30px rgba(0,0,0,0.10)",
         }}
       >
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-md">
-          <Wifi size={14} className="text-white" />
+        <div
+          style={{
+            width: 34,
+            height: 34,
+            borderRadius: 10,
+            background: acc,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Wifi size={14} style={{ color: "#0a0a0a" }} />
         </div>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: txt }}>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              color: txt,
+              fontFamily: "Epilogue, sans-serif",
+            }}
+          >
             99.98% Uptime
           </div>
-          <div style={{ fontSize: 9, color: "#16a34a", fontWeight: 600 }}>
+          <div style={{ fontSize: 9, color: "#4ade80", fontWeight: 600 }}>
             ● All systems go
           </div>
         </div>
       </div>
 
       <div
-        className="absolute -top-5 -left-5 rounded-2xl border px-3 py-2.5 flex items-center gap-2"
         style={{
-          background: dark ? "#231408" : "#ffffff",
-          borderColor: bdr,
+          position: "absolute",
+          top: -16,
+          left: -16,
+          borderRadius: 10,
+          border: `1px solid ${bdr}`,
+          padding: "8px 12px",
+          display: "flex",
+          alignItems: "center",
+          gap: 7,
+          background: dark ? "#141414" : "#fff",
           boxShadow: dark
-            ? "0 8px 24px rgba(0,0,0,0.5)"
-            : "0 8px 24px rgba(234,88,12,0.12)",
+            ? "0 10px 30px rgba(0,0,0,0.7)"
+            : "0 10px 30px rgba(0,0,0,0.08)",
         }}
       >
-        <GitBranch size={13} style={{ color: coral }} />
-        <span style={{ fontSize: 10, fontWeight: 600, color: txt }}>
+        <GitBranch size={12} style={{ color: acc }} />
+        <span
+          style={{
+            fontSize: 10,
+            fontWeight: 600,
+            color: txt,
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
           Deployed just now
         </span>
       </div>
     </div>
   );
 }
-function Hero({ dark, scrollTo, t }) {
+
+// ─── HERO ─────────────────────────────────────────────────────────────────────
+
+function Hero({ t, dark, scrollTo }) {
   return (
     <section
-      className={`relative min-h-screen flex items-center overflow-hidden ${dark ? "bg-stone-950 dot-grid-dark" : "bg-[#fffaf7] dot-grid-light"}`}
+      id="hero"
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        overflow: "hidden",
+        background: t.pageBg,
+      }}
     >
+      {/* Dot grid */}
       <div
-        className={`absolute top-1/4 -left-24 w-[500px] h-[500px] rounded-full blur-3xl pointer-events-none ${dark ? "bg-orange-600/8" : "bg-orange-200/35"}`}
-      />
-      <div
-        className={`absolute bottom-1/4 -right-24 w-80 h-80 rounded-full blur-3xl pointer-events-none ${dark ? "bg-rose-600/6" : "bg-rose-200/25"}`}
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `radial-gradient(${dark ? "rgba(204,234,74,0.10)" : "rgba(0,0,0,0.07)"} 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+          pointerEvents: "none",
+        }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 pt-28 pb-20 w-full relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* Lime glow blob */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-10%",
+          right: "-10%",
+          width: 600,
+          height: 600,
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${t.accent}18 0%, transparent 65%)`,
+          pointerEvents: "none",
+        }}
+      />
+
+      <div
+        style={{
+          maxWidth: 1280,
+          margin: "0 auto",
+          padding: "112px 24px 80px",
+          width: "100%",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 80,
+            alignItems: "center",
+          }}
+          className="hero-grid"
+        >
           <div>
+            {/* Eyebrow */}
             <div
-              className={`inline-flex items-center gap-2 border rounded-full px-4 py-1.5 mb-7 fade-up ${t.pillOrange}`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "6px 14px",
+                borderRadius: 4,
+                border: `1px solid ${t.borderStrong}`,
+                marginBottom: 28,
+              }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 pulse-ring" />
-              <span className="text-xs font-semibold tracking-wide">
+              <span
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: t.accent,
+                  display: "block",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: t.muted,
+                  fontFamily: "Inter, sans-serif",
+                }}
+              >
                 IT Solutions Built for Humans · PH-Based
               </span>
             </div>
 
             <h1
-              className={`text-5xl md:text-7xl font-bold leading-[1.05] tracking-tight mb-6 fade-up s1 ${t.heading}`}
+              style={{
+                fontSize: "clamp(2.8rem,5.5vw,4.2rem)",
+                fontWeight: 800,
+                lineHeight: 1.03,
+                letterSpacing: "-0.03em",
+                color: t.heading,
+                marginBottom: 24,
+                fontFamily: "Epilogue, sans-serif",
+              }}
             >
               The IT partner
               <br />
-              that <span className="hero-gradient">actually cares</span>
+              that <span style={{ color: t.accent }}>actually cares</span>
             </h1>
 
             <p
-              className={`text-lg leading-relaxed max-w-lg mb-9 fade-up s2 ${t.muted}`}
+              style={{
+                fontSize: 17,
+                lineHeight: 1.7,
+                color: t.muted,
+                maxWidth: 420,
+                marginBottom: 36,
+              }}
             >
               GoBeyond builds SaaS products, manages cloud infrastructure,
               automates with AI, and secures your systems — with a team that
               communicates like humans, not ticket numbers.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-start gap-4 mb-12 fade-up s3">
+            <div
+              style={{
+                display: "flex",
+                gap: 12,
+                flexWrap: "wrap",
+                marginBottom: 52,
+              }}
+            >
               <button
                 onClick={() => scrollTo("pricing")}
-                className="group flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-semibold px-8 py-4 rounded-xl transition-all text-base shadow-xl shadow-orange-200/50"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: t.accent,
+                  color: t.accentText,
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "14px 28px",
+                  fontSize: 15,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontFamily: "Inter, sans-serif",
+                  transition: "background 0.2s, transform 0.15s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = t.accentDark;
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = t.accent;
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
               >
-                See Pricing{" "}
-                <ArrowRight
-                  size={18}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
+                See Pricing <ArrowRight size={16} />
               </button>
               <button
                 onClick={() => scrollTo("services")}
-                className={`flex items-center gap-2 border px-8 py-4 rounded-xl transition-all text-base font-medium ${dark ? "border-stone-700 bg-stone-900 text-stone-300 hover:border-orange-700/50" : "border-stone-200 bg-white text-stone-600 hover:border-orange-300 hover:bg-orange-50"} shadow-sm`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  background: "transparent",
+                  color: t.body,
+                  border: `1px solid ${t.borderStrong}`,
+                  borderRadius: 8,
+                  padding: "14px 28px",
+                  fontSize: 15,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  fontFamily: "Inter, sans-serif",
+                  transition: "border-color 0.2s, background 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = t.accent;
+                  e.currentTarget.style.background = t.tagBg;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = t.borderStrong;
+                  e.currentTarget.style.background = "transparent";
+                }}
               >
-                <Play size={15} /> Our Services
+                <Play size={13} style={{ fill: "currentColor" }} /> Our Services
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-8 fade-up s4">
+            {/* Stats */}
+            <div style={{ display: "flex", gap: 36, flexWrap: "wrap" }}>
               {STATS.map((s, i) => (
                 <div key={i}>
-                  <div className="text-2xl font-bold text-orange-500">
+                  <div
+                    style={{
+                      fontSize: "clamp(1.5rem,2.5vw,1.9rem)",
+                      fontWeight: 800,
+                      color: t.heading,
+                      fontFamily: "Epilogue, sans-serif",
+                      letterSpacing: "-0.02em",
+                      lineHeight: 1,
+                    }}
+                  >
                     {s.value}
                   </div>
                   <div
-                    className={`text-xs uppercase tracking-widest font-medium mt-0.5 ${t.label}`}
+                    style={{
+                      fontSize: 10,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.14em",
+                      fontWeight: 600,
+                      color: t.faint,
+                      marginTop: 5,
+                      fontFamily: "Inter, sans-serif",
+                    }}
                   >
                     {s.label}
                   </div>
@@ -342,8 +684,8 @@ function Hero({ dark, scrollTo, t }) {
             </div>
           </div>
 
-          <div className="hidden lg:block fade-up s2">
-            <DashboardMockup dark={dark} />
+          <div className="hero-mockup">
+            <DashboardMockup dark={dark} t={t} />
           </div>
         </div>
       </div>

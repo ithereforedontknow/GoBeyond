@@ -1,24 +1,63 @@
-import { Flame } from "lucide-react";
-import { ArrowRight } from "lucide-react";
-import { ExternalLink } from "lucide-react";
+import { Blocks, Sun, Moon } from "lucide-react";
 import { FOOTER_COLS } from "../../data/constants";
-import ThemeToggle from "../ui/ThemeToggle";
 
-function Footer({ dark, setDark, t }) {
+function Footer({ t, dark, setDark, scrollTo }) {
   return (
-    <footer className={`border-t py-16 ${t.border} ${t.footerBg}`}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-10 mb-14">
+    <footer
+      style={{
+        borderTop: `1px solid ${t.border}`,
+        padding: "60px 0",
+        background: t.altBg,
+      }}
+    >
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.2fr 1fr 1fr 1fr",
+            gap: 40,
+            marginBottom: 52,
+          }}
+          className="footer-grid"
+        >
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center shadow-md">
-                <Flame size={13} className="text-white" />
+            <button
+              onClick={() => scrollTo("hero")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                marginBottom: 16,
+              }}
+            >
+              <div
+                style={{
+                  width: 28,
+                  height: 28,
+                  background: t.accent,
+                  borderRadius: 6,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Blocks size={13} style={{ color: t.accentText }} />
               </div>
-              <span className={`font-bold ${t.heading}`}>
-                Go<span className="text-orange-500">Beyond</span>
+              <span
+                style={{
+                  fontSize: 15,
+                  fontWeight: 800,
+                  color: t.heading,
+                  fontFamily: "Epilogue, sans-serif",
+                }}
+              >
+                Go<span style={{ color: t.accent }}>Beyond</span>
               </span>
-            </div>
-            <p className={`text-xs leading-relaxed ${t.footerText}`}>
+            </button>
+            <p style={{ fontSize: 12, lineHeight: 1.7, color: t.faint }}>
               IT solutions built for humans. SaaS, cloud, security, and AI — for
               startups and enterprises alike.
             </p>
@@ -26,16 +65,40 @@ function Footer({ dark, setDark, t }) {
           {FOOTER_COLS.map((col, i) => (
             <div key={i}>
               <h4
-                className={`text-xs font-bold uppercase tracking-widest mb-4 ${t.footerHeading}`}
+                style={{
+                  fontSize: 10,
+                  fontWeight: 800,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  color: t.muted,
+                  marginBottom: 18,
+                  fontFamily: "Inter, sans-serif",
+                }}
               >
                 {col.title}
               </h4>
-              <ul className="space-y-2.5">
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                }}
+              >
                 {col.links.map((l) => (
                   <li key={l}>
                     <a
                       href="#"
-                      className={`text-xs transition-colors ${t.footerLink}`}
+                      style={{
+                        fontSize: 13,
+                        color: t.faint,
+                        textDecoration: "none",
+                        fontFamily: "Inter, sans-serif",
+                        transition: "color 0.2s",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.color = t.accent)}
+                      onMouseLeave={(e) => (e.target.style.color = t.faint)}
                     >
                       {l}
                     </a>
@@ -45,24 +108,71 @@ function Footer({ dark, setDark, t }) {
             </div>
           ))}
         </div>
+
         <div
-          className={`border-t pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 ${t.border}`}
+          style={{
+            borderTop: `1px solid ${t.border}`,
+            paddingTop: 28,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 14,
+          }}
         >
-          <span className={`text-xs ${t.footerText}`}>
-            © 2025 GoBeyond IT Solutions. All rights reserved.
+          <span style={{ fontSize: 12, color: t.faint }}>
+            © 2026 GoBeyond IT Solutions. All rights reserved.
           </span>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500 pulse-ring" />
-              <span className={`text-xs ${t.footerText}`}>
+          <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <span
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: "50%",
+                  background: "#4ade80",
+                  display: "block",
+                }}
+              />
+              <span
+                style={{
+                  fontSize: 12,
+                  color: t.faint,
+                  fontFamily: "Inter, sans-serif",
+                }}
+              >
                 All systems operational
               </span>
             </div>
-            <ThemeToggle dark={dark} setDark={setDark} size="sm" t={t} />
+            <button
+              onClick={() => setDark(!dark)}
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: 6,
+                border: `1px solid ${t.border}`,
+                background: t.cardBg,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: t.muted,
+                transition: "border-color 0.2s",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.borderColor = t.accent)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.borderColor = t.border)
+              }
+            >
+              {dark ? <Sun size={13} /> : <Moon size={13} />}
+            </button>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
 export default Footer;
