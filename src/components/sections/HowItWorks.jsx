@@ -85,7 +85,6 @@ function HowItWorks({ t }) {
                 style={{
                   fontSize: "clamp(2.8rem,4vw,3.6rem)",
                   fontWeight: 800,
-                  color: (dark) => t.pageBg,
                   marginBottom: 28,
                   lineHeight: 1,
                   fontFamily: "Epilogue, sans-serif",
