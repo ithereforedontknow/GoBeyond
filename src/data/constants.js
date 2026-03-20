@@ -69,6 +69,7 @@ export const MARQUEE_ITEMS = [
   { name: "Process Automation", color: "#818cf8" },
   { name: "Digitization", color: "#4ade80" },
   { name: "Consultation", color: "#e879f9" },
+  { name: "Shopify", color: "#fbbf24" },
 ];
 
 export const APPROACH = [
