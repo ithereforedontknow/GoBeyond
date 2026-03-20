@@ -1,6 +1,6 @@
 import { Blocks, Sun, Moon } from "lucide-react";
 import { FOOTER_COLS } from "../../data/constants";
-
+import { Link } from "react-router-dom";
 function Footer({ t, dark, setDark, scrollTo }) {
   return (
     <footer
@@ -97,20 +97,39 @@ function Footer({ t, dark, setDark, scrollTo }) {
               >
                 {col.links.map((l) => (
                   <li key={l}>
-                    <a
-                      href="#"
-                      style={{
-                        fontSize: 13,
-                        color: t.faint,
-                        textDecoration: "none",
-                        fontFamily: "Inter, sans-serif",
-                        transition: "color 0.2s",
-                      }}
-                      onMouseEnter={(e) => (e.target.style.color = t.accent)}
-                      onMouseLeave={(e) => (e.target.style.color = t.faint)}
-                    >
-                      {l}
-                    </a>
+                    {col.title === "Legal" ? (
+                      <Link
+                        to={
+                          l === "Privacy Policy" ? "/privacy-policy" : "/terms"
+                        }
+                        style={{
+                          fontSize: 13,
+                          color: t.faint,
+                          textDecoration: "none",
+                          fontFamily: "Inter, sans-serif",
+                          transition: "color 0.2s",
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = t.accent)}
+                        onMouseLeave={(e) => (e.target.style.color = t.faint)}
+                      >
+                        {l}
+                      </Link>
+                    ) : (
+                      <a
+                        href="#"
+                        style={{
+                          fontSize: 13,
+                          color: t.faint,
+                          textDecoration: "none",
+                          fontFamily: "Inter, sans-serif",
+                          transition: "color 0.2s",
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = t.accent)}
+                        onMouseLeave={(e) => (e.target.style.color = t.faint)}
+                      >
+                        {l}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
