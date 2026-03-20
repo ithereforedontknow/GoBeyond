@@ -117,12 +117,12 @@ function ContactForm({ t }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
       {[
-        { label: "Full Name", key: "name", type: "text", ph: "Juan dela Cruz" },
+        { label: "Full Name", key: "name", type: "text", ph: "Your full name" },
         {
           label: "Email Address",
           key: "email",
           type: "email",
-          ph: "juan@company.com",
+          ph: "Your email address",
         },
       ].map((field) => (
         <div key={field.key}>
