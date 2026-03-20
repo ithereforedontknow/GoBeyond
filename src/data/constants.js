@@ -307,8 +307,8 @@ export const FAQS = [
 ];
 
 export const CONTACT_INFO = [
-  { icon: Phone, label: "Phone", value: "[Phone Number]" },
-  { icon: Mail, label: "Email", value: "[Email Address]" },
+  { icon: Phone, label: "Phone", value: "+639207982695" },
+  { icon: Mail, label: "Email", value: "itsolutionsgobeyond@gmail.com" },
   {
     icon: MapPin,
     label: "Office",
