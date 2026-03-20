@@ -4,12 +4,16 @@ import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { CONTACT_INFO } from "../../data/constants";
 import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
+import emailjs from "@emailjs/browser"; // <-- Import EmailJS
 
 function ContactForm({ t }) {
   const [form, setForm] = useState({ name: "", email: "", msg: "" });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // <-- Loading state
+  const [sendError, setSendError] = useState(null); // <-- Error state
 
+  // Validate function remains the same
   const validate = () => {
     const e = {};
     if (!form.name.trim()) e.name = "Name is required.";
@@ -24,8 +28,43 @@ function ContactForm({ t }) {
   const handleChange = (key, val) => {
     setForm((p) => ({ ...p, [key]: val }));
     if (errors[key]) setErrors((p) => ({ ...p, [key]: undefined }));
+    if (sendError) setSendError(null); // Clear email error on change
   };
 
+  const handleSubmit = async () => {
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setIsLoading(true);
+    setSendError(null);
+
+    // Prepare template parameters
+    const templateParams = {
+      name: form.name,
+      email: form.email,
+      message: form.msg,
+    };
+
+    try {
+      await emailjs.send(
+        import.meta.env.REACT_APP_EMAILJS_SERVICE_ID,
+        import.meta.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY,
+      );
+      setSubmitted(true);
+    } catch (error) {
+      console.error("EmailJS error:", error);
+      setSendError("Failed to send message. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Input styling (unchanged)
   const inputStyle = (key) => ({
     width: "100%",
     border: `1px solid ${errors[key] ? "#f87171" : t.borderStrong}`,
@@ -40,7 +79,7 @@ function ContactForm({ t }) {
     boxSizing: "border-box",
   });
 
-  if (submitted)
+  if (submitted) {
     return (
       <div
         style={{
@@ -86,6 +125,7 @@ function ContactForm({ t }) {
             setSubmitted(false);
             setForm({ name: "", email: "", msg: "" });
             setErrors({});
+            setSendError(null);
           }}
           style={{
             marginTop: 22,
@@ -102,6 +142,7 @@ function ContactForm({ t }) {
         </button>
       </div>
     );
+  }
 
   const lbl = {
     display: "block",
@@ -192,15 +233,28 @@ function ContactForm({ t }) {
           </div>
         )}
       </div>
+      {/* Show email send error if any */}
+      {sendError && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            backgroundColor: "#fef2f2",
+            border: "1px solid #fecaca",
+            borderRadius: 6,
+            padding: "8px 12px",
+            fontSize: 12,
+            color: "#b91c1c",
+          }}
+        >
+          <AlertCircle size={12} />
+          {sendError}
+        </div>
+      )}
       <button
-        onClick={() => {
-          const e = validate();
-          if (Object.keys(e).length) {
-            setErrors(e);
-            return;
-          }
-          setSubmitted(true);
-        }}
+        onClick={handleSubmit}
+        disabled={isLoading}
         style={{
           display: "flex",
           alignItems: "center",
@@ -213,14 +267,25 @@ function ContactForm({ t }) {
           padding: "13px 0",
           fontSize: 14,
           fontWeight: 700,
-          cursor: "pointer",
+          cursor: isLoading ? "not-allowed" : "pointer",
           fontFamily: "Inter, sans-serif",
           transition: "background 0.2s",
+          opacity: isLoading ? 0.7 : 1,
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = t.accentDark)}
-        onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
+        onMouseEnter={(e) =>
+          !isLoading && (e.currentTarget.style.background = t.accentDark)
+        }
+        onMouseLeave={(e) =>
+          !isLoading && (e.currentTarget.style.background = t.accent)
+        }
       >
-        <Send size={14} /> Send Message
+        {isLoading ? (
+          <>Sending...</>
+        ) : (
+          <>
+            <Send size={14} /> Send Message
+          </>
+        )}
       </button>
       <p
         style={{
@@ -239,6 +304,7 @@ function ContactForm({ t }) {
   );
 }
 
+// Contact component unchanged (except it uses the new ContactForm)
 function Contact({ t }) {
   return (
     <section
@@ -371,4 +437,5 @@ function Contact({ t }) {
     </section>
   );
 }
+
 export default Contact;

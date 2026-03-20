@@ -56,7 +56,7 @@ function Navbar({ t, dark, setDark, scrolled, scrollTo }) {
           </div>
           <span
             style={{
-              fontSize: 17,
+              fontSize: 19,
               fontWeight: 800,
               color: t.heading,
               fontFamily: "Epilogue, sans-serif",
