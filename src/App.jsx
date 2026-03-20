@@ -14,6 +14,8 @@ import Contact from "./components/sections/Contact";
 import CTABand from "./components/sections/CTABand";
 import LegalPrivacy from "./pages/LegalPrivacy";
 import LegalTerms from "./pages/LegalTerms";
+import NotFound from "./pages/NotFound";
+
 import Footer from "./components/layout/Footer";
 
 export default function App() {
@@ -110,6 +112,7 @@ export default function App() {
           </div>
         }
       />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
