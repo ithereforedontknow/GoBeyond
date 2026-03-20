@@ -4,16 +4,16 @@ import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { CONTACT_INFO } from "../../data/constants";
 import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
-import emailjs from "@emailjs/browser"; // <-- Import EmailJS
+import emailjs from "@emailjs/browser";
 
 function ContactForm({ t }) {
   const [form, setForm] = useState({ name: "", email: "", msg: "" });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // <-- Loading state
-  const [sendError, setSendError] = useState(null); // <-- Error state
+  const [isLoading, setIsLoading] = useState(false);
+  const [sendError, setSendError] = useState(null);
+  const [showSuccessToast, setShowSuccessToast] = useState(false);
 
-  // Validate function remains the same
   const validate = () => {
     const e = {};
     if (!form.name.trim()) e.name = "Name is required.";
@@ -28,7 +28,7 @@ function ContactForm({ t }) {
   const handleChange = (key, val) => {
     setForm((p) => ({ ...p, [key]: val }));
     if (errors[key]) setErrors((p) => ({ ...p, [key]: undefined }));
-    if (sendError) setSendError(null); // Clear email error on change
+    if (sendError) setSendError(null);
   };
 
   const handleSubmit = async () => {
@@ -41,30 +41,54 @@ function ContactForm({ t }) {
     setIsLoading(true);
     setSendError(null);
 
-    // Prepare template parameters
+    const now = new Date();
+    const formattedTime = now.toLocaleString("en-US", {
+      dateStyle: "full",
+      timeStyle: "short",
+    });
+
     const templateParams = {
+      title: `Let's build something great: ${form.name} wants to connect`,
       name: form.name,
       email: form.email,
       message: form.msg,
+      time: formattedTime,
+      accentColor: t.accent || "#6366f1",
+      accentDark: t.accentDark || "#4f46e5",
+      portfolioUrl: window.location.origin,
+      currentYear: new Date().getFullYear().toString(),
     };
 
     try {
-      await emailjs.send(
-        import.meta.env.REACT_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.REACT_APP_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        import.meta.env.REACT_APP_EMAILJS_PUBLIC_KEY,
-      );
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+
+      if (!publicKey || !serviceId || !templateId) {
+        throw new Error("Email service configuration missing");
+      }
+
+      emailjs.init(publicKey);
+      await emailjs.send(serviceId, templateId, templateParams);
+
+      setShowSuccessToast(true);
+      setTimeout(() => setShowSuccessToast(false), 3000);
+
+      setForm({ name: "", email: "", msg: "" });
       setSubmitted(true);
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
     } catch (error) {
-      console.error("EmailJS error:", error);
-      setSendError("Failed to send message. Please try again later.");
+      setSendError(
+        error.message || "Failed to send message. Please try again later.",
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Input styling (unchanged)
   const inputStyle = (key) => ({
     width: "100%",
     border: `1px solid ${errors[key] ? "#f87171" : t.borderStrong}`,
@@ -157,6 +181,33 @@ function ContactForm({ t }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+      {/* Toast Notification */}
+      {showSuccessToast && (
+        <div
+          style={{
+            position: "fixed",
+            top: "24px",
+            right: "24px",
+            background: t.accent,
+            color: t.accentText,
+            padding: "12px 20px",
+            borderRadius: 8,
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            fontSize: 13,
+            fontWeight: 600,
+            fontFamily: "Inter, sans-serif",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            zIndex: 1000,
+            animation: "slideIn 0.3s ease-out",
+          }}
+        >
+          <CheckCircle2 size={16} />
+          Message sent successfully!
+        </div>
+      )}
+
       {[
         { label: "Full Name", key: "name", type: "text", ph: "Your full name" },
         {
@@ -233,7 +284,6 @@ function ContactForm({ t }) {
           </div>
         )}
       </div>
-      {/* Show email send error if any */}
       {sendError && (
         <div
           style={{
@@ -280,7 +330,19 @@ function ContactForm({ t }) {
         }
       >
         {isLoading ? (
-          <>Sending...</>
+          <>
+            <div
+              style={{
+                width: 14,
+                height: 14,
+                border: "2px solid currentColor",
+                borderTopColor: "transparent",
+                borderRadius: "50%",
+                animation: "spin 0.6s linear infinite",
+              }}
+            />
+            Sending...
+          </>
         ) : (
           <>
             <Send size={14} /> Send Message
@@ -300,11 +362,29 @@ function ContactForm({ t }) {
       >
         No spam, ever.
       </p>
+
+      <style>{`
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 }
 
-// Contact component unchanged (except it uses the new ContactForm)
 function Contact({ t }) {
   return (
     <section
