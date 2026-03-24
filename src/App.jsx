@@ -7,7 +7,7 @@ import Hero from "./components/sections/Hero";
 import MarqueeStrip from "./components/sections/MarqueeStrip";
 import Solutions from "./components/sections/Solutions";
 import Approach from "./components/sections/Approach";
-// import WhyUs from "./components/sections/WhyUs";
+import Founder from "./components/sections/Founder";
 import Pricing from "./components/sections/Pricing";
 import FAQ from "./components/sections/FAQ";
 import Contact from "./components/sections/Contact";
@@ -103,7 +103,7 @@ export default function App() {
             <MarqueeStrip t={t} />
             <Solutions t={t} scrollTo={scrollTo} />
             <Approach t={t} />
-            {/* <WhyUs t={t} />*/}
+            <Founder t={t} />
             <Pricing t={t} scrollTo={scrollTo} />
             <FAQ t={t} />
             <Contact t={t} />

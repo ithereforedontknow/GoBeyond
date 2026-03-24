@@ -36,6 +36,9 @@ import {
   Cpu,
   Globe,
   Package,
+  Smartphone,
+  FileText,
+  Layers,
 } from "lucide-react";
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
@@ -43,7 +46,7 @@ import {
 export const NAV_LINKS = [
   { label: "Solutions", id: "solutions" },
   { label: "Approach", id: "approach" },
-  // { label: "Why Us", id: "whyus" },
+  { label: "Founder", id: "founder" },
   { label: "Pricing", id: "pricing" },
   { label: "FAQ", id: "faq" },
   { label: "Contact", id: "contact" },
@@ -179,106 +182,214 @@ export const WHY_US = [
   },
 ];
 
-export const PLANS = {
-  "Project-Based": [
-    {
-      name: "Basic",
-      price: "TBD",
-      period: "",
-      desc: "Ideal for individuals and small-scale projects.",
-      features: [
-        "Single-scope project delivery",
-        "Initial discovery & consultation",
-        "One solution division",
-        "Email support",
-        "Defined revision rounds",
-      ],
-      cta: "Inquire Now",
-      highlight: false,
-    },
-    {
-      name: "Standard",
-      price: "TBD",
-      period: "",
-      desc: "Built for growing businesses with broader needs.",
-      features: [
-        "Everything in Basic",
-        "Multi-feature solution development",
-        "Priority communication",
-        "Dedicated project handling",
-        "Extended revisions & refinements",
-        "Post-delivery support",
-      ],
-      cta: "Inquire Now",
-      highlight: true,
-    },
-    {
-      name: "Enterprise",
-      price: "Custom",
-      period: "",
-      desc: "For large, complex, or multi-division engagements.",
-      features: [
-        "Everything in Standard",
-        "Full-scope cross-division delivery",
-        "On-site consultation available",
-        "Long-term partnership terms",
-        "Custom SLA and timelines",
-        "Dedicated account handling",
-      ],
-      cta: "Contact Us",
-      highlight: false,
-    },
-  ],
-  Retainer: [
-    {
-      name: "Essential",
-      price: "TBD",
-      period: "/mo",
-      desc: "Ongoing support for small teams and solo operators.",
-      features: [
-        "Monthly hours allocation (TBD)",
-        "Maintenance & updates",
-        "Priority email support",
-        "Quarterly review session",
-        "One solution division covered",
-      ],
-      cta: "Inquire Now",
-      highlight: false,
-    },
-    {
-      name: "Growth",
-      price: "TBD",
-      period: "/mo",
-      desc: "Continuous partnership for scaling organizations.",
-      features: [
-        "Everything in Essential",
-        "Expanded monthly hours (TBD)",
-        "Multi-division coverage",
-        "Bi-weekly check-ins",
-        "Proactive optimization",
-        "Dedicated point of contact",
-      ],
-      cta: "Inquire Now",
-      highlight: true,
-    },
-    {
-      name: "Full Partner",
-      price: "Custom",
-      period: "/mo",
-      desc: "Complete innovation partnership, fully tailored.",
-      features: [
-        "Everything in Growth",
-        "Unlimited scope coverage",
-        "All three solution divisions",
-        "Weekly strategy sessions",
-        "On-site visits available",
-        "Custom contract terms",
-      ],
-      cta: "Contact Us",
-      highlight: false,
-    },
-  ],
-};
+export const PRICING_CATEGORIES = [
+  {
+    id: "digital",
+    label: "Digital Products",
+    icon: FileText,
+    description:
+      "Ready-made templates and digital assets — buy once, use immediately.",
+    items: [
+      { name: "Kids Templates", billing: "per template", price: 250 },
+      { name: "Invitations", billing: "per template", price: 400 },
+      { name: "Food Posters", billing: "per template", price: 300 },
+      { name: "Resume Template", billing: "per template", price: 300 },
+      { name: "Story Books", billing: "per template", price: 250 },
+      { name: "Flyers", billing: "per template", price: 300 },
+      { name: "Menu Poster", billing: "per template", price: 400 },
+    ],
+  },
+  {
+    id: "systems",
+    label: "Systems",
+    icon: Layers,
+    description:
+      "Custom-built business systems — choose a subscription or own it outright.",
+    groups: [
+      {
+        name: "Inventory Management",
+        tiers: [
+          {
+            name: "Basic",
+            sub: "Small shops, retailers",
+            billing: "monthly",
+            price: 4400,
+          },
+          {
+            name: "Mid",
+            sub: "Growth stage, small distribution",
+            billing: "monthly",
+            price: 17875,
+          },
+          {
+            name: "Enterprise",
+            sub: "Large inventory, multi-locations",
+            billing: "monthly",
+            price: 27500,
+          },
+          {
+            name: "One-Time License",
+            sub: "Own it outright",
+            billing: "one-time",
+            price: 825000,
+          },
+          {
+            name: "Custom Build",
+            sub: "Fully bespoke",
+            billing: "one-time",
+            price: 5500000,
+          },
+        ],
+      },
+      {
+        name: "Payroll System",
+        tiers: [
+          {
+            name: "Basic",
+            sub: "Payroll automation for small business",
+            billing: "monthly",
+            price: 2750,
+          },
+          {
+            name: "Standard",
+            sub: "Full SaaS payroll + HR, medium business",
+            billing: "monthly",
+            price: 22000,
+          },
+          {
+            name: "Enterprise",
+            sub: "Advanced payroll with integrations",
+            billing: "monthly",
+            price: 55000,
+          },
+          {
+            name: "Custom Build",
+            sub: "Built to your exact specs",
+            billing: "one-time",
+            price: 5500000,
+          },
+        ],
+      },
+      {
+        name: "Accounting System",
+        tiers: [
+          {
+            name: "Small — Monthly",
+            sub: "Budget-conscious",
+            billing: "monthly",
+            price: 1650,
+          },
+          {
+            name: "Small — One-Time",
+            sub: "Budget-conscious",
+            billing: "one-time",
+            price: 55000,
+          },
+          {
+            name: "Standard — Monthly",
+            sub: "Growing business",
+            billing: "monthly",
+            price: 6875,
+          },
+          {
+            name: "Standard — One-Time",
+            sub: "Growing business",
+            billing: "one-time",
+            price: 165000,
+          },
+          {
+            name: "Enterprise — Monthly",
+            sub: "Large organization",
+            billing: "monthly",
+            price: 33000,
+          },
+          {
+            name: "Enterprise — One-Time",
+            sub: "Large organization",
+            billing: "one-time",
+            price: 8250000,
+          },
+        ],
+      },
+      {
+        name: "System Integration",
+        tiers: [
+          {
+            name: "SaaS Integrated Platform",
+            sub: "All modules connected",
+            billing: "monthly",
+            price: 55000,
+          },
+          {
+            name: "Custom Integrated System",
+            sub: "Fully bespoke integration",
+            billing: "one-time",
+            price: 13750000,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "websites",
+    label: "Websites",
+    icon: Monitor,
+    description:
+      "Professional websites built for your goals — priced annually.",
+    items: [
+      { name: "Basic Portfolio", billing: "annual", price: 27500 },
+      { name: "Professional Presence", billing: "annual", price: 110000 },
+      { name: "E-commerce / Advanced", billing: "annual", price: 357500 },
+    ],
+  },
+  {
+    id: "apps",
+    label: "Mobile Apps",
+    icon: Smartphone,
+    description: "Custom mobile applications — one-time build, yours to keep.",
+    groups: [
+      {
+        name: "Ordering App",
+        tiers: [
+          {
+            name: "Basic Food Ordering",
+            sub: "Simple menu + cart",
+            billing: "one-time",
+            price: 300000,
+          },
+          {
+            name: "Mid-Level Delivery",
+            sub: "Tracking, riders, dashboard",
+            billing: "one-time",
+            price: 1375000,
+          },
+          {
+            name: "Advanced / Enterprise",
+            sub: "Full platform, integrations",
+            billing: "one-time",
+            price: 3850000,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "building",
+    label: "Building Plans",
+    icon: Building2,
+    description:
+      "Professional architectural plans — residential and commercial.",
+    items: [
+      { name: "Small House (1–2 storey)", billing: "per plan", price: 150000 },
+      { name: "Medium House or Duplex", billing: "per plan", price: 500000 },
+      {
+        name: "Commercial / Complex Design",
+        billing: "per plan",
+        price: 1000000,
+      },
+    ],
+  },
+];
 
 export const FAQS = [
   {

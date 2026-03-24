@@ -1,15 +1,42 @@
 import { useState } from "react";
-import { Package } from "lucide-react";
-import { CheckCircle2 } from "lucide-react";
-import { PLANS } from "../../data/constants";
+import { Package, ArrowRight } from "lucide-react";
+import { PRICING_CATEGORIES } from "../../data/constants";
 import useInView from "../../hooks/useInView";
-import SectionLabel from "../mini/SectionLabel";
-import AccentLine from "../mini/AccentLine";
-
+import SectionHeader from "../mini/SectionHeader";
 function Pricing({ t, scrollTo }) {
-  const [tab, setTab] = useState("Project-Based");
+  const [active, setActive] = useState("digital");
   const [ref, inView] = useInView();
-  const tabs = ["Project-Based", "Retainer"];
+  const cat = PRICING_CATEGORIES.find((c) => c.id === active);
+
+  const fmt = (n) => "₱" + n.toLocaleString("en-PH");
+
+  const billingColor = (billing) => {
+    if (billing === "monthly")
+      return { bg: `${t.accent}18`, color: t.accent, border: `${t.accent}40` };
+    if (billing === "one-time")
+      return { bg: "#60a5fa18", color: "#60a5fa", border: "#60a5fa40" };
+    if (billing === "annual")
+      return { bg: "#a78bfa18", color: "#a78bfa", border: "#a78bfa40" };
+    return { bg: t.tagBg, color: t.muted, border: t.border };
+  };
+
+  const pillStyle = (billing) => {
+    const c = billingColor(billing);
+    return {
+      display: "inline-block",
+      fontSize: 9,
+      fontWeight: 700,
+      letterSpacing: "0.12em",
+      textTransform: "uppercase",
+      padding: "3px 8px",
+      borderRadius: 20,
+      background: c.bg,
+      color: c.color,
+      border: `1px solid ${c.border}`,
+      fontFamily: "Inter, sans-serif",
+      whiteSpace: "nowrap",
+    };
+  };
 
   return (
     <section
@@ -21,295 +48,443 @@ function Pricing({ t, scrollTo }) {
       }}
     >
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ marginBottom: 48 }}>
-          <SectionLabel t={t} icon={Package}>
-            Pricing
-          </SectionLabel>
-          <AccentLine t={t} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              gap: 32,
-              flexWrap: "wrap",
-            }}
-          >
-            <div>
-              <h2
-                style={{
-                  fontSize: "clamp(2rem,3.8vw,2.9rem)",
-                  fontWeight: 800,
-                  lineHeight: 1.05,
-                  letterSpacing: "-0.025em",
-                  color: t.heading,
-                  fontFamily: "Epilogue, sans-serif",
-                  marginBottom: 10,
-                }}
-              >
-                Flexible pricing
-                <br />
-                for every need.
-              </h2>
-              <p
-                style={{
-                  fontSize: 13,
-                  color: t.faint,
-                  maxWidth: 380,
-                  lineHeight: 1.7,
-                }}
-              >
-                Pricing is tailored to each project's scope and requirements.
-                The tiers below give you a clear sense of what's included —
-                reach out for a custom quote.
-              </p>
-            </div>
-            {/* Tab toggle */}
-            <div
-              style={{
-                display: "flex",
-                border: `1px solid ${t.borderStrong}`,
-                borderRadius: 8,
-                overflow: "hidden",
-                alignSelf: "flex-start",
-              }}
-            >
-              {tabs.map((tb) => (
-                <button
-                  key={tb}
-                  onClick={() => setTab(tb)}
-                  style={{
-                    padding: "9px 22px",
-                    fontSize: 13,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                    border: "none",
-                    fontFamily: "Inter, sans-serif",
-                    whiteSpace: "nowrap",
-                    transition: "background 0.2s, color 0.2s",
-                    background: tab === tb ? t.accent : t.cardBg,
-                    color: tab === tb ? t.accentText : t.muted,
-                  }}
-                >
-                  {tb}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+        <SectionHeader
+          t={t}
+          label="Pricing"
+          labelIcon={Package}
+          heading={
+            <>
+              Transparent pricing
+              <br />
+              for every need.
+            </>
+          }
+          subtext="Every price listed here is final — no hidden fees. Choose a category to explore what fits your project."
+        />
 
+        {/* Category tabs */}
         <div
           ref={ref}
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-            alignItems: "stretch",
+            display: "flex",
+            gap: 8,
+            flexWrap: "wrap",
+            marginBottom: 40,
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(16px)",
+            transition: "opacity 0.6s, transform 0.6s",
           }}
-          className="card-grid"
         >
-          {PLANS[tab].map((p, i) => (
-            <div
-              key={`${tab}-${i}`}
+          {PRICING_CATEGORIES.map((c) => (
+            <button
+              key={c.id}
+              onClick={() => setActive(c.id)}
               style={{
-                position: "relative",
-                borderRadius: 12,
-                padding: "36px 30px",
-                display: "flex",
-                flexDirection: "column",
-                background: p.highlight ? t.accent : t.cardBg,
-                border: p.highlight
-                  ? `2px solid ${t.accent}`
-                  : `1px solid ${t.border}`,
-                boxShadow: p.highlight ? `0 20px 60px ${t.accent}22` : "none",
-                transition: `opacity 0.7s ${i * 0.13}s, transform 0.7s ${i * 0.13}s`,
-                opacity: inView ? 1 : 0,
-                transform: inView ? "translateY(0)" : "translateY(28px)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 7,
+                padding: "9px 18px",
+                borderRadius: 8,
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "Inter, sans-serif",
+                border:
+                  active === c.id
+                    ? `1.5px solid ${t.accent}`
+                    : `1px solid ${t.border}`,
+                background: active === c.id ? `${t.accent}14` : t.cardBg,
+                color: active === c.id ? t.accent : t.muted,
+                transition: "all 0.2s",
               }}
             >
-              {p.highlight && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -14,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    background: t.heading,
-                    color: t.pageBg,
-                    fontSize: 9,
-                    fontWeight: 800,
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    padding: "5px 14px",
-                    borderRadius: 20,
-                    fontFamily: "Inter, sans-serif",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  Recommended
-                </div>
-              )}
-
-              <div style={{ marginBottom: 26 }}>
-                <h3
-                  style={{
-                    fontSize: 18,
-                    fontWeight: 800,
-                    marginBottom: 4,
-                    fontFamily: "Epilogue, sans-serif",
-                    color: p.highlight ? t.accentText : t.heading,
-                  }}
-                >
-                  {p.name}
-                </h3>
-                <p
-                  style={{
-                    fontSize: 12,
-                    marginBottom: 20,
-                    color: p.highlight ? "#4a4a2a" : t.faint,
-                    lineHeight: 1.5,
-                  }}
-                >
-                  {p.desc}
-                </p>
-                <div
-                  style={{ display: "flex", alignItems: "flex-end", gap: 6 }}
-                >
-                  <span
-                    style={{
-                      fontSize: "clamp(1.8rem,3vw,2.4rem)",
-                      fontWeight: 800,
-                      lineHeight: 1,
-                      fontFamily: "Epilogue, sans-serif",
-                      color: p.highlight ? t.accentText : t.heading,
-                    }}
-                  >
-                    {p.price}
-                  </span>
-                  {p.period && (
-                    <span
-                      style={{
-                        fontSize: 12,
-                        marginBottom: 3,
-                        color: p.highlight ? "#4a4a2a" : t.faint,
-                      }}
-                    >
-                      {p.period}
-                    </span>
-                  )}
-                  {p.price === "TBD" && (
-                    <span
-                      style={{
-                        fontSize: 11,
-                        marginBottom: 3,
-                        fontWeight: 600,
-                        color: p.highlight ? "#4a4a2a" : t.faint,
-                        fontFamily: "Inter, sans-serif",
-                      }}
-                    >
-                      — quoted per project
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <ul
-                style={{
-                  flex: 1,
-                  marginBottom: 26,
-                  listStyle: "none",
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 11,
-                }}
-              >
-                {p.features.map((f, j) => (
-                  <li
-                    key={j}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: 10,
-                      fontSize: 13,
-                    }}
-                  >
-                    <CheckCircle2
-                      size={14}
-                      style={{
-                        color: p.highlight ? "#4a4a2a" : t.accent,
-                        flexShrink: 0,
-                        marginTop: 1,
-                      }}
-                    />
-                    <span
-                      style={{
-                        color: p.highlight ? t.accentText : t.body,
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      {f}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={() => scrollTo("contact")}
-                style={{
-                  width: "100%",
-                  padding: "13px 0",
-                  borderRadius: 8,
-                  fontSize: 14,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  fontFamily: "Inter, sans-serif",
-                  transition: "opacity 0.2s",
-                  background: p.highlight ? t.heading : t.accent,
-                  color: p.highlight ? t.pageBg : t.accentText,
-                  border: "none",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.86")}
-                onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-              >
-                {p.cta}
-              </button>
-            </div>
+              <c.icon size={13} />
+              {c.label}
+            </button>
           ))}
         </div>
 
-        <p
+        {/* Active category panel */}
+        <div
           style={{
-            textAlign: "center",
-            fontSize: 12,
-            color: t.faint,
-            marginTop: 28,
-            fontFamily: "Inter, sans-serif",
-            lineHeight: 1.7,
+            border: `1px solid ${t.border}`,
+            borderRadius: 14,
+            background: t.cardBg,
+            overflow: "hidden",
           }}
         >
-          All pricing is finalized through a discovery session.{" "}
-          <button
-            onClick={() => scrollTo("contact")}
+          {/* Panel header */}
+          <div
             style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: t.accent,
-              fontWeight: 600,
-              fontSize: 12,
-              fontFamily: "Inter, sans-serif",
-              textDecoration: "underline",
-              textUnderlineOffset: 3,
+              padding: "28px 32px",
+              borderBottom: `1px solid ${t.border}`,
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
             }}
           >
-            Get in touch
-          </button>{" "}
-          and we'll build a quote around your exact needs.
-        </p>
+            <div
+              style={{
+                width: 42,
+                height: 42,
+                borderRadius: 10,
+                background: `${t.accent}18`,
+                border: `1px solid ${t.accent}38`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <cat.icon size={19} style={{ color: t.accent }} />
+            </div>
+            <div>
+              <h3
+                style={{
+                  fontSize: 17,
+                  fontWeight: 800,
+                  color: t.heading,
+                  fontFamily: "Epilogue, sans-serif",
+                  marginBottom: 3,
+                }}
+              >
+                {cat.label}
+              </h3>
+              <p style={{ fontSize: 13, color: t.muted }}>{cat.description}</p>
+            </div>
+          </div>
+
+          {/* Items — flat list (digital, websites, building) */}
+          {cat.items && (
+            <div>
+              {/* Legend */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 140px 140px",
+                  padding: "10px 32px",
+                  borderBottom: `1px solid ${t.border}`,
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.14em",
+                    color: t.faint,
+                    fontFamily: "Inter, sans-serif",
+                  }}
+                >
+                  Item
+                </span>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.14em",
+                    color: t.faint,
+                    fontFamily: "Inter, sans-serif",
+                  }}
+                >
+                  Billing
+                </span>
+                <span
+                  style={{
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.14em",
+                    color: t.faint,
+                    fontFamily: "Inter, sans-serif",
+                    textAlign: "right",
+                  }}
+                >
+                  Price
+                </span>
+              </div>
+              {cat.items.map((item, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 140px 140px",
+                    padding: "16px 32px",
+                    alignItems: "center",
+                    borderBottom:
+                      i < cat.items.length - 1
+                        ? `1px solid ${t.border}`
+                        : "none",
+                    transition: "background 0.15s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = t.tagBg)
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "transparent")
+                  }
+                >
+                  <span
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: t.heading,
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                  <span style={pillStyle(item.billing)}>{item.billing}</span>
+                  <span
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 800,
+                      color: t.heading,
+                      fontFamily: "Epilogue, sans-serif",
+                      textAlign: "right",
+                    }}
+                  >
+                    {fmt(item.price)}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Groups — tiered (systems, apps) */}
+          {cat.groups &&
+            cat.groups.map((group, gi) => (
+              <div
+                key={gi}
+                style={{
+                  borderBottom:
+                    gi < cat.groups.length - 1
+                      ? `1px solid ${t.border}`
+                      : "none",
+                }}
+              >
+                {/* Group header */}
+                <div
+                  style={{
+                    padding: "16px 32px 10px",
+                    background: t.tagBg,
+                    borderBottom: `1px solid ${t.border}`,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.14em",
+                      color: t.muted,
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    {group.name}
+                  </span>
+                </div>
+                {/* Legend */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 180px 140px 140px",
+                    padding: "8px 32px",
+                    borderBottom: `1px solid ${t.border}`,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.14em",
+                      color: t.faint,
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    Tier
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.14em",
+                      color: t.faint,
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    Best for
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.14em",
+                      color: t.faint,
+                      fontFamily: "Inter, sans-serif",
+                    }}
+                  >
+                    Billing
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.14em",
+                      color: t.faint,
+                      fontFamily: "Inter, sans-serif",
+                      textAlign: "right",
+                    }}
+                  >
+                    Price
+                  </span>
+                </div>
+                {group.tiers.map((tier, ti) => (
+                  <div
+                    key={ti}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 180px 140px 140px",
+                      padding: "15px 32px",
+                      alignItems: "center",
+                      borderBottom:
+                        ti < group.tiers.length - 1
+                          ? `1px solid ${t.border}`
+                          : "none",
+                      transition: "background 0.15s",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = t.tagBg)
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background = "transparent")
+                    }
+                  >
+                    <span
+                      style={{
+                        fontSize: 14,
+                        fontWeight: 600,
+                        color: t.heading,
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      {tier.name}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: 12,
+                        color: t.muted,
+                        fontFamily: "Inter, sans-serif",
+                      }}
+                    >
+                      {tier.sub}
+                    </span>
+                    <span style={pillStyle(tier.billing)}>{tier.billing}</span>
+                    <span
+                      style={{
+                        fontSize: 15,
+                        fontWeight: 800,
+                        color: t.heading,
+                        fontFamily: "Epilogue, sans-serif",
+                        textAlign: "right",
+                      }}
+                    >
+                      {fmt(tier.price)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ))}
+
+          {/* Footer */}
+          <div
+            style={{
+              padding: "20px 32px",
+              borderTop: `1px solid ${t.border}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 12,
+            }}
+          >
+            <p
+              style={{
+                fontSize: 12,
+                color: t.faint,
+                fontFamily: "Inter, sans-serif",
+              }}
+            >
+              All prices in Philippine Peso (₱). Scope may affect final pricing
+              — contact us to confirm.
+            </p>
+            <button
+              onClick={() => scrollTo("contact")}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 7,
+                background: t.accent,
+                color: t.accentText,
+                border: "none",
+                borderRadius: 7,
+                padding: "10px 20px",
+                fontSize: 13,
+                fontWeight: 700,
+                cursor: "pointer",
+                fontFamily: "Inter, sans-serif",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.background = t.accentDark)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.background = t.accent)
+              }
+            >
+              Get a quote <ArrowRight size={13} />
+            </button>
+          </div>
+        </div>
+
+        {/* Billing legend */}
+        <div
+          style={{ display: "flex", gap: 20, marginTop: 20, flexWrap: "wrap" }}
+        >
+          {[
+            ["monthly", "Recurring monthly"],
+            ["one-time", "One-time payment"],
+            ["annual", "Billed annually"],
+            ["per template", "Per item"],
+            ["per plan", "Per plan"],
+          ].map(([key, label]) => {
+            const c = billingColor(key);
+            return (
+              <div
+                key={key}
+                style={{ display: "flex", alignItems: "center", gap: 6 }}
+              >
+                <span style={{ ...pillStyle(key) }}>{key}</span>
+                <span
+                  style={{
+                    fontSize: 11,
+                    color: t.faint,
+                    fontFamily: "Inter, sans-serif",
+                  }}
+                >
+                  {label}
+                </span>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 }
-
 export default Pricing;
