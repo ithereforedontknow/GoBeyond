@@ -54,9 +54,6 @@ function Pricing({ t, scrollTo }) {
           gap: 8px;
           flex-wrap: wrap;
           margin-bottom: 40px;
-          opacity: ${inView ? 1 : 0};
-          transform: ${inView ? "translateY(0)" : "translateY(16px)"};
-          transition: opacity 0.6s, transform 0.6s;
         }
         /* Table layout for desktop */
         .pricing-table {

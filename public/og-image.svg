@@ -1,48 +1,51 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <!-- Background -->
-  <rect width="1200" height="630" fill="#0a0a0a"/>
-
-  <!-- Dot grid -->
   <defs>
-    <pattern id="dots" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse">
-      <circle cx="1" cy="1" r="1" fill="rgba(204,234,74,0.12)"/>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#ccea4a" fill-opacity="0.08"/>
     </pattern>
-  </defs>
-  <rect width="1200" height="630" fill="url(#dots)"/>
-
-  <!-- Lime glow blob -->
-  <defs>
-    <radialGradient id="glow" cx="75%" cy="40%" r="50%">
-      <stop offset="0%" stop-color="#ccea4a" stop-opacity="0.15"/>
+    <radialGradient id="glow" cx="70%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#ccea4a" stop-opacity="0.18"/>
       <stop offset="100%" stop-color="#ccea4a" stop-opacity="0"/>
     </radialGradient>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+    </style>
   </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0f0f0f"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
 
-  <!-- Logo mark -->
-  <rect x="80" y="80" width="52" height="52" rx="12" fill="#ccea4a"/>
-  <!-- Flame shape approximation -->
-  <path d="M106 98 C106 98 118 108 114 118 C114 118 120 112 118 104 C118 104 124 112 120 122 C116 130 106 132 106 132 C106 132 92 130 90 120 C88 112 96 106 96 106 C96 106 100 114 104 112 C102 108 106 98 106 98Z" fill="#0a0a0a"/>
+  <!-- Logo square -->
+  <rect x="80" y="78" width="56" height="56" rx="14" fill="#ccea4a"/>
+
+  <!-- Larger centered white Blocks icon -->
+  <g transform="translate(87 86) scale(1.72)">
+    <path d="M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="14" y="2" width="8" height="8" rx="1" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 
   <!-- Wordmark -->
-  <text x="148" y="118" font-family="Arial Black, Arial, sans-serif" font-size="36" font-weight="900" letter-spacing="-1" fill="#f7f7f7">Go<tspan fill="#ccea4a">Beyond</tspan></text>
+  <text x="155" y="122" font-family="Inter, Arial Black, sans-serif" font-size="39" font-weight="900" letter-spacing="-1.8" fill="#ffffff">Go<tspan fill="#ccea4a">Beyond</tspan></text>
 
   <!-- Divider -->
-  <rect x="80" y="172" width="48" height="3" rx="2" fill="#ccea4a"/>
+  <rect x="80" y="175" width="52" height="4" rx="2" fill="#ccea4a"/>
 
   <!-- Tagline -->
-  <text x="80" y="240" font-family="Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="-2" fill="#f7f7f7">Go Further. Go Smarter.</text>
-  <text x="80" y="310" font-family="Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="-2" fill="#ccea4a">Go Beyond.</text>
+  <text x="80" y="245" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-2.2" fill="#f7f7f7">Let's Go Further</text>
+  <text x="80" y="305" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800" letter-spacing="-2.2" fill="#ccea4a">Together.</text>
 
   <!-- Description -->
-  <text x="80" y="390" font-family="Arial, sans-serif" font-size="22" fill="#888888">Digital Solutions · Systems &amp; Web Development · Building Plans</text>
+  <text x="80" y="385" font-family="Inter, Arial, sans-serif" font-size="23" font-weight="600" fill="#aaaaaa">Creative Digital Solutions • Smart Systems • Web Development • Building Plans</text>
+
+  <!-- Call-to-Action -->
+  <text x="80" y="460" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="700" fill="#ccea4a">Ready to build something amazing? Let's talk!</text>
 
   <!-- Bottom rule -->
-  <rect x="80" y="530" width="1040" height="1" fill="rgba(255,255,255,0.08)"/>
+  <rect x="80" y="530" width="1040" height="1" fill="rgba(255,255,255,0.07)"/>
 
-  <!-- Bottom left — contact -->
-  <text x="80" y="572" font-family="Arial, sans-serif" font-size="16" fill="#555555">itsolutionsgobeyond@gmail.com</text>
-
-  <!-- Bottom right — URL -->
-  <text x="1120" y="572" font-family="Arial, sans-serif" font-size="16" fill="#555555" text-anchor="end">go-beyond.net</text>
+  <!-- Bottom info -->
+  <text x="80" y="572" font-family="Inter, Arial, sans-serif" font-size="16.5" font-weight="400" fill="#666666">itsolutionsgobeyond@gmail.com</text>
+  <text x="1120" y="572" font-family="Inter, Arial, sans-serif" font-size="16.5" font-weight="400" fill="#666666" text-anchor="end">www.go-beyond.net</text>
 </svg>
