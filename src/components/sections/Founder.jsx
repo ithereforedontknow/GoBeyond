@@ -66,45 +66,7 @@ function Founder({ t }) {
                   e.target.style.display = "none";
                 }}
               />
-              {/* Fallback initials if photo missing */}
-              {/* <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                  gap: 8,
-                }}
-              >
-                <div
-                  style={{
-                    width: 72,
-                    height: 72,
-                    borderRadius: "50%",
-                    background: `${t.accent}20`,
-                    border: `1px solid ${t.accent}40`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: 24,
-                      fontWeight: 800,
-                      color: t.accent,
-                      fontFamily: "Epilogue, sans-serif",
-                    }}
-                  >
-                    PD
-                  </span>
-                </div>
-                <span style={{ fontSize: 12, color: t.faint }}>
-                  Photo coming soon
-                </span>
-              </div>*/}
+              </div>
             </div>
 
             {/* Floating badge */}
