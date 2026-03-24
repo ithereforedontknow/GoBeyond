@@ -2,8 +2,10 @@ import useInView from "../../hooks/useInView";
 import { Quote } from "lucide-react";
 import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
+
 function Founder({ t }) {
   const [ref, inView] = useInView();
+
   return (
     <section
       id="founder"
@@ -13,22 +15,73 @@ function Founder({ t }) {
         background: t.pageBg,
       }}
     >
+      <style>{`
+        .founder-grid {
+          display: grid;
+          grid-template-columns: 420px 1fr;
+          gap: 80px;
+          align-items: center;
+          opacity: ${inView ? 1 : 0};
+          transform: ${inView ? "translateY(0)" : "translateY(28px)"};
+          transition: opacity 0.8s, transform 0.8s;
+        }
+        .founder-photo {
+          position: relative;
+        }
+        .founder-photo .photo-frame {
+          position: relative;
+          z-index: 1;
+          border-radius: 18px;
+          overflow: hidden;
+          border: 1px solid ${t.border};
+          background: ${t.altBg};
+          aspect-ratio: 4 / 5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .founder-photo img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .founder-badge {
+          position: absolute;
+          bottom: 24px;
+          right: -20px;
+          background: ${t.cardBg};
+          border: 1px solid ${t.border};
+          border-radius: 12px;
+          padding: 12px 16px;
+          box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+          z-index: 2;
+        }
+        @media (max-width: 1024px) {
+          .founder-grid {
+            gap: 48px;
+          }
+        }
+        @media (max-width: 768px) {
+          .founder-grid {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+          .founder-photo {
+            max-width: 380px;
+            margin: 0 auto;
+          }
+          .founder-badge {
+            right: 0;
+            bottom: 16px;
+          }
+        }
+      `}</style>
+
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
-        <div
-          ref={ref}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "420px 1fr",
-            gap: 80,
-            alignItems: "center",
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateY(0)" : "translateY(28px)",
-            transition: "opacity 0.8s, transform 0.8s",
-          }}
-          className="founder-grid"
-        >
+        <div ref={ref} className="founder-grid">
           {/* Photo */}
-          <div style={{ position: "relative" }}>
+          <div className="founder-photo">
             <div
               style={{
                 position: "absolute",
@@ -38,50 +91,16 @@ function Founder({ t }) {
                 zIndex: 0,
               }}
             />
-            <div
-              style={{
-                position: "relative",
-                zIndex: 1,
-                borderRadius: 18,
-                overflow: "hidden",
-                border: `1px solid ${t.border}`,
-                aspectRatio: "4/5",
-                background: t.altBg,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {/* Replace src below with your actual photo path e.g. "/princess.jpg" */}
+            <div className="photo-frame">
               <img
                 src="/founder.jpg"
                 alt="Princess Dianne Dulay — Founder, GoBeyond"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
-                }}
                 onError={(e) => {
                   e.target.style.display = "none";
                 }}
               />
             </div>
-
-            {/* Floating badge */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 24,
-                right: -20,
-                background: t.cardBg,
-                border: `1px solid ${t.border}`,
-                borderRadius: 12,
-                padding: "12px 16px",
-                boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
-                zIndex: 2,
-              }}
-            >
+            <div className="founder-badge">
               <div
                 style={{
                   fontSize: 11,
@@ -104,17 +123,15 @@ function Founder({ t }) {
               </div>
             </div>
           </div>
-
           {/* Text */}
           <div>
             <SectionLabel t={t} icon={Quote}>
               The Founder
             </SectionLabel>
             <AccentLine t={t} />
-
             <h2
               style={{
-                fontSize: "clamp(2rem,3.5vw,2.8rem)",
+                fontSize: "clamp(2rem, 3.5vw, 2.8rem)",
                 fontWeight: 800,
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
@@ -138,7 +155,6 @@ function Founder({ t }) {
             >
               Founder, GoBeyond IT Solutions
             </p>
-
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: t.muted }}>
                 I am Princess Dianne Dulay, the founder of Go Beyond, a company
@@ -162,7 +178,6 @@ function Founder({ t }) {
                 go beyond.
               </p>
             </div>
-
             {/* Credentials */}
             <div
               style={{
@@ -201,4 +216,5 @@ function Founder({ t }) {
     </section>
   );
 }
+
 export default Founder;
