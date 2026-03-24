@@ -66,7 +66,6 @@ function Founder({ t }) {
                   e.target.style.display = "none";
                 }}
               />
-              </div>
             </div>
 
             {/* Floating badge */}
