@@ -1071,7 +1071,6 @@ function Pricing({ t, scrollTo }) {
               gap: 8,
               flexWrap: "wrap",
               marginBottom: 40,
-              opacity: inView ? 1 : 0,
               transform: inView ? "translateY(0)" : "translateY(16px)",
               transition: "opacity 0.6s, transform 0.6s",
             }}
