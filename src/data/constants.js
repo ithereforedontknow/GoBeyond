@@ -28,7 +28,6 @@ export const NAV_LINKS = [
   { label: "Founder", id: "founder" },
   { label: "Pricing", id: "pricing" },
   { label: "FAQ", id: "faq" },
-  { label: "Contact", id: "contact" },
 ];
 
 export const STATS = [
