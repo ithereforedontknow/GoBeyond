@@ -10,32 +10,32 @@ function Founder({ t }) {
       id="founder"
       style={{
         borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
+        padding: "80px 0",
         background: t.pageBg,
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
         <div
           ref={ref}
+          className="founder-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "420px 1fr",
-            gap: 80,
+            gridTemplateColumns: "400px 1fr",
+            gap: 72,
             alignItems: "center",
             opacity: inView ? 1 : 0,
             transform: inView ? "translateY(0)" : "translateY(28px)",
             transition: "opacity 0.8s, transform 0.8s",
           }}
-          className="founder-grid"
         >
-          {/* Photo */}
+          {/* Photo column */}
           <div style={{ position: "relative" }}>
             <div
               style={{
                 position: "absolute",
                 inset: -2,
                 borderRadius: 20,
-                background: `linear-gradient(135deg, ${t.accent}40, transparent 60%)`,
+                background: `linear-gradient(135deg, ${t.accent}35, transparent 55%)`,
                 zIndex: 0,
               }}
             />
@@ -53,7 +53,6 @@ function Founder({ t }) {
                 justifyContent: "center",
               }}
             >
-              {/* Replace src below with your actual photo path e.g. "/princess.jpg" */}
               <img
                 src="/founder.jpg"
                 alt="Princess Dianne Dulay — Founder, GoBeyond"
@@ -61,6 +60,7 @@ function Founder({ t }) {
                   width: "100%",
                   height: "100%",
                   objectFit: "cover",
+                  objectPosition: "center top",
                   display: "block",
                 }}
                 onError={(e) => {
@@ -69,12 +69,13 @@ function Founder({ t }) {
               />
             </div>
 
-            {/* Floating badge */}
+            {/* Floating badge — hidden on small mobile via class */}
             <div
+              className="founder-badge"
               style={{
                 position: "absolute",
                 bottom: 24,
-                right: -20,
+                right: -18,
                 background: t.cardBg,
                 border: `1px solid ${t.border}`,
                 borderRadius: 12,
@@ -85,10 +86,10 @@ function Founder({ t }) {
             >
               <div
                 style={{
-                  fontSize: 11,
-                  fontWeight: 700,
+                  fontSize: 13,
+                  fontWeight: 800,
                   color: t.accent,
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "Epilogue, sans-serif",
                   marginBottom: 2,
                 }}
               >
@@ -101,26 +102,25 @@ function Founder({ t }) {
                   fontFamily: "Inter, sans-serif",
                 }}
               >
-                in Accounting & Business
+                Accounting & Business
               </div>
             </div>
           </div>
 
-          {/* Text */}
+          {/* Text column */}
           <div>
             <SectionLabel t={t} icon={Quote}>
               The Founder
             </SectionLabel>
             <AccentLine t={t} />
-
             <h2
               style={{
-                fontSize: "clamp(2rem,3.5vw,2.8rem)",
+                fontSize: "clamp(1.8rem,3.2vw,2.6rem)",
                 fontWeight: 800,
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
                 color: t.heading,
-                marginBottom: 6,
+                marginBottom: 4,
                 fontFamily: "Epilogue, sans-serif",
               }}
             >
@@ -128,19 +128,19 @@ function Founder({ t }) {
             </h2>
             <p
               style={{
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.14em",
+                letterSpacing: "0.15em",
                 color: t.accent,
-                marginBottom: 28,
+                marginBottom: 24,
                 fontFamily: "Inter, sans-serif",
               }}
             >
               Founder, GoBeyond IT Solutions
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <p style={{ fontSize: 15, lineHeight: 1.85, color: t.muted }}>
                 GoBeyond was born from a long-held dream of building something
                 meaningful and impactful. It took years to find the courage to
@@ -161,20 +161,19 @@ function Founder({ t }) {
               </p>
             </div>
 
-            {/* Credentials */}
             <div
               style={{
                 display: "flex",
-                gap: 12,
+                gap: 8,
                 flexWrap: "wrap",
-                marginTop: 32,
+                marginTop: 28,
               }}
             >
               {[
                 "7+ yrs Accounting",
                 "Business Process Management",
                 "Digital Transformation",
-                "Team of IT & Engineering Professionals",
+                "IT & Engineering Team",
               ].map((tag, i) => (
                 <span
                   key={i}

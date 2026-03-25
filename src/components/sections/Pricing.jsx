@@ -11,44 +11,266 @@ function Pricing({ t, scrollTo }) {
 
   const fmt = (n) => "₱" + n.toLocaleString("en-PH");
 
-  const billingColor = (billing) => {
-    if (billing === "monthly")
-      return { bg: `${t.accent}18`, color: t.accent, border: `${t.accent}40` };
-    if (billing === "one-time")
-      return { bg: "#60a5fa18", color: "#60a5fa", border: "#60a5fa40" };
-    if (billing === "annual")
-      return { bg: "#a78bfa18", color: "#a78bfa", border: "#a78bfa40" };
-    return { bg: t.tagBg, color: t.muted, border: t.border };
+  const billingMeta = {
+    monthly: {
+      label: "monthly",
+      bg: `${t.accent}18`,
+      color: t.accent,
+      border: `${t.accent}40`,
+    },
+    "one-time": {
+      label: "one-time",
+      bg: "#60a5fa18",
+      color: "#60a5fa",
+      border: "#60a5fa40",
+    },
+    annual: {
+      label: "annual",
+      bg: "#a78bfa18",
+      color: "#a78bfa",
+      border: "#a78bfa40",
+    },
+    "per template": {
+      label: "per template",
+      bg: t.tagBg,
+      color: t.muted,
+      border: t.border,
+    },
+    "per plan": {
+      label: "per plan",
+      bg: t.tagBg,
+      color: t.muted,
+      border: t.border,
+    },
   };
 
-  const pillStyle = (billing) => {
-    const c = billingColor(billing);
-    return {
-      display: "inline-block",
-      fontSize: 9,
-      fontWeight: 700,
-      letterSpacing: "0.12em",
-      textTransform: "uppercase",
-      padding: "3px 8px",
-      borderRadius: 20,
-      background: c.bg,
-      color: c.color,
-      border: `1px solid ${c.border}`,
-      fontFamily: "Inter, sans-serif",
-      whiteSpace: "nowrap",
-    };
+  const Pill = ({ billing }) => {
+    const m = billingMeta[billing] || billingMeta["per template"];
+    return (
+      <span
+        style={{
+          display: "inline-block",
+          fontSize: 9,
+          fontWeight: 700,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          padding: "3px 8px",
+          borderRadius: 20,
+          whiteSpace: "nowrap",
+          background: m.bg,
+          color: m.color,
+          border: `1px solid ${m.border}`,
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
+        {m.label}
+      </span>
+    );
   };
+
+  // Flat row — desktop table, mobile card
+  const FlatRow = ({ item, last }) => (
+    <>
+      {/* Desktop row */}
+      <div
+        className="pricing-row-desktop"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 140px 140px",
+          padding: "15px 28px",
+          alignItems: "center",
+          borderBottom: last ? "none" : `1px solid ${t.border}`,
+          transition: "background 0.15s",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = t.tagBg)}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+      >
+        <span
+          style={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: t.heading,
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          {item.name}
+        </span>
+        <Pill billing={item.billing} />
+        <span
+          style={{
+            fontSize: 15,
+            fontWeight: 800,
+            color: t.heading,
+            fontFamily: "Epilogue, sans-serif",
+            textAlign: "right",
+          }}
+        >
+          {fmt(item.price)}
+        </span>
+      </div>
+
+      {/* Mobile card */}
+      <div
+        className="pricing-row-mobile"
+        style={{
+          display: "none",
+          padding: "16px 20px",
+          borderBottom: last ? "none" : `1px solid ${t.border}`,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: 6,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: t.heading,
+              fontFamily: "Inter, sans-serif",
+              flex: 1,
+              paddingRight: 12,
+            }}
+          >
+            {item.name}
+          </span>
+          <span
+            style={{
+              fontSize: 15,
+              fontWeight: 800,
+              color: t.heading,
+              fontFamily: "Epilogue, sans-serif",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {fmt(item.price)}
+          </span>
+        </div>
+        <Pill billing={item.billing} />
+      </div>
+    </>
+  );
+
+  // Tiered row — desktop table, mobile card
+  const TierRow = ({ tier, last }) => (
+    <>
+      {/* Desktop */}
+      <div
+        className="pricing-row-desktop"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 120px 140px",
+          padding: "14px 28px",
+          alignItems: "center",
+          borderBottom: last ? "none" : `1px solid ${t.border}`,
+          transition: "background 0.15s",
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = t.tagBg)}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+      >
+        <span
+          style={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: t.heading,
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          {tier.name}
+        </span>
+        <span
+          style={{
+            fontSize: 12,
+            color: t.muted,
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          {tier.sub}
+        </span>
+        <Pill billing={tier.billing} />
+        <span
+          style={{
+            fontSize: 15,
+            fontWeight: 800,
+            color: t.heading,
+            fontFamily: "Epilogue, sans-serif",
+            textAlign: "right",
+          }}
+        >
+          {fmt(tier.price)}
+        </span>
+      </div>
+
+      {/* Mobile card */}
+      <div
+        className="pricing-row-mobile"
+        style={{
+          display: "none",
+          padding: "16px 20px",
+          borderBottom: last ? "none" : `1px solid ${t.border}`,
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: 4,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 14,
+              fontWeight: 600,
+              color: t.heading,
+              fontFamily: "Inter, sans-serif",
+              flex: 1,
+              paddingRight: 12,
+            }}
+          >
+            {tier.name}
+          </span>
+          <span
+            style={{
+              fontSize: 15,
+              fontWeight: 800,
+              color: t.heading,
+              fontFamily: "Epilogue, sans-serif",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {fmt(tier.price)}
+          </span>
+        </div>
+        <p
+          style={{
+            fontSize: 12,
+            color: t.muted,
+            marginBottom: 6,
+            fontFamily: "Inter, sans-serif",
+          }}
+        >
+          {tier.sub}
+        </p>
+        <Pill billing={tier.billing} />
+      </div>
+    </>
+  );
 
   return (
     <section
       id="pricing"
       style={{
         borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
+        padding: "80px 0",
         background: t.altBg,
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
         <SectionHeader
           t={t}
           label="Pricing"
@@ -60,12 +282,11 @@ function Pricing({ t, scrollTo }) {
               for every need.
             </>
           }
-          subtext="Every price listed here is final — no hidden fees. Choose a category to explore what fits your project."
+          subtext="Every price listed here is final — no hidden fees. Pick a category to explore."
         />
 
         {/* Category tabs */}
         <div
-          ref={ref}
           style={{
             display: "flex",
             gap: 8,
@@ -105,7 +326,7 @@ function Pricing({ t, scrollTo }) {
           ))}
         </div>
 
-        {/* Active category panel */}
+        {/* Panel */}
         <div
           style={{
             border: `1px solid ${t.border}`,
@@ -117,11 +338,12 @@ function Pricing({ t, scrollTo }) {
           {/* Panel header */}
           <div
             style={{
-              padding: "28px 32px",
+              padding: "24px 28px",
               borderBottom: `1px solid ${t.border}`,
               display: "flex",
               alignItems: "center",
               gap: 14,
+              flexWrap: "wrap",
             }}
           >
             <div
@@ -139,14 +361,14 @@ function Pricing({ t, scrollTo }) {
             >
               <cat.icon size={19} style={{ color: t.accent }} />
             </div>
-            <div>
+            <div style={{ flex: 1, minWidth: 200 }}>
               <h3
                 style={{
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: 800,
                   color: t.heading,
                   fontFamily: "Epilogue, sans-serif",
-                  marginBottom: 3,
+                  marginBottom: 2,
                 }}
               >
                 {cat.label}
@@ -155,16 +377,18 @@ function Pricing({ t, scrollTo }) {
             </div>
           </div>
 
-          {/* Items — flat list (digital, websites, building) */}
+          {/* Flat items (digital, websites, building) */}
           {cat.items && (
             <div>
-              {/* Legend */}
+              {/* Desktop legend */}
               <div
+                className="pricing-row-desktop"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 140px 140px",
-                  padding: "10px 32px",
+                  padding: "10px 28px",
                   borderBottom: `1px solid ${t.border}`,
+                  background: t.tagBg,
                 }}
               >
                 <span
@@ -206,54 +430,16 @@ function Pricing({ t, scrollTo }) {
                 </span>
               </div>
               {cat.items.map((item, i) => (
-                <div
+                <FlatRow
                   key={i}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 140px 140px",
-                    padding: "16px 32px",
-                    alignItems: "center",
-                    borderBottom:
-                      i < cat.items.length - 1
-                        ? `1px solid ${t.border}`
-                        : "none",
-                    transition: "background 0.15s",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = t.tagBg)
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "transparent")
-                  }
-                >
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: t.heading,
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    {item.name}
-                  </span>
-                  <span style={pillStyle(item.billing)}>{item.billing}</span>
-                  <span
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 800,
-                      color: t.heading,
-                      fontFamily: "Epilogue, sans-serif",
-                      textAlign: "right",
-                    }}
-                  >
-                    {fmt(item.price)}
-                  </span>
-                </div>
+                  item={item}
+                  last={i === cat.items.length - 1}
+                />
               ))}
             </div>
           )}
 
-          {/* Groups — tiered (systems, apps) */}
+          {/* Grouped tiers (systems, apps) */}
           {cat.groups &&
             cat.groups.map((group, gi) => (
               <div
@@ -265,10 +451,10 @@ function Pricing({ t, scrollTo }) {
                       : "none",
                 }}
               >
-                {/* Group header */}
+                {/* Group label */}
                 <div
                   style={{
-                    padding: "16px 32px 10px",
+                    padding: "13px 28px",
                     background: t.tagBg,
                     borderBottom: `1px solid ${t.border}`,
                   }}
@@ -286,126 +472,47 @@ function Pricing({ t, scrollTo }) {
                     {group.name}
                   </span>
                 </div>
-                {/* Legend */}
+                {/* Desktop legend */}
                 <div
+                  className="pricing-row-desktop"
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 180px 140px 140px",
-                    padding: "8px 32px",
+                    gridTemplateColumns: "1fr 1fr 120px 140px",
+                    padding: "8px 28px",
                     borderBottom: `1px solid ${t.border}`,
                   }}
                 >
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.14em",
-                      color: t.faint,
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    Tier
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.14em",
-                      color: t.faint,
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    Best for
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.14em",
-                      color: t.faint,
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    Billing
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.14em",
-                      color: t.faint,
-                      fontFamily: "Inter, sans-serif",
-                      textAlign: "right",
-                    }}
-                  >
-                    Price
-                  </span>
+                  {["Tier", "Best for", "Billing", "Price"].map((h, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        fontSize: 10,
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.14em",
+                        color: t.faint,
+                        fontFamily: "Inter, sans-serif",
+                        textAlign: i === 3 ? "right" : "left",
+                      }}
+                    >
+                      {h}
+                    </span>
+                  ))}
                 </div>
                 {group.tiers.map((tier, ti) => (
-                  <div
+                  <TierRow
                     key={ti}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 180px 140px 140px",
-                      padding: "15px 32px",
-                      alignItems: "center",
-                      borderBottom:
-                        ti < group.tiers.length - 1
-                          ? `1px solid ${t.border}`
-                          : "none",
-                      transition: "background 0.15s",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = t.tagBg)
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "transparent")
-                    }
-                  >
-                    <span
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 600,
-                        color: t.heading,
-                        fontFamily: "Inter, sans-serif",
-                      }}
-                    >
-                      {tier.name}
-                    </span>
-                    <span
-                      style={{
-                        fontSize: 12,
-                        color: t.muted,
-                        fontFamily: "Inter, sans-serif",
-                      }}
-                    >
-                      {tier.sub}
-                    </span>
-                    <span style={pillStyle(tier.billing)}>{tier.billing}</span>
-                    <span
-                      style={{
-                        fontSize: 15,
-                        fontWeight: 800,
-                        color: t.heading,
-                        fontFamily: "Epilogue, sans-serif",
-                        textAlign: "right",
-                      }}
-                    >
-                      {fmt(tier.price)}
-                    </span>
-                  </div>
+                    tier={tier}
+                    last={ti === group.tiers.length - 1}
+                  />
                 ))}
               </div>
             ))}
 
-          {/* Footer */}
+          {/* Panel footer */}
           <div
             style={{
-              padding: "20px 32px",
+              padding: "18px 28px",
               borderTop: `1px solid ${t.border}`,
               display: "flex",
               alignItems: "center",
@@ -421,8 +528,7 @@ function Pricing({ t, scrollTo }) {
                 fontFamily: "Inter, sans-serif",
               }}
             >
-              All prices in Philippine Peso (₱). Scope may affect final pricing
-              — contact us to confirm.
+              All prices in Philippine Peso (₱). Scope may affect final pricing.
             </p>
             <button
               onClick={() => scrollTo("contact")}
@@ -440,6 +546,7 @@ function Pricing({ t, scrollTo }) {
                 cursor: "pointer",
                 fontFamily: "Inter, sans-serif",
                 transition: "background 0.2s",
+                whiteSpace: "nowrap",
               }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.background = t.accentDark)
@@ -455,34 +562,50 @@ function Pricing({ t, scrollTo }) {
 
         {/* Billing legend */}
         <div
-          style={{ display: "flex", gap: 20, marginTop: 20, flexWrap: "wrap" }}
+          style={{
+            display: "flex",
+            gap: 16,
+            marginTop: 20,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
         >
-          {[
-            ["monthly", "Recurring monthly"],
-            ["one-time", "One-time payment"],
-            ["annual", "Billed annually"],
-            ["per template", "Per item"],
-            ["per plan", "Per plan"],
-          ].map(([key, label]) => {
-            const c = billingColor(key);
-            return (
-              <div
-                key={key}
-                style={{ display: "flex", alignItems: "center", gap: 6 }}
+          <span
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              color: t.faint,
+              fontFamily: "Inter, sans-serif",
+            }}
+          >
+            Key:
+          </span>
+          {Object.entries(billingMeta).map(([key, m]) => (
+            <div
+              key={key}
+              style={{ display: "flex", alignItems: "center", gap: 6 }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  fontSize: 9,
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  padding: "3px 8px",
+                  borderRadius: 20,
+                  background: m.bg,
+                  color: m.color,
+                  border: `1px solid ${m.border}`,
+                  fontFamily: "Inter, sans-serif",
+                }}
               >
-                <span style={{ ...pillStyle(key) }}>{key}</span>
-                <span
-                  style={{
-                    fontSize: 11,
-                    color: t.faint,
-                    fontFamily: "Inter, sans-serif",
-                  }}
-                >
-                  {label}
-                </span>
-              </div>
-            );
-          })}
+                {key}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
