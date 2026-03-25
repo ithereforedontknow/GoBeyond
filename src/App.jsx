@@ -68,6 +68,7 @@ export default function App() {
 
               .hidden-mobile { display: flex !important; }
               .show-mobile   { display: none  !important; }
+              .founder-grid { grid-template-columns: 420px 1fr !important; }
 
               @media (max-width: 768px) {
                 .hidden-mobile  { display: none !important; }
@@ -82,6 +83,7 @@ export default function App() {
                 .faq-grid       { grid-template-columns: 1fr !important; }
                 .contact-grid   { grid-template-columns: 1fr !important; }
                 .footer-grid    { grid-template-columns: 1fr 1fr !important; }
+                .founder-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
               }
 
               @media (max-width: 1100px) and (min-width: 769px) {
@@ -89,6 +91,7 @@ export default function App() {
                 .card-grid     { grid-template-columns: repeat(2, 1fr) !important; }
                 .solution-row  { grid-template-columns: 1fr !important; }
                 .solution-row > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.12); }
+                .founder-grid { grid-template-columns: 320px 1fr !important; gap: 48px !important; }
               }
             `}</style>
 

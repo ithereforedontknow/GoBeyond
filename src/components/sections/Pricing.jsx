@@ -7,8 +7,8 @@ import SectionHeader from "../mini/SectionHeader";
 function Pricing({ t, scrollTo }) {
   const [active, setActive] = useState("digital");
   const [ref, inView] = useInView();
-
   const cat = PRICING_CATEGORIES.find((c) => c.id === active);
+
   const fmt = (n) => "₱" + n.toLocaleString("en-PH");
 
   const billingColor = (billing) => {
@@ -48,116 +48,6 @@ function Pricing({ t, scrollTo }) {
         background: t.altBg,
       }}
     >
-      <style>{`
-        .pricing-categories {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          margin-bottom: 40px;
-        }
-        /* Table layout for desktop */
-        .pricing-table {
-          border: 1px solid ${t.border};
-          border-radius: 14px;
-          background: ${t.cardBg};
-          overflow: hidden;
-        }
-        .pricing-row {
-          display: grid;
-          grid-template-columns: 1fr 140px 140px;
-          align-items: center;
-          padding: 16px 32px;
-          border-bottom: 1px solid ${t.border};
-          transition: background 0.15s;
-        }
-        .pricing-row:hover {
-          background: ${t.tagBg};
-        }
-        .pricing-group {
-          border-bottom: 1px solid ${t.border};
-        }
-        .pricing-group-header {
-          padding: 16px 32px 10px;
-          background: ${t.tagBg};
-          border-bottom: 1px solid ${t.border};
-        }
-        .pricing-group-legend {
-          display: grid;
-          grid-template-columns: 1fr 180px 140px 140px;
-          padding: 8px 32px;
-          border-bottom: 1px solid ${t.border};
-        }
-        .pricing-group-tier {
-          display: grid;
-          grid-template-columns: 1fr 180px 140px 140px;
-          align-items: center;
-          padding: 15px 32px;
-          border-bottom: 1px solid ${t.border};
-          transition: background 0.15s;
-        }
-        .pricing-group-tier:hover {
-          background: ${t.tagBg};
-        }
-        .pricing-footer {
-          padding: 20px 32px;
-          border-top: 1px solid ${t.border};
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-
-        /* Mobile styles */
-        @media (max-width: 768px) {
-          .pricing-row {
-            grid-template-columns: 1fr 2fr;
-            gap: 12px;
-            padding: 16px;
-          }
-          .pricing-row .item-name,
-          .pricing-group-tier .tier-name {
-            grid-column: 1 / -1;
-            font-size: 16px;
-            font-weight: 700;
-          }
-          .pricing-row .billing-pill {
-            justify-self: start;
-          }
-          .pricing-row .price {
-            text-align: right;
-            font-size: 18px;
-          }
-          .pricing-group-legend {
-            display: none; /* hide column headers on mobile */
-          }
-          .pricing-group-tier {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 12px;
-            padding: 16px;
-          }
-          .pricing-group-tier .tier-sub {
-            grid-column: 1 / -1;
-          }
-          .pricing-group-tier .billing-pill {
-            justify-self: start;
-          }
-          .pricing-group-tier .price {
-            text-align: right;
-            font-size: 18px;
-          }
-          .pricing-footer {
-            flex-direction: column;
-            align-items: stretch;
-          }
-          .pricing-footer button {
-            width: 100%;
-            justify-content: center;
-          }
-        }
-      `}</style>
-
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader
           t={t}
@@ -174,7 +64,18 @@ function Pricing({ t, scrollTo }) {
         />
 
         {/* Category tabs */}
-        <div className="pricing-categories">
+        <div
+          ref={ref}
+          style={{
+            display: "flex",
+            gap: 8,
+            flexWrap: "wrap",
+            marginBottom: 40,
+            opacity: inView ? 1 : 0,
+            transform: inView ? "translateY(0)" : "translateY(16px)",
+            transition: "opacity 0.6s, transform 0.6s",
+          }}
+        >
           {PRICING_CATEGORIES.map((c) => (
             <button
               key={c.id}
@@ -205,7 +106,14 @@ function Pricing({ t, scrollTo }) {
         </div>
 
         {/* Active category panel */}
-        <div className="pricing-table">
+        <div
+          style={{
+            border: `1px solid ${t.border}`,
+            borderRadius: 14,
+            background: t.cardBg,
+            overflow: "hidden",
+          }}
+        >
           {/* Panel header */}
           <div
             style={{
@@ -250,7 +158,7 @@ function Pricing({ t, scrollTo }) {
           {/* Items — flat list (digital, websites, building) */}
           {cat.items && (
             <div>
-              {/* Desktop legend */}
+              {/* Legend */}
               <div
                 style={{
                   display: "grid",
@@ -258,7 +166,6 @@ function Pricing({ t, scrollTo }) {
                   padding: "10px 32px",
                   borderBottom: `1px solid ${t.border}`,
                 }}
-                className="hidden-mobile"
               >
                 <span
                   style={{
@@ -298,20 +205,28 @@ function Pricing({ t, scrollTo }) {
                   Price
                 </span>
               </div>
-
               {cat.items.map((item, i) => (
                 <div
                   key={i}
-                  className="pricing-row"
                   style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 140px 140px",
+                    padding: "16px 32px",
+                    alignItems: "center",
                     borderBottom:
                       i < cat.items.length - 1
                         ? `1px solid ${t.border}`
                         : "none",
+                    transition: "background 0.15s",
                   }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = t.tagBg)
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "transparent")
+                  }
                 >
                   <span
-                    className="item-name"
                     style={{
                       fontSize: 14,
                       fontWeight: 600,
@@ -321,14 +236,8 @@ function Pricing({ t, scrollTo }) {
                   >
                     {item.name}
                   </span>
+                  <span style={pillStyle(item.billing)}>{item.billing}</span>
                   <span
-                    className="billing-pill"
-                    style={pillStyle(item.billing)}
-                  >
-                    {item.billing}
-                  </span>
-                  <span
-                    className="price"
                     style={{
                       fontSize: 15,
                       fontWeight: 800,
@@ -347,9 +256,23 @@ function Pricing({ t, scrollTo }) {
           {/* Groups — tiered (systems, apps) */}
           {cat.groups &&
             cat.groups.map((group, gi) => (
-              <div key={gi} className="pricing-group">
+              <div
+                key={gi}
+                style={{
+                  borderBottom:
+                    gi < cat.groups.length - 1
+                      ? `1px solid ${t.border}`
+                      : "none",
+                }}
+              >
                 {/* Group header */}
-                <div className="pricing-group-header">
+                <div
+                  style={{
+                    padding: "16px 32px 10px",
+                    background: t.tagBg,
+                    borderBottom: `1px solid ${t.border}`,
+                  }}
+                >
                   <span
                     style={{
                       fontSize: 11,
@@ -363,8 +286,15 @@ function Pricing({ t, scrollTo }) {
                     {group.name}
                   </span>
                 </div>
-                {/* Desktop legend */}
-                <div className="pricing-group-legend hidden-mobile">
+                {/* Legend */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 180px 140px 140px",
+                    padding: "8px 32px",
+                    borderBottom: `1px solid ${t.border}`,
+                  }}
+                >
                   <span
                     style={{
                       fontSize: 10,
@@ -418,16 +348,25 @@ function Pricing({ t, scrollTo }) {
                 {group.tiers.map((tier, ti) => (
                   <div
                     key={ti}
-                    className="pricing-group-tier"
                     style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 180px 140px 140px",
+                      padding: "15px 32px",
+                      alignItems: "center",
                       borderBottom:
                         ti < group.tiers.length - 1
                           ? `1px solid ${t.border}`
                           : "none",
+                      transition: "background 0.15s",
                     }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = t.tagBg)
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.background = "transparent")
+                    }
                   >
                     <span
-                      className="tier-name"
                       style={{
                         fontSize: 14,
                         fontWeight: 600,
@@ -438,7 +377,6 @@ function Pricing({ t, scrollTo }) {
                       {tier.name}
                     </span>
                     <span
-                      className="tier-sub"
                       style={{
                         fontSize: 12,
                         color: t.muted,
@@ -447,14 +385,8 @@ function Pricing({ t, scrollTo }) {
                     >
                       {tier.sub}
                     </span>
+                    <span style={pillStyle(tier.billing)}>{tier.billing}</span>
                     <span
-                      className="billing-pill"
-                      style={pillStyle(tier.billing)}
-                    >
-                      {tier.billing}
-                    </span>
-                    <span
-                      className="price"
                       style={{
                         fontSize: 15,
                         fontWeight: 800,
@@ -471,7 +403,17 @@ function Pricing({ t, scrollTo }) {
             ))}
 
           {/* Footer */}
-          <div className="pricing-footer">
+          <div
+            style={{
+              padding: "20px 32px",
+              borderTop: `1px solid ${t.border}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 12,
+            }}
+          >
             <p
               style={{
                 fontSize: 12,
