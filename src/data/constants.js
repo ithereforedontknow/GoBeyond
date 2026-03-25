@@ -1,28 +1,8 @@
 import {
-  ArrowRight,
-  Menu,
-  X,
-  Sun,
-  Moon,
-  ChevronDown,
-  MessageSquare,
   Mail,
   Phone,
   MapPin,
-  Clock,
-  CheckCircle2,
-  Send,
-  AlertCircle,
-  Flame,
-  Play,
-  GitBranch,
-  Wifi,
-  Activity,
-  Bell,
   Users,
-  LayoutDashboard,
-  Award,
-  ExternalLink,
   Monitor,
   LayoutTemplate,
   Building2,
@@ -35,7 +15,6 @@ import {
   Zap,
   Cpu,
   Globe,
-  Package,
   Smartphone,
   FileText,
   Layers,
@@ -390,7 +369,28 @@ export const PRICING_CATEGORIES = [
     ],
   },
 ];
-
+export const PROJECTS = [
+  {
+    id: "stockpilot",
+    name: "StockPilot",
+    type: "Inventory Management System",
+    division: "Systems & Web Development",
+    client: "Anonymous Client",
+    problem:
+      "The client was managing inventory manually across spreadsheets — no visibility into low stock, no transaction history, no way to spot trends without digging through files.",
+    outcome:
+      "A full-stack web application that gives real-time stock visibility, logs every purchase and sale, and surfaces actionable reports — all in one place.",
+    stack: ["React 18", "PHP 8.2", "MySQL 8.0", "Docker"],
+    features: [
+      "Real-time dashboard with stock alerts",
+      "Full inventory CRUD with search & pagination",
+      "Transaction logging with invoice numbers",
+      "Trend charts and stock distribution reports",
+      "Audit logs and automated backups",
+      "User management",
+    ],
+  },
+];
 export const FAQS = [
   {
     q: "What does GoBeyond do?",

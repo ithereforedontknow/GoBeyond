@@ -69,6 +69,16 @@ export default function App() {
               .hidden-mobile { display: flex !important; }
               .show-mobile   { display: none  !important; }
               .founder-grid { grid-template-columns: 420px 1fr !important; }
+              .work-grid {
+                  grid-template-columns: 1fr 1fr !important;
+                }
+
+                .work-grid > div:first-child {
+                  border-right: 1px solid ${t.border} !important;
+                  border-bottom: none !important;
+                }
+              }
+              .features-mini-grid  { grid-template-columns: 1fr !important; }
 
               @media (max-width: 768px) {
                 .hidden-mobile  { display: none !important; }
@@ -84,14 +94,31 @@ export default function App() {
                 .contact-grid   { grid-template-columns: 1fr !important; }
                 .footer-grid    { grid-template-columns: 1fr 1fr !important; }
                 .founder-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+                .work-grid {
+                      grid-template-columns: 1fr !important;
+                    }
+                    .work-grid > div:first-child {
+                      border-right: none !important;
+                      border-bottom: 1px solid ${t.border} !important;
+                    }
+                    .features-mini-grid {
+                      grid-template-columns: 1fr !important;
+                    }
+                }
               }
-
+              @media (min-width: 641px) and (max-width: 1024px) {
+                .work-grid           { grid-template-columns: 1fr !important; }
+                .work-grid > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.12); }
+              }
               @media (max-width: 1100px) and (min-width: 769px) {
                 .approach-grid { grid-template-columns: repeat(3, 1fr) !important; }
                 .card-grid     { grid-template-columns: repeat(2, 1fr) !important; }
                 .solution-row  { grid-template-columns: 1fr !important; }
                 .solution-row > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(128,128,128,0.12); }
                 .founder-grid { grid-template-columns: 320px 1fr !important; gap: 48px !important; }
+                .work-grid {
+                      grid-template-columns: 1fr 1fr !important;
+                    }
               }
             `}</style>
 
