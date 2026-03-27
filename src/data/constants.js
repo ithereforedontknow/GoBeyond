@@ -42,7 +42,6 @@ export const MARQUEE_ITEMS = [
   { name: "Automation Systems", color: "#60a5fa" },
   { name: "Web Development", color: "#f472b6" },
   { name: "Business Systems", color: "#34d399" },
-  { name: "E-Commerce", color: "#fb923c" },
   { name: "Client Portals", color: "#a78bfa" },
   { name: "Building Plans", color: "#fbbf24" },
   { name: "Space Planning", color: "#2dd4bf" },
@@ -89,29 +88,25 @@ export const APPROACH = [
 export const SOLUTIONS = [
   {
     icon: Monitor,
-    name: "Digital Solutions & Products",
-    desc: "Custom tools, automation systems, and workflow software that cut manual work and scale with you.",
+    name: "Digital Solutions & Creative Products",
+    desc: "High-quality, ready-to-use templates and digital assets designed to simplify your branding, celebrations, and everyday projects.",
     services: [
-      "Custom digital tools",
-      "Automation systems",
-      "Workflow optimization",
-      "Digital productivity resources",
-      "Business process digitization",
+      "Marketing & Business Assets",
+      "Career & Resume Tools",
+      "Event & Celebration Kits",
+      "Kids’ Educational Resources",
     ],
-    badge: null,
   },
   {
     icon: LayoutTemplate,
     name: "Systems & Web Development",
-    desc: "Business systems, websites, e-commerce platforms, and client portals — built to your exact requirements.",
+    desc: "Business systems, websites, and client portals — built to your exact requirements.",
     services: [
-      "Custom business systems",
-      "Internal workflow & management systems",
-      "Website design & development",
-      "E-commerce platforms",
-      "Client portals and dashboards",
+      "Custom Business Systems",
+      "Workflow Automation & Integration",
+      "Bespoke Client Portals & Dashboards",
+      "Legacy Process Digitization",
     ],
-    badge: "Most Popular",
   },
   {
     icon: Building2,
@@ -123,7 +118,6 @@ export const SOLUTIONS = [
       "Layout optimization",
       "Planning consultation",
     ],
-    badge: null,
   },
 ];
 
@@ -168,13 +162,13 @@ export const PRICING_CATEGORIES = [
     description:
       "Ready-made templates and digital assets — buy once, use immediately.",
     items: [
-      { name: "Kids Templates", billing: "per template", price: 250 },
-      { name: "Invitations", billing: "per template", price: 400 },
-      { name: "Food Posters", billing: "per template", price: 300 },
-      { name: "Resume Template", billing: "per template", price: 300 },
-      { name: "Story Books", billing: "per template", price: 250 },
-      { name: "Flyers", billing: "per template", price: 300 },
-      { name: "Menu Poster", billing: "per template", price: 400 },
+      { name: "Kids Templates", billing: "per template" },
+      { name: "Invitations", billing: "per template" },
+      { name: "Food Posters", billing: "per template" },
+      { name: "Resume Template", billing: "per template" },
+      { name: "Story Books", billing: "per template" },
+      { name: "Flyers", billing: "per template" },
+      { name: "Menu Poster", billing: "per template" },
     ],
   },
   {
@@ -183,128 +177,22 @@ export const PRICING_CATEGORIES = [
     icon: Layers,
     description:
       "Custom-built business systems — choose a subscription or own it outright.",
-    groups: [
+    items: [
       {
         name: "Inventory Management",
-        tiers: [
-          {
-            name: "Basic",
-            sub: "Small shops, retailers",
-            billing: "monthly",
-            price: 4400,
-          },
-          {
-            name: "Mid",
-            sub: "Growth stage, small distribution",
-            billing: "monthly",
-            price: 17875,
-          },
-          {
-            name: "Enterprise",
-            sub: "Large inventory, multi-locations",
-            billing: "monthly",
-            price: 27500,
-          },
-          {
-            name: "One-Time License",
-            sub: "Own it outright",
-            billing: "one-time",
-            price: 825000,
-          },
-          {
-            name: "Custom Build",
-            sub: "Fully bespoke",
-            billing: "one-time",
-            price: 5500000,
-          },
-        ],
+        billing: "monthly",
       },
       {
         name: "Payroll System",
-        tiers: [
-          {
-            name: "Basic",
-            sub: "Payroll automation for small business",
-            billing: "monthly",
-            price: 2750,
-          },
-          {
-            name: "Standard",
-            sub: "Full SaaS payroll + HR, medium business",
-            billing: "monthly",
-            price: 22000,
-          },
-          {
-            name: "Enterprise",
-            sub: "Advanced payroll with integrations",
-            billing: "monthly",
-            price: 55000,
-          },
-          {
-            name: "Custom Build",
-            sub: "Built to your exact specs",
-            billing: "one-time",
-            price: 5500000,
-          },
-        ],
+        billing: "monthly",
       },
       {
         name: "Accounting System",
-        tiers: [
-          {
-            name: "Small — Monthly",
-            sub: "Budget-conscious",
-            billing: "monthly",
-            price: 1650,
-          },
-          {
-            name: "Small — One-Time",
-            sub: "Budget-conscious",
-            billing: "one-time",
-            price: 55000,
-          },
-          {
-            name: "Standard — Monthly",
-            sub: "Growing business",
-            billing: "monthly",
-            price: 6875,
-          },
-          {
-            name: "Standard — One-Time",
-            sub: "Growing business",
-            billing: "one-time",
-            price: 165000,
-          },
-          {
-            name: "Enterprise — Monthly",
-            sub: "Large organization",
-            billing: "monthly",
-            price: 33000,
-          },
-          {
-            name: "Enterprise — One-Time",
-            sub: "Large organization",
-            billing: "one-time",
-            price: 8250000,
-          },
-        ],
+        billing: "monthly",
       },
       {
-        name: "System Integration",
-        tiers: [
-          {
-            name: "SaaS Integrated Platform",
-            sub: "All modules connected",
-            billing: "monthly",
-            price: 55000,
-          },
-          {
-            name: "Custom Integrated System",
-            sub: "Fully bespoke integration",
-            billing: "one-time",
-            price: 13750000,
-          },
-        ],
+        name: "Other Systems",
+        billing: "monthly",
       },
     ],
   },
@@ -315,40 +203,9 @@ export const PRICING_CATEGORIES = [
     description:
       "Professional websites built for your goals — priced annually.",
     items: [
-      { name: "Basic Portfolio", billing: "annual", price: 27500 },
-      { name: "Professional Presence", billing: "annual", price: 110000 },
-      { name: "E-commerce / Advanced", billing: "annual", price: 357500 },
-    ],
-  },
-  {
-    id: "apps",
-    label: "Mobile Apps",
-    icon: Smartphone,
-    description: "Custom mobile applications — one-time build, yours to keep.",
-    groups: [
-      {
-        name: "Ordering App",
-        tiers: [
-          {
-            name: "Basic Food Ordering",
-            sub: "Simple menu + cart",
-            billing: "one-time",
-            price: 300000,
-          },
-          {
-            name: "Mid-Level Delivery",
-            sub: "Tracking, riders, dashboard",
-            billing: "one-time",
-            price: 1375000,
-          },
-          {
-            name: "Advanced / Enterprise",
-            sub: "Full platform, integrations",
-            billing: "one-time",
-            price: 3850000,
-          },
-        ],
-      },
+      { name: "Basic Portfolio", billing: "annual" },
+      { name: "Business Website", billing: "annual" },
+      { name: "Custom Website", billing: "annual" },
     ],
   },
   {
@@ -358,16 +215,14 @@ export const PRICING_CATEGORIES = [
     description:
       "Professional architectural plans — residential and commercial.",
     items: [
-      { name: "Small House (1–2 storey)", billing: "per plan", price: 150000 },
-      { name: "Medium House or Duplex", billing: "per plan", price: 500000 },
-      {
-        name: "Commercial / Complex Design",
-        billing: "per plan",
-        price: 1000000,
-      },
+      { name: "Small House (1–2 storey)", billing: "per plan" },
+      { name: "Medium House (3–4 storey)", billing: "per plan" },
+      { name: "Large House (5+ storey)", billing: "per plan" },
+      { name: "Commercial Building", billing: "per plan" },
     ],
   },
 ];
+
 export const PROJECTS = [
   {
     id: "stockpilot",

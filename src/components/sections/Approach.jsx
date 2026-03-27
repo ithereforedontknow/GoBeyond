@@ -61,7 +61,6 @@ function Approach({ t }) {
                   fontFamily: "Epilogue, sans-serif",
                   letterSpacing: "-0.04em",
                   color: t.heading,
-                  opacity: 0.1,
                   userSelect: "none",
                 }}
               >
@@ -72,8 +71,8 @@ function Approach({ t }) {
                   width: 40,
                   height: 40,
                   borderRadius: 10,
-                  background: `${t.accent}18`,
-                  border: `1px solid ${t.accent}38`,
+                  background: `${t.accent}25`,
+                  border: `1px solid ${t.accent}40`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -84,7 +83,7 @@ function Approach({ t }) {
               </div>
               <h3
                 style={{
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: 800,
                   color: t.heading,
                   marginBottom: 10,
