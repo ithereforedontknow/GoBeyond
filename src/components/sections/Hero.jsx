@@ -1,29 +1,50 @@
+import { useEffect, useRef, useState, useCallback } from "react";
 import {
+  LayoutDashboard,
   ArrowRight,
   Play,
-  Activity,
-  Users,
-  LayoutDashboard,
   FileText,
   Star,
   BookOpen,
   Monitor,
+  Users,
   Clock,
+  Activity,
 } from "lucide-react";
-
 import { STATS } from "../../data/constants";
-
-import { useEffect, useRef, useState, useCallback } from "react";
-
-// ─── constants ───────────────────────────────────────────────────────────────
+// ─── constants ────────────────────────────────────────────────────────────────
 
 const SLIDE_DURATION = 4200;
-
 const ACC = "#ccea4a";
 const ACC_DIM = "rgba(204,234,74,0.10)";
 const ACC_BDR = "rgba(204,234,74,0.22)";
 
-// ─── tiny helpers ─────────────────────────────────────────────────────────────
+// ─── theme builder ────────────────────────────────────────────────────────────
+
+function buildTheme(dark) {
+  return {
+    bg: dark ? "#0e0e0e" : "#ffffff",
+    panel: dark ? "#141414" : "#f7f7f7",
+    card: dark ? "#1a1a1a" : "#f0f0f0",
+    bdr: dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)",
+    bdrFlt: dark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.11)",
+    txt: dark ? "#f0f0f0" : "#111111",
+    muted: dark ? "#555555" : "#999999",
+    faint: dark ? "#444444" : "#bbbbbb",
+    urlTxt: dark ? "#444444" : "#aaaaaa",
+    barBg: dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.06)",
+    chipName: dark ? "#c8c8c8" : "#333333",
+    badgeBg: dark ? "#141414" : "#ffffff",
+    badgeShadow: dark
+      ? "0 10px 30px rgba(0,0,0,0.7)"
+      : "0 10px 30px rgba(0,0,0,0.10)",
+    shadow: dark
+      ? "0 48px 96px rgba(0,0,0,0.88), 0 0 0 1px rgba(204,234,74,0.04)"
+      : "0 48px 96px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04)",
+  };
+}
+
+// ─── shared sub-components ────────────────────────────────────────────────────
 
 function Pill({ label }) {
   return (
@@ -60,16 +81,17 @@ function Pill({ label }) {
   );
 }
 
-function SlideTitle({ children }) {
+function SlideTitle({ m, children }) {
   return (
     <h3
       style={{
         fontFamily: "Epilogue, sans-serif",
         fontSize: 18,
         fontWeight: 800,
-        color: "#f0f0f0",
+        color: m.txt,
         lineHeight: 1.2,
         marginBottom: 8,
+        transition: "color 0.3s",
       }}
     >
       {children}
@@ -77,15 +99,16 @@ function SlideTitle({ children }) {
   );
 }
 
-function SlideDesc({ children }) {
+function SlideDesc({ m, children }) {
   return (
     <p
       style={{
         fontSize: 11.5,
-        color: "#555",
+        color: m.muted,
         lineHeight: 1.65,
         marginBottom: 24,
         fontFamily: "Inter, sans-serif",
+        transition: "color 0.3s",
       }}
     >
       {children}
@@ -95,10 +118,7 @@ function SlideDesc({ children }) {
 
 // ─── Slide 0 — Digital Solutions ─────────────────────────────────────────────
 
-function DigitalSlide() {
-  const bdr = "rgba(255,255,255,0.07)";
-  const card = "#141414";
-
+function DigitalSlide({ m }) {
   const chips = [
     {
       Icon: Star,
@@ -126,22 +146,23 @@ function DigitalSlide() {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <Pill label="Digital Solutions" />
-      <SlideTitle>Creative assets, ready to use</SlideTitle>
-      <SlideDesc>
+      <SlideTitle m={m}>Creative assets, ready to use</SlideTitle>
+      <SlideDesc m={m}>
         Templates and digital products — buy once, deploy instantly.
       </SlideDesc>
 
-      {/* featured */}
+      {/* featured card */}
       <div
         style={{
           borderRadius: 12,
-          border: `1px solid ${bdr}`,
-          background: card,
+          border: `1px solid ${m.bdr}`,
+          background: m.card,
           padding: "16px 18px",
           marginBottom: 10,
           display: "flex",
           alignItems: "center",
           gap: 14,
+          transition: "background 0.3s, border-color 0.3s",
         }}
       >
         <div
@@ -149,12 +170,13 @@ function DigitalSlide() {
             width: 48,
             height: 48,
             borderRadius: 10,
-            background: "#1e1e1e",
-            border: `1px solid ${bdr}`,
+            background: m.panel,
+            border: `1px solid ${m.bdr}`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
+            transition: "background 0.3s",
           }}
         >
           <LayoutDashboard size={20} style={{ color: ACC }} />
@@ -164,9 +186,10 @@ function DigitalSlide() {
             style={{
               fontSize: 13,
               fontWeight: 700,
-              color: "#f0f0f0",
+              color: m.txt,
               marginBottom: 3,
               fontFamily: "Epilogue, sans-serif",
+              transition: "color 0.3s",
             }}
           >
             Professional CV Kit
@@ -174,8 +197,9 @@ function DigitalSlide() {
           <div
             style={{
               fontSize: 10,
-              color: "#555",
+              color: m.muted,
               fontFamily: "Inter, sans-serif",
+              transition: "color 0.3s",
             }}
           >
             Resume · Career Tools
@@ -200,7 +224,7 @@ function DigitalSlide() {
         </div>
       </div>
 
-      {/* chips row */}
+      {/* chip row */}
       <div style={{ display: "flex", gap: 8 }}>
         {chips.map(({ Icon, color, bg, name, tag }) => (
           <div
@@ -208,12 +232,13 @@ function DigitalSlide() {
             style={{
               flex: 1,
               borderRadius: 9,
-              border: `1px solid ${bdr}`,
-              background: card,
+              border: `1px solid ${m.bdr}`,
+              background: m.card,
               padding: "12px 13px",
               display: "flex",
               flexDirection: "column",
               gap: 5,
+              transition: "background 0.3s, border-color 0.3s",
             }}
           >
             <div
@@ -234,8 +259,9 @@ function DigitalSlide() {
               style={{
                 fontSize: 10.5,
                 fontWeight: 600,
-                color: "#c8c8c8",
+                color: m.chipName,
                 fontFamily: "Inter, sans-serif",
+                transition: "color 0.3s",
               }}
             >
               {name}
@@ -243,10 +269,11 @@ function DigitalSlide() {
             <div
               style={{
                 fontSize: 9,
-                color: "#444",
+                color: m.faint,
                 textTransform: "uppercase",
                 letterSpacing: "0.07em",
                 fontFamily: "Inter, sans-serif",
+                transition: "color 0.3s",
               }}
             >
               {tag}
@@ -260,10 +287,7 @@ function DigitalSlide() {
 
 // ─── Slide 1 — Systems & Web ──────────────────────────────────────────────────
 
-function SystemsSlide() {
-  const bdr = "rgba(255,255,255,0.07)";
-  const card = "#141414";
-
+function SystemsSlide({ m }) {
   const kpis = [
     { val: "98%", label: "Uptime", color: ACC },
     { val: "12", label: "Active Projects", color: "#4ade80" },
@@ -306,12 +330,12 @@ function SystemsSlide() {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <Pill label="Systems & Web" />
-      <SlideTitle>Your workflow, fully digitized</SlideTitle>
-      <SlideDesc>
+      <SlideTitle m={m}>Your workflow, fully digitized</SlideTitle>
+      <SlideDesc m={m}>
         Custom dashboards, portals, and automations — built around how you work.
       </SlideDesc>
 
-      {/* KPIs */}
+      {/* KPI row */}
       <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
         {kpis.map(({ val, label, color }) => (
           <div
@@ -319,9 +343,10 @@ function SystemsSlide() {
             style={{
               flex: 1,
               borderRadius: 10,
-              border: `1px solid ${bdr}`,
-              background: card,
+              border: `1px solid ${m.bdr}`,
+              background: m.card,
               padding: "13px 14px",
+              transition: "background 0.3s, border-color 0.3s",
             }}
           >
             <div
@@ -338,11 +363,12 @@ function SystemsSlide() {
             <div
               style={{
                 fontSize: 9,
-                color: "#444",
+                color: m.faint,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
                 marginTop: 5,
                 fontFamily: "Inter, sans-serif",
+                transition: "color 0.3s",
               }}
             >
               {label}
@@ -368,12 +394,13 @@ function SystemsSlide() {
               key={name}
               style={{
                 borderRadius: 10,
-                border: `1px solid ${bdr}`,
-                background: card,
+                border: `1px solid ${m.bdr}`,
+                background: m.card,
                 padding: "12px 15px",
                 display: "flex",
                 alignItems: "center",
                 gap: 11,
+                transition: "background 0.3s, border-color 0.3s",
               }}
             >
               <div
@@ -394,9 +421,10 @@ function SystemsSlide() {
                 style={{
                   fontSize: 11.5,
                   fontWeight: 600,
-                  color: "#e0e0e0",
+                  color: m.txt,
                   flex: 1,
                   fontFamily: "Inter, sans-serif",
+                  transition: "color 0.3s",
                 }}
               >
                 {name}
@@ -426,10 +454,7 @@ function SystemsSlide() {
 
 // ─── Slide 2 — Building Plans ─────────────────────────────────────────────────
 
-function BuildingSlide() {
-  const bdr = "rgba(255,255,255,0.07)";
-  const card = "#141414";
-
+function BuildingSlide({ m }) {
   const stats = [
     { val: "120", unit: "m²", label: "Floor Area" },
     { val: "2", label: "Bedrooms" },
@@ -440,8 +465,8 @@ function BuildingSlide() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Pill label="Building Plans" />
-      <SlideTitle>From vision to ready-to-build</SlideTitle>
-      <SlideDesc>
+      <SlideTitle m={m}>From vision to ready-to-build</SlideTitle>
+      <SlideDesc m={m}>
         Residential & commercial — precise layouts, space planning, consultation
         included.
       </SlideDesc>
@@ -450,11 +475,12 @@ function BuildingSlide() {
       <div
         style={{
           borderRadius: 12,
-          border: `1px solid ${bdr}`,
-          background: card,
+          border: `1px solid ${m.bdr}`,
+          background: m.card,
           padding: "14px 14px 10px",
           marginBottom: 10,
           flex: 1,
+          transition: "background 0.3s, border-color 0.3s",
         }}
       >
         <div
@@ -469,10 +495,11 @@ function BuildingSlide() {
             style={{
               fontSize: 9,
               fontWeight: 700,
-              color: "#555",
+              color: m.muted,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
               fontFamily: "Inter, sans-serif",
+              transition: "color 0.3s",
             }}
           >
             Floor Plan — Lot 4 Block 3
@@ -501,10 +528,9 @@ function BuildingSlide() {
             height="122"
             rx="3"
             fill="none"
-            stroke="rgba(255,255,255,0.05)"
+            stroke={m.bdr}
             strokeWidth="1"
           />
-          {/* outer walls */}
           <rect
             x="14"
             y="10"
@@ -515,7 +541,6 @@ function BuildingSlide() {
             stroke={ACC}
             strokeWidth="1.8"
           />
-          {/* dividers */}
           <line
             x1="145"
             y1="10"
@@ -556,7 +581,6 @@ function BuildingSlide() {
             strokeDasharray="4 3"
             opacity="0.55"
           />
-          {/* door arcs */}
           <path
             d="M145 32 Q128 32 128 49"
             fill="none"
@@ -564,12 +588,11 @@ function BuildingSlide() {
             strokeWidth="0.9"
           />
           <path
-            d="M14 96 Q30 96 30 80"
+            d="M14 96  Q30 96  30 80"
             fill="none"
             stroke="rgba(204,234,74,0.3)"
             strokeWidth="0.9"
           />
-          {/* room labels */}
           {[
             { x: 76, y: 42, text: "Living Room" },
             { x: 76, y: 84, text: "Bedroom 1" },
@@ -582,7 +605,7 @@ function BuildingSlide() {
               x={x}
               y={y}
               fontSize="7.5"
-              fill="#5a5a5a"
+              fill={m.muted}
               textAnchor="middle"
               fontFamily="Inter, sans-serif"
               fontWeight="500"
@@ -590,7 +613,6 @@ function BuildingSlide() {
               {text}
             </text>
           ))}
-          {/* compass */}
           <text
             x="312"
             y="22"
@@ -606,11 +628,11 @@ function BuildingSlide() {
             x1="312"
             y1="24"
             x2="312"
-            y2="34"
+            y2="32"
             stroke={ACC}
             strokeWidth="1"
           />
-          <polygon points="308,34 312,40 316,34" fill={ACC} opacity="0.7" />
+          <polygon points="308,32 312,38 316,32" fill={ACC} opacity="0.7" />
         </svg>
       </div>
 
@@ -622,9 +644,10 @@ function BuildingSlide() {
             style={{
               flex: 1,
               borderRadius: 9,
-              border: `1px solid ${bdr}`,
-              background: card,
+              border: `1px solid ${m.bdr}`,
+              background: m.card,
               padding: "11px 12px",
+              transition: "background 0.3s, border-color 0.3s",
             }}
           >
             <div
@@ -632,13 +655,14 @@ function BuildingSlide() {
                 fontFamily: "Epilogue, sans-serif",
                 fontSize: accent ? 12 : 16,
                 fontWeight: 800,
-                color: accent ? ACC : "#f0f0f0",
+                color: accent ? ACC : m.txt,
                 lineHeight: 1,
+                transition: "color 0.3s",
               }}
             >
               {val}
               {unit && (
-                <span style={{ fontSize: 9, fontWeight: 400, color: "#444" }}>
+                <span style={{ fontSize: 9, fontWeight: 400, color: m.faint }}>
                   {unit}
                 </span>
               )}
@@ -646,11 +670,12 @@ function BuildingSlide() {
             <div
               style={{
                 fontSize: 8.5,
-                color: "#444",
+                color: m.faint,
                 textTransform: "uppercase",
                 letterSpacing: "0.07em",
                 marginTop: 4,
                 fontFamily: "Inter, sans-serif",
+                transition: "color 0.3s",
               }}
             >
               {label}
@@ -664,27 +689,25 @@ function BuildingSlide() {
 
 // ─── HeroMockup ───────────────────────────────────────────────────────────────
 
-const SLIDES = [
-  { component: <DigitalSlide /> },
-  { component: <SystemsSlide /> },
-  { component: <BuildingSlide /> },
-];
+function HeroMockup({ dark }) {
+  const m = buildTheme(dark);
 
-function HeroMockup() {
+  const SLIDES = [
+    { component: <DigitalSlide m={m} /> },
+    { component: <SystemsSlide m={m} /> },
+    { component: <BuildingSlide m={m} /> },
+  ];
+
   const [cur, setCur] = useState(0);
-  const [phase, setPhase] = useState("idle"); // idle | out | in
+  const [phase, setPhase] = useState("idle");
   const [progKey, setProgKey] = useState(0);
   const timerRef = useRef(null);
-  const nextRef = useRef(null);
-
-  const bdr = "rgba(255,255,255,0.07)";
 
   const goTo = useCallback(
     (idx) => {
       if (idx === cur) return;
       clearInterval(timerRef.current);
       setPhase("out");
-      nextRef.current = idx;
       setTimeout(() => {
         setCur(idx);
         setPhase("in");
@@ -696,17 +719,23 @@ function HeroMockup() {
   );
 
   const advance = useCallback(() => {
-    const next = (cur + 1) % SLIDES.length;
-    goTo(next);
-  }, [cur, goTo]);
+    goTo((cur + 1) % SLIDES.length);
+  }, [cur, goTo, SLIDES.length]);
 
-  // auto-cycle
   useEffect(() => {
     timerRef.current = setInterval(advance, SLIDE_DURATION);
     return () => clearInterval(timerRef.current);
   }, [advance]);
 
-  const slideStyle = (active) => ({
+  const handleDotClick = (idx) => {
+    clearInterval(timerRef.current);
+    goTo(idx);
+    setTimeout(() => {
+      timerRef.current = setInterval(advance, SLIDE_DURATION);
+    }, 450);
+  };
+
+  const slideWrapStyle = {
     transition:
       "opacity 0.42s cubic-bezier(.4,0,.2,1), transform 0.42s cubic-bezier(.4,0,.2,1)",
     opacity: phase === "out" ? 0 : 1,
@@ -716,7 +745,7 @@ function HeroMockup() {
         : phase === "in"
           ? "translateY(14px)"
           : "translateY(0)",
-  });
+  };
 
   return (
     <div
@@ -739,30 +768,31 @@ function HeroMockup() {
         }}
       />
 
-      {/* frame */}
+      {/* outer frame */}
       <div
         style={{
           position: "relative",
           borderRadius: 18,
           overflow: "hidden",
-          border: `1px solid ${bdr}`,
-          background: "#0e0e0e",
-          boxShadow:
-            "0 48px 96px rgba(0,0,0,0.88), 0 0 0 1px rgba(204,234,74,0.04)",
+          border: `1px solid ${m.bdr}`,
+          background: m.bg,
+          boxShadow: m.shadow,
+          transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
         }}
       >
-        {/* chrome */}
+        {/* chrome bar */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             gap: 7,
             padding: "11px 16px",
-            borderBottom: `1px solid ${bdr}`,
-            background: "#141414",
+            borderBottom: `1px solid ${m.bdr}`,
+            background: m.panel,
+            transition: "background 0.3s, border-color 0.3s",
           }}
         >
-          {[["#ff5f57"], ["#ffbd2e"], ["#28ca41"]].map(([bg], i) => (
+          {["#ff5f57", "#ffbd2e", "#28ca41"].map((bg, i) => (
             <span
               key={i}
               style={{
@@ -779,18 +809,20 @@ function HeroMockup() {
               flex: 1,
               height: 20,
               borderRadius: 5,
-              background: "rgba(255,255,255,0.05)",
+              background: m.barBg,
               display: "flex",
               alignItems: "center",
               padding: "0 10px",
+              transition: "background 0.3s",
             }}
           >
             <span
               style={{
                 fontSize: 9,
-                color: "#444",
+                color: m.urlTxt,
                 fontFamily: "Inter, sans-serif",
                 letterSpacing: "0.02em",
+                transition: "color 0.3s",
               }}
             >
               app.gobeyond.ph
@@ -802,8 +834,9 @@ function HeroMockup() {
         <div
           style={{
             height: 2,
-            background: "rgba(255,255,255,0.05)",
+            background: m.barBg,
             overflow: "hidden",
+            transition: "background 0.3s",
           }}
         >
           <div
@@ -811,16 +844,22 @@ function HeroMockup() {
             style={{
               height: "100%",
               background: ACC,
-              animation: `progFill ${SLIDE_DURATION}ms linear forwards`,
+              animation: `gbProgFill ${SLIDE_DURATION}ms linear forwards`,
             }}
           />
         </div>
 
         {/* slide area */}
         <div
-          style={{ padding: "24px 24px 16px", height: 340, overflow: "hidden" }}
+          style={{
+            padding: "24px 24px 16px",
+            height: 340,
+            overflow: "hidden",
+            background: m.bg,
+            transition: "background 0.3s",
+          }}
         >
-          <div style={slideStyle(true)}>{SLIDES[cur].component}</div>
+          <div style={slideWrapStyle}>{SLIDES[cur].component}</div>
         </div>
 
         {/* dot nav */}
@@ -830,20 +869,21 @@ function HeroMockup() {
             justifyContent: "center",
             gap: 7,
             padding: "10px 0 14px",
-            background: "#0e0e0e",
+            background: m.bg,
+            transition: "background 0.3s",
           }}
         >
           {SLIDES.map((_, i) => (
             <button
               key={i}
-              onClick={() => goTo(i)}
+              onClick={() => handleDotClick(i)}
               style={{
                 width: i === cur ? 18 : 6,
                 height: 6,
                 borderRadius: 3,
                 border: "none",
                 padding: 0,
-                background: i === cur ? ACC : "rgba(255,255,255,0.14)",
+                background: i === cur ? ACC : m.faint,
                 cursor: "pointer",
                 transition: "width 0.3s, background 0.25s",
               }}
@@ -852,20 +892,21 @@ function HeroMockup() {
         </div>
       </div>
 
-      {/* badge — bottom right */}
+      {/* floating badge — bottom right */}
       <div
         style={{
           position: "absolute",
           bottom: -18,
           right: -22,
           borderRadius: 13,
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: `1px solid ${m.bdrFlt}`,
           padding: "10px 15px",
           display: "flex",
           alignItems: "center",
           gap: 10,
-          background: "#141414",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.7)",
+          background: m.badgeBg,
+          boxShadow: m.badgeShadow,
+          transition: "background 0.3s, border-color 0.3s",
         }}
       >
         <div
@@ -887,8 +928,9 @@ function HeroMockup() {
             style={{
               fontSize: 11,
               fontWeight: 700,
-              color: "#f0f0f0",
+              color: m.txt,
               fontFamily: "Epilogue, sans-serif",
+              transition: "color 0.3s",
             }}
           >
             3 Divisions. 1 Partner.
@@ -907,20 +949,21 @@ function HeroMockup() {
         </div>
       </div>
 
-      {/* badge — top left */}
+      {/* floating badge — top left */}
       <div
         style={{
           position: "absolute",
           top: -16,
           left: -20,
           borderRadius: 10,
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: `1px solid ${m.bdrFlt}`,
           padding: "8px 13px",
           display: "flex",
           alignItems: "center",
           gap: 8,
-          background: "#141414",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.7)",
+          background: m.badgeBg,
+          boxShadow: m.badgeShadow,
+          transition: "background 0.3s, border-color 0.3s",
         }}
       >
         <span
@@ -936,17 +979,17 @@ function HeroMockup() {
           style={{
             fontSize: 10.5,
             fontWeight: 600,
-            color: "#f0f0f0",
+            color: m.txt,
             fontFamily: "Inter, sans-serif",
+            transition: "color 0.3s",
           }}
         >
           New project kicked off
         </span>
       </div>
 
-      {/* keyframe injection */}
       <style>{`
-        @keyframes progFill {
+        @keyframes gbProgFill {
           from { width: 0%; }
           to   { width: 100%; }
         }
