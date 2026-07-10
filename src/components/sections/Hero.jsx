@@ -12,12 +12,13 @@ import {
   Activity,
 } from "lucide-react";
 import { STATS } from "../../data/constants";
+import DotGrid from "../effects/DotGrid";
 // ─── constants ────────────────────────────────────────────────────────────────
 
 const SLIDE_DURATION = 4200;
-const ACC = "#ccea4a";
-const ACC_DIM = "rgba(204,234,74,0.10)";
-const ACC_BDR = "rgba(204,234,74,0.22)";
+const ACC = "#0066cc";
+const ACC_DIM = "rgba(0,102,204,0.10)";
+const ACC_BDR = "rgba(0,102,204,0.22)";
 
 // ─── theme builder ────────────────────────────────────────────────────────────
 
@@ -39,7 +40,7 @@ function buildTheme(dark) {
       ? "0 10px 30px rgba(0,0,0,0.7)"
       : "0 10px 30px rgba(0,0,0,0.10)",
     shadow: dark
-      ? "0 48px 96px rgba(0,0,0,0.88), 0 0 0 1px rgba(204,234,74,0.04)"
+      ? "0 48px 96px rgba(0,0,0,0.88), 0 0 0 1px rgba(0,102,204,0.04)"
       : "0 48px 96px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04)",
   };
 }
@@ -64,7 +65,7 @@ function Pill({ label }) {
         textTransform: "uppercase",
         color: ACC,
         marginBottom: 18,
-        fontFamily: "Inter, sans-serif",
+        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
       }}
     >
       <span
@@ -85,7 +86,7 @@ function SlideTitle({ m, children }) {
   return (
     <h3
       style={{
-        fontFamily: "Epilogue, sans-serif",
+        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
         fontSize: 18,
         fontWeight: 800,
         color: m.txt,
@@ -107,7 +108,7 @@ function SlideDesc({ m, children }) {
         color: m.muted,
         lineHeight: 1.65,
         marginBottom: 24,
-        fontFamily: "Inter, sans-serif",
+        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
         transition: "color 0.3s",
       }}
     >
@@ -188,7 +189,7 @@ function DigitalSlide({ m }) {
               fontWeight: 700,
               color: m.txt,
               marginBottom: 3,
-              fontFamily: "Epilogue, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               transition: "color 0.3s",
             }}
           >
@@ -198,7 +199,7 @@ function DigitalSlide({ m }) {
             style={{
               fontSize: 10,
               color: m.muted,
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               transition: "color 0.3s",
             }}
           >
@@ -216,7 +217,7 @@ function DigitalSlide({ m }) {
             color: ACC,
             whiteSpace: "nowrap",
             flexShrink: 0,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
             letterSpacing: "0.08em",
           }}
         >
@@ -260,7 +261,7 @@ function DigitalSlide({ m }) {
                 fontSize: 10.5,
                 fontWeight: 600,
                 color: m.chipName,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 transition: "color 0.3s",
               }}
             >
@@ -272,7 +273,7 @@ function DigitalSlide({ m }) {
                 color: m.faint,
                 textTransform: "uppercase",
                 letterSpacing: "0.07em",
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 transition: "color 0.3s",
               }}
             >
@@ -351,7 +352,7 @@ function SystemsSlide({ m }) {
           >
             <div
               style={{
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 fontSize: 20,
                 fontWeight: 800,
                 color,
@@ -367,7 +368,7 @@ function SystemsSlide({ m }) {
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
                 marginTop: 5,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 transition: "color 0.3s",
               }}
             >
@@ -423,7 +424,7 @@ function SystemsSlide({ m }) {
                   fontWeight: 600,
                   color: m.txt,
                   flex: 1,
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   transition: "color 0.3s",
                 }}
               >
@@ -439,7 +440,7 @@ function SystemsSlide({ m }) {
                   border: `1px solid ${statusBdr}`,
                   color: statusColor,
                   whiteSpace: "nowrap",
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {status}
@@ -498,7 +499,7 @@ function BuildingSlide({ m }) {
               color: m.muted,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               transition: "color 0.3s",
             }}
           >
@@ -513,7 +514,7 @@ function BuildingSlide({ m }) {
               border: `1px solid ${ACC_BDR}`,
               padding: "3px 9px",
               borderRadius: 10,
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
             }}
           >
             Approved
@@ -584,13 +585,13 @@ function BuildingSlide({ m }) {
           <path
             d="M145 32 Q128 32 128 49"
             fill="none"
-            stroke="rgba(204,234,74,0.3)"
+            stroke="rgba(0,102,204,0.3)"
             strokeWidth="0.9"
           />
           <path
             d="M14 96  Q30 96  30 80"
             fill="none"
-            stroke="rgba(204,234,74,0.3)"
+            stroke="rgba(0,102,204,0.3)"
             strokeWidth="0.9"
           />
           {[
@@ -652,7 +653,7 @@ function BuildingSlide({ m }) {
           >
             <div
               style={{
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 fontSize: accent ? 12 : 16,
                 fontWeight: 800,
                 color: accent ? ACC : m.txt,
@@ -674,7 +675,7 @@ function BuildingSlide({ m }) {
                 textTransform: "uppercase",
                 letterSpacing: "0.07em",
                 marginTop: 4,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 transition: "color 0.3s",
               }}
             >
@@ -689,7 +690,7 @@ function BuildingSlide({ m }) {
 
 // ─── HeroMockup ───────────────────────────────────────────────────────────────
 
-function HeroMockup({ dark }) {
+function HeroMockup({ dark, maxWidth = 420 }) {
   const m = buildTheme(dark);
 
   const SLIDES = [
@@ -752,7 +753,7 @@ function HeroMockup({ dark }) {
       style={{
         position: "relative",
         width: "100%",
-        maxWidth: 420,
+        maxWidth,
         margin: "0 auto",
         userSelect: "none",
       }}
@@ -768,16 +769,19 @@ function HeroMockup({ dark }) {
         }}
       />
 
-      {/* outer frame */}
+      {/* outer frame — locked to 16:9 regardless of width */}
       <div
         style={{
           position: "relative",
-          borderRadius: 18,
+          borderRadius: 14,
           overflow: "hidden",
           border: `1px solid ${m.bdr}`,
           background: m.bg,
           boxShadow: m.shadow,
           transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
+          display: "flex",
+          flexDirection: "column",
+          aspectRatio: "16 / 9",
         }}
       >
         {/* chrome bar */}
@@ -790,6 +794,7 @@ function HeroMockup({ dark }) {
             borderBottom: `1px solid ${m.bdr}`,
             background: m.panel,
             transition: "background 0.3s, border-color 0.3s",
+            flexShrink: 0,
           }}
         >
           {["#ff5f57", "#ffbd2e", "#28ca41"].map((bg, i) => (
@@ -820,7 +825,7 @@ function HeroMockup({ dark }) {
               style={{
                 fontSize: 9,
                 color: m.urlTxt,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 letterSpacing: "0.02em",
                 transition: "color 0.3s",
               }}
@@ -837,6 +842,7 @@ function HeroMockup({ dark }) {
             background: m.barBg,
             overflow: "hidden",
             transition: "background 0.3s",
+            flexShrink: 0,
           }}
         >
           <div
@@ -849,11 +855,13 @@ function HeroMockup({ dark }) {
           />
         </div>
 
-        {/* slide area */}
+        {/* slide area — fills whatever room the 16:9 frame leaves, instead
+            of a fixed pixel height that broke proportions at other widths */}
         <div
           style={{
             padding: "24px 24px 16px",
-            height: 340,
+            flex: 1,
+            minHeight: 0,
             overflow: "hidden",
             background: m.bg,
             transition: "background 0.3s",
@@ -871,6 +879,7 @@ function HeroMockup({ dark }) {
             padding: "10px 0 14px",
             background: m.bg,
             transition: "background 0.3s",
+            flexShrink: 0,
           }}
         >
           {SLIDES.map((_, i) => (
@@ -921,7 +930,7 @@ function HeroMockup({ dark }) {
             flexShrink: 0,
           }}
         >
-          <Activity size={15} style={{ color: "#0a0a0a" }} />
+          <Activity size={15} style={{ color: "#ffffff" }} />
         </div>
         <div>
           <div
@@ -929,7 +938,7 @@ function HeroMockup({ dark }) {
               fontSize: 11,
               fontWeight: 700,
               color: m.txt,
-              fontFamily: "Epilogue, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               transition: "color 0.3s",
             }}
           >
@@ -941,7 +950,7 @@ function HeroMockup({ dark }) {
               color: "#4ade80",
               fontWeight: 600,
               marginTop: 2,
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
             }}
           >
             ● All projects on track
@@ -980,7 +989,7 @@ function HeroMockup({ dark }) {
             fontSize: 10.5,
             fontWeight: 600,
             color: m.txt,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
             transition: "color 0.3s",
           }}
         >
@@ -1006,233 +1015,173 @@ function Hero({ t, dark, scrollTo }) {
       id="hero"
       style={{
         position: "relative",
-        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
         background: t.pageBg,
+        padding: "168px 24px 96px",
       }}
     >
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `radial-gradient(${dark ? "rgba(204,234,74,0.09)" : "rgba(0,0,0,0.06)"} 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-          pointerEvents: "none",
+          zIndex: 0,
         }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: "-10%",
-          right: "-8%",
-          width: 600,
-          height: 600,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${t.accent}14 0%, transparent 65%)`,
-          pointerEvents: "none",
-        }}
-      />
+      >
+        <DotGrid
+          dotSize={4}
+          gap={26}
+          baseColor={dark ? "#3a3a3c" : "#e3e3e6"}
+          activeColor={t.accent}
+          proximity={130}
+          shockRadius={220}
+          shockStrength={3}
+          resistance={750}
+          returnDuration={1.5}
+          style={{ width: "100%", height: "100%" }}
+        />
+      </div>
 
       <div
         style={{
-          maxWidth: 1280,
+          maxWidth: 760,
           margin: "0 auto",
-          padding: "112px 24px 80px",
           width: "100%",
           position: "relative",
           zIndex: 1,
+          textAlign: "center",
         }}
       >
+        <h1
+          style={{
+            fontSize: "clamp(2.6rem,5.2vw,4.2rem)",
+            fontWeight: 600,
+            lineHeight: 1.06,
+            letterSpacing: "-0.03em",
+            color: t.heading,
+            marginBottom: 10,
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+          }}
+        >
+          Go Further.
+          <br />
+          Go Smarter.
+        </h1>
+        <h1
+          style={{
+            fontSize: "clamp(2.6rem,5.2vw,4.2rem)",
+            fontWeight: 600,
+            lineHeight: 1.06,
+            letterSpacing: "-0.03em",
+            color: t.accent,
+            marginBottom: 24,
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+          }}
+        >
+          Go Beyond.
+        </h1>
+
+        <p
+          style={{
+            fontSize: 18,
+            lineHeight: 1.5,
+            letterSpacing: "-0.32px",
+            color: t.muted,
+            maxWidth: 480,
+            margin: "0 auto 40px",
+          }}
+        >
+          We build digital tools, custom systems, and building plans —
+          whatever your problem needs, under one roof.
+        </p>
+
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 80,
-            alignItems: "center",
+            display: "flex",
+            gap: 12,
+            flexWrap: "wrap",
+            justifyContent: "center",
+            marginBottom: 56,
           }}
-          className="hero-grid"
         >
-          <div>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "6px 14px",
-                borderRadius: 4,
-                border: `1px solid ${t.borderStrong}`,
-                marginBottom: 28,
-              }}
-            >
-              <span
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: "50%",
-                  background: t.accent,
-                  display: "block",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: t.muted,
-                  fontFamily: "Inter, sans-serif",
-                }}
-              >
-                Innovation · Digital · Systems · Plans
-              </span>
-            </div>
+          <button
+            onClick={() => scrollTo("solutions")}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: t.accent,
+              color: t.accentText,
+              border: "none",
+              borderRadius: 8,
+              padding: "14px 28px",
+              fontSize: 16,
+              fontWeight: 500,
+              cursor: "pointer",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = t.accentDark)}
+            onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
+            onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.96)")}
+            onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            Explore Solutions <ArrowRight size={16} />
+          </button>
+          <button
+            onClick={() => scrollTo("approach")}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "transparent",
+              color: t.body,
+              border: `1px solid ${t.borderStrong}`,
+              borderRadius: 8,
+              padding: "14px 28px",
+              fontSize: 16,
+              fontWeight: 500,
+              cursor: "pointer",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+              transition: "border-color 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.borderColor = t.accent)}
+            onMouseLeave={(e) => (e.currentTarget.style.borderColor = t.borderStrong)}
+          >
+            <Play size={13} style={{ fill: "currentColor" }} /> Our Approach
+          </button>
+        </div>
 
-            <h1
-              style={{
-                fontSize: "clamp(2.8rem,5.5vw,4.4rem)",
-                fontWeight: 800,
-                lineHeight: 1.03,
-                letterSpacing: "-0.03em",
-                color: t.heading,
-                marginBottom: 10,
-                fontFamily: "Epilogue, sans-serif",
-              }}
-            >
-              Go Further.
-              <br />
-              Go Smarter.
-            </h1>
-            <h1
-              style={{
-                fontSize: "clamp(2.8rem,5.5vw,4.4rem)",
-                fontWeight: 800,
-                lineHeight: 1.03,
-                letterSpacing: "-0.03em",
-                color: t.accent,
-                marginBottom: 28,
-                fontFamily: "Epilogue, sans-serif",
-              }}
-            >
-              Go Beyond.
-            </h1>
-
-            <p
-              style={{
-                fontSize: 17,
-                lineHeight: 1.75,
-                color: t.muted,
-                maxWidth: 440,
-                marginBottom: 40,
-              }}
-            >
-              We build digital tools, custom systems, and building plans —
-              whatever your problem needs, under one roof.
-            </p>
-
-            <div
-              style={{
-                display: "flex",
-                gap: 12,
-                flexWrap: "wrap",
-                marginBottom: 52,
-              }}
-            >
-              <button
-                onClick={() => scrollTo("solutions")}
+        <div style={{ display: "flex", gap: 36, flexWrap: "wrap", justifyContent: "center" }}>
+          {STATS.map((s, i) => (
+            <div key={i}>
+              <div
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  background: t.accent,
-                  color: t.accentText,
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "14px 28px",
-                  fontSize: 15,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  fontFamily: "Inter, sans-serif",
-                  transition: "background 0.2s, transform 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = t.accentDark;
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = t.accent;
-                  e.currentTarget.style.transform = "translateY(0)";
-                }}
-              >
-                Explore Solutions <ArrowRight size={16} />
-              </button>
-              <button
-                onClick={() => scrollTo("approach")}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  background: "transparent",
-                  color: t.body,
-                  border: `1px solid ${t.borderStrong}`,
-                  borderRadius: 8,
-                  padding: "14px 28px",
-                  fontSize: 15,
+                  fontSize: "clamp(1.5rem,2.5vw,1.9rem)",
                   fontWeight: 600,
-                  cursor: "pointer",
-                  fontFamily: "Inter, sans-serif",
-                  transition: "border-color 0.2s, background 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = t.accent;
-                  e.currentTarget.style.background = t.tagBg;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = t.borderStrong;
-                  e.currentTarget.style.background = "transparent";
+                  color: t.heading,
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
                 }}
               >
-                <Play size={13} style={{ fill: "currentColor" }} /> Our Approach
-              </button>
+                {s.value}
+              </div>
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 400,
+                  letterSpacing: "-0.224px",
+                  color: t.faint,
+                  marginTop: 6,
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+                }}
+              >
+                {s.label}
+              </div>
             </div>
-
-            <div style={{ display: "flex", gap: 36, flexWrap: "wrap" }}>
-              {STATS.map((s, i) => (
-                <div key={i}>
-                  <div
-                    style={{
-                      fontSize: "clamp(1.5rem,2.5vw,1.9rem)",
-                      fontWeight: 800,
-                      color: t.heading,
-                      fontFamily: "Epilogue, sans-serif",
-                      letterSpacing: "-0.02em",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {s.value}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: 10,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.14em",
-                      fontWeight: 600,
-                      color: t.faint,
-                      marginTop: 5,
-                      fontFamily: "Inter, sans-serif",
-                    }}
-                  >
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="hero-mockup">
-            <HeroMockup dark={dark} />
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -1240,3 +1189,4 @@ function Hero({ t, dark, scrollTo }) {
 }
 
 export default Hero;
+export { HeroMockup };

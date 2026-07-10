@@ -6,15 +6,8 @@ import AccentLine from "../mini/AccentLine";
 function Founder({ t }) {
   const [ref, inView] = useInView();
   return (
-    <section
-      id="founder"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "80px 0",
-        background: t.pageBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 20px" }}>
+    <section id="founder" style={{ padding: "64px 0", background: t.pageBg }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
         <div
           ref={ref}
           className="founder-grid"
@@ -28,29 +21,20 @@ function Founder({ t }) {
             transition: "opacity 0.8s, transform 0.8s",
           }}
         >
-          {/* Photo column */}
+          {/* Photo column — the one place the system's single reserved
+              shadow applies: real photography resting on a surface. */}
           <div style={{ position: "relative" }}>
             <div
               style={{
-                position: "absolute",
-                inset: -2,
-                borderRadius: 20,
-                background: `linear-gradient(135deg, ${t.accent}35, transparent 55%)`,
-                zIndex: 0,
-              }}
-            />
-            <div
-              style={{
                 position: "relative",
-                zIndex: 1,
-                borderRadius: 18,
+                borderRadius: 14,
                 overflow: "hidden",
-                border: `1px solid ${t.border}`,
                 aspectRatio: "4/5",
                 background: t.altBg,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                boxShadow: "rgba(0, 0, 0, 0.22) 3px 5px 30px 0",
               }}
             >
               <img
@@ -78,18 +62,17 @@ function Founder({ t }) {
                 right: -18,
                 background: t.cardBg,
                 border: `1px solid ${t.border}`,
-                borderRadius: 12,
+                borderRadius: 11,
                 padding: "12px 16px",
-                boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
                 zIndex: 2,
               }}
             >
               <div
                 style={{
                   fontSize: 13,
-                  fontWeight: 800,
+                  fontWeight: 600,
                   color: t.accent,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   marginBottom: 2,
                 }}
               >
@@ -97,9 +80,9 @@ function Founder({ t }) {
               </div>
               <div
                 style={{
-                  fontSize: 11,
+                  fontSize: 12,
                   color: t.muted,
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 Accounting & Business
@@ -115,46 +98,45 @@ function Founder({ t }) {
             <AccentLine t={t} />
             <h2
               style={{
-                fontSize: "clamp(1.8rem,3.2vw,2.6rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
+                fontSize: "clamp(1.8rem,3.2vw,2.5rem)",
+                fontWeight: 600,
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
                 color: t.heading,
                 marginBottom: 4,
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               }}
             >
               Princess Dianne Dulay
             </h2>
             <p
               style={{
-                fontSize: 12,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.15em",
+                fontSize: 14,
+                fontWeight: 600,
+                letterSpacing: "-0.224px",
                 color: t.accent,
                 marginBottom: 24,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               }}
             >
               Founder, GoBeyond IT Solutions
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              <p style={{ fontSize: 15, lineHeight: 1.85, color: t.muted }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <p style={{ fontSize: 17, lineHeight: 1.47, letterSpacing: "-0.374px", color: t.muted }}>
                 GoBeyond was born from a long-held dream of building something
                 meaningful and impactful. It took years to find the courage to
                 turn this vision into reality — and today, with the world moving
                 deeper into the digital era, the time is right.
               </p>
-              <p style={{ fontSize: 15, lineHeight: 1.85, color: t.muted }}>
+              <p style={{ fontSize: 17, lineHeight: 1.47, letterSpacing: "-0.374px", color: t.muted }}>
                 With over seven years in accounting, I bring a solid foundation
                 in business processes and financial management. Together with a
                 team of capable IT professionals and an engineer, we combine
                 diverse expertise to deliver solutions that genuinely go beyond
                 expectations.
               </p>
-              <p style={{ fontSize: 15, lineHeight: 1.85, color: t.muted }}>
+              <p style={{ fontSize: 17, lineHeight: 1.47, letterSpacing: "-0.374px", color: t.muted }}>
                 At GoBeyond, we're not here just to sell. We're here to guide
                 businesses as they take bold steps toward transformation —
                 helping them go further, work smarter, and truly go beyond.
@@ -178,14 +160,14 @@ function Founder({ t }) {
                 <span
                   key={i}
                   style={{
-                    fontSize: 11,
-                    fontWeight: 600,
-                    padding: "5px 12px",
-                    borderRadius: 6,
+                    fontSize: 12,
+                    fontWeight: 400,
+                    letterSpacing: "-0.12px",
+                    padding: "6px 14px",
+                    borderRadius: 9999,
                     background: t.tagBg,
-                    border: `1px solid ${t.border}`,
-                    color: t.muted,
-                    fontFamily: "Inter, sans-serif",
+                    color: t.tagText,
+                    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   }}
                 >
                   {tag}

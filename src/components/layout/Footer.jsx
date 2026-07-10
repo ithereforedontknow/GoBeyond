@@ -1,22 +1,22 @@
-import { Blocks, Sun, Moon } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { FOOTER_COLS } from "../../data/constants";
 import { Link } from "react-router-dom";
+
+const FONT = "'Inter', system-ui, -apple-system, sans-serif";
+
+// Apple's footer: parchment surface, dense-link columns run at 17px body
+// size with a relaxed 2.41 line-height — the space between links, not
+// smaller type, is what makes a dense list scannable.
 function Footer({ t, dark, setDark, scrollTo }) {
   return (
-    <footer
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "60px 0",
-        background: t.altBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+    <footer style={{ background: t.altBg, padding: "64px 0" }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "1.3fr 1fr 1fr 1fr",
             gap: 40,
-            marginBottom: 52,
+            marginBottom: 48,
           }}
           className="footer-grid"
         >
@@ -30,28 +30,33 @@ function Footer({ t, dark, setDark, scrollTo }) {
                 background: "none",
                 border: "none",
                 cursor: "pointer",
-                marginBottom: 12,
+                marginBottom: 14,
               }}
             >
               <div
                 style={{
-                  width: 28,
-                  height: 28,
+                  width: 24,
+                  height: 24,
                   background: t.accent,
                   borderRadius: 6,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  fontFamily: FONT,
+                  fontWeight: 700,
+                  fontSize: 12,
+                  color: "#ffffff",
                 }}
               >
-                <Blocks size={13} style={{ color: t.accentText }} />
+                G
               </div>
               <span
                 style={{
                   fontSize: 15,
-                  fontWeight: 800,
+                  fontWeight: 600,
                   color: t.heading,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: FONT,
+                  letterSpacing: "-0.374px",
                 }}
               >
                 Go<span style={{ color: t.accent }}>Beyond</span>
@@ -59,15 +64,25 @@ function Footer({ t, dark, setDark, scrollTo }) {
             </button>
             <p
               style={{
-                fontSize: 11,
-                lineHeight: 1.7,
+                fontSize: 12,
+                lineHeight: 1.43,
+                letterSpacing: "-0.224px",
                 color: t.faint,
                 marginBottom: 6,
+                fontFamily: FONT,
               }}
             >
               Go Further. Go Smarter. Go Beyond.
             </p>
-            <p style={{ fontSize: 11, lineHeight: 1.7, color: t.faint }}>
+            <p
+              style={{
+                fontSize: 12,
+                lineHeight: 1.43,
+                letterSpacing: "-0.224px",
+                color: t.faint,
+                fontFamily: FONT,
+              }}
+            >
               Innovation · Digital · Systems · Plans
             </p>
           </div>
@@ -75,13 +90,12 @@ function Footer({ t, dark, setDark, scrollTo }) {
             <div key={i}>
               <h4
                 style={{
-                  fontSize: 10,
-                  fontWeight: 800,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.15em",
-                  color: t.muted,
-                  marginBottom: 16,
-                  fontFamily: "Inter, sans-serif",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  letterSpacing: "-0.224px",
+                  color: t.body,
+                  marginBottom: 8,
+                  fontFamily: FONT,
                 }}
               >
                 {col.title}
@@ -92,25 +106,23 @@ function Footer({ t, dark, setDark, scrollTo }) {
                   padding: 0,
                   display: "flex",
                   flexDirection: "column",
-                  gap: 11,
                 }}
               >
                 {col.links.map((l) => (
                   <li key={l}>
                     {col.title === "Legal" ? (
                       <Link
-                        to={
-                          l === "Privacy Policy" ? "/privacy-policy" : "/terms"
-                        }
+                        to={l === "Privacy Policy" ? "/privacy-policy" : "/terms"}
                         style={{
-                          fontSize: 13,
-                          color: t.faint,
+                          fontSize: 17,
+                          lineHeight: 2.41,
+                          color: t.muted,
                           textDecoration: "none",
-                          fontFamily: "Inter, sans-serif",
+                          fontFamily: FONT,
                           transition: "color 0.2s",
                         }}
                         onMouseEnter={(e) => (e.target.style.color = t.accent)}
-                        onMouseLeave={(e) => (e.target.style.color = t.faint)}
+                        onMouseLeave={(e) => (e.target.style.color = t.muted)}
                       >
                         {l}
                       </Link>
@@ -118,14 +130,15 @@ function Footer({ t, dark, setDark, scrollTo }) {
                       <a
                         href="#"
                         style={{
-                          fontSize: 13,
-                          color: t.faint,
+                          fontSize: 17,
+                          lineHeight: 2.41,
+                          color: t.muted,
                           textDecoration: "none",
-                          fontFamily: "Inter, sans-serif",
+                          fontFamily: FONT,
                           transition: "color 0.2s",
                         }}
                         onMouseEnter={(e) => (e.target.style.color = t.accent)}
-                        onMouseLeave={(e) => (e.target.style.color = t.faint)}
+                        onMouseLeave={(e) => (e.target.style.color = t.muted)}
                       >
                         {l}
                       </a>
@@ -140,7 +153,7 @@ function Footer({ t, dark, setDark, scrollTo }) {
         <div
           style={{
             borderTop: `1px solid ${t.border}`,
-            paddingTop: 26,
+            paddingTop: 24,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -148,7 +161,15 @@ function Footer({ t, dark, setDark, scrollTo }) {
             gap: 14,
           }}
         >
-          <span style={{ fontSize: 12, color: t.faint }}>
+          <span
+            style={{
+              fontSize: 12,
+              lineHeight: 1,
+              letterSpacing: "-0.12px",
+              color: t.faint,
+              fontFamily: FONT,
+            }}
+          >
             © 2025 GoBeyond · IT Solutions. All rights reserved.
           </span>
           <button
@@ -156,18 +177,15 @@ function Footer({ t, dark, setDark, scrollTo }) {
             style={{
               width: 32,
               height: 32,
-              borderRadius: 6,
-              border: `1px solid ${t.border}`,
-              background: t.cardBg,
+              borderRadius: 9999,
+              border: "none",
+              background: t.tagBg,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: t.muted,
-              transition: "border-color 0.2s",
+              color: t.body,
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = t.accent)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = t.border)}
           >
             {dark ? <Sun size={13} /> : <Moon size={13} />}
           </button>

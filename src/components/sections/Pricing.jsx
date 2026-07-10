@@ -14,14 +14,14 @@ import useInView from "../../hooks/useInView";
 import SectionHeader from "../mini/SectionHeader";
 
 function StockPilotMockup({ t }) {
-  const dark = t.pageBg === "#0a0a0a";
+  const dark = t.pageBg === "#272729";
   const bg = dark ? "#0e0e0e" : "#ffffff";
   const panel = dark ? "#141414" : "#f3f4f6";
   const card = dark ? "#1a1a1a" : "#ffffff";
   const bdr = dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)";
   const txt = dark ? "#f0f0f0" : "#111";
   const muted = dark ? "#555" : "#aaa";
-  const acc = "#ccea4a";
+  const acc = "#0066cc";
 
   return (
     <div
@@ -119,7 +119,7 @@ function StockPilotMockup({ t }) {
               >
                 <Icon
                   size={13}
-                  style={{ color: i === 0 ? "#0a0a0a" : muted }}
+                  style={{ color: i === 0 ? "#1d1d1f" : muted }}
                 />
               </div>
             ),
@@ -159,7 +159,7 @@ function StockPilotMockup({ t }) {
                     fontSize: 12,
                     fontWeight: 800,
                     color: k.color,
-                    fontFamily: "Epilogue, sans-serif",
+                    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                     lineHeight: 1,
                   }}
                 >
@@ -448,7 +448,7 @@ function Work({ t, scrollTo }) {
       id="work"
       style={{
         borderTop: `1px solid ${t.border}`,
-        padding: "80px 0",
+        padding: "64px 0",
         background: t.altBg,
       }}
     >
@@ -527,7 +527,7 @@ function Work({ t, scrollTo }) {
                     background: `${t.accent}18`,
                     border: `1px solid ${t.accent}40`,
                     color: t.accent,
-                    fontFamily: "Inter, sans-serif",
+                    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   }}
                 >
                   {p.division}
@@ -543,7 +543,7 @@ function Work({ t, scrollTo }) {
                     background: t.tagBg,
                     border: `1px solid ${t.border}`,
                     color: t.muted,
-                    fontFamily: "Inter, sans-serif",
+                    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   }}
                 >
                   {p.client}
@@ -555,7 +555,7 @@ function Work({ t, scrollTo }) {
                   fontSize: "clamp(1.6rem, 2.5vw, 2.2rem)",
                   fontWeight: 800,
                   color: t.heading,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   letterSpacing: "-0.02em",
                   lineHeight: 1.1,
                   marginBottom: 6,
@@ -571,7 +571,7 @@ function Work({ t, scrollTo }) {
                   letterSpacing: "0.14em",
                   color: t.faint,
                   marginBottom: 20,
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {p.type}
@@ -714,7 +714,7 @@ function Work({ t, scrollTo }) {
                         background: t.tagBg,
                         border: `1px solid ${t.border}`,
                         color: t.muted,
-                        fontFamily: "Inter, sans-serif",
+                        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                       }}
                     >
                       {s}
@@ -740,7 +740,7 @@ function Work({ t, scrollTo }) {
                 fontSize: 13,
                 fontWeight: 700,
                 cursor: "pointer",
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 alignSelf: "flex-start",
               }}
               onMouseEnter={(e) =>
@@ -769,7 +769,7 @@ function Work({ t, scrollTo }) {
             style={{
               fontSize: 12,
               color: t.faint,
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               whiteSpace: "nowrap",
             }}
           >
@@ -837,7 +837,7 @@ function Pricing({ t, scrollTo }) {
           background: m.bg,
           color: m.color,
           border: `1px solid ${m.border}`,
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
         }}
       >
         {m.label}
@@ -867,7 +867,7 @@ function Pricing({ t, scrollTo }) {
             fontSize: 14,
             fontWeight: 600,
             color: t.heading,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           }}
         >
           {item.name}
@@ -897,7 +897,7 @@ function Pricing({ t, scrollTo }) {
               fontSize: 14,
               fontWeight: 600,
               color: t.heading,
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               flex: 1,
               paddingRight: 12,
             }}
@@ -915,8 +915,7 @@ function Pricing({ t, scrollTo }) {
       <section
         id="pricing"
         style={{
-          borderTop: `1px solid ${t.border}`,
-          padding: "80px 0",
+          padding: "64px 0",
           background: t.altBg,
         }}
       >
@@ -959,7 +958,7 @@ function Pricing({ t, scrollTo }) {
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: "pointer",
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   border:
                     active === c.id
                       ? `1.5px solid ${t.accent}`
@@ -1016,7 +1015,7 @@ function Pricing({ t, scrollTo }) {
                     fontSize: 16,
                     fontWeight: 800,
                     color: t.heading,
-                    fontFamily: "Epilogue, sans-serif",
+                    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                     marginBottom: 2,
                   }}
                 >
@@ -1049,7 +1048,7 @@ function Pricing({ t, scrollTo }) {
                       textTransform: "uppercase",
                       letterSpacing: "0.14em",
                       color: t.faint,
-                      fontFamily: "Inter, sans-serif",
+                      fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                     }}
                   >
                     Item
@@ -1061,7 +1060,7 @@ function Pricing({ t, scrollTo }) {
                       textTransform: "uppercase",
                       letterSpacing: "0.14em",
                       color: t.faint,
-                      fontFamily: "Inter, sans-serif",
+                      fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                     }}
                   >
                     Billing
@@ -1093,7 +1092,7 @@ function Pricing({ t, scrollTo }) {
                 style={{
                   fontSize: 12,
                   color: t.faint,
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 All prices in Philippine Peso (₱). Scope may affect final
@@ -1113,7 +1112,7 @@ function Pricing({ t, scrollTo }) {
                   fontSize: 13,
                   fontWeight: 700,
                   cursor: "pointer",
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   transition: "background 0.2s",
                   whiteSpace: "nowrap",
                 }}
@@ -1146,7 +1145,7 @@ function Pricing({ t, scrollTo }) {
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
                 color: t.faint,
-                fontFamily: "Inter, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               }}
             >
               Key:
@@ -1168,7 +1167,7 @@ function Pricing({ t, scrollTo }) {
                     background: m.bg,
                     color: m.color,
                     border: `1px solid ${m.border}`,
-                    fontFamily: "Inter, sans-serif",
+                    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   }}
                 >
                   {key}

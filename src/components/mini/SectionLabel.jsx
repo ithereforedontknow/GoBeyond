@@ -1,25 +1,16 @@
+// Apple's captions read as plain colored text, never a bordered chip —
+// "don't add shadows/borders to non-utility elements" (design doc: Do's/Don'ts).
 function SectionLabel({ t, icon: Icon, children }) {
   return (
-    <div
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "5px 12px",
-        border: `1px solid ${t.borderStrong}`,
-        borderRadius: 4,
-        background: t.tagBg,
-      }}
-    >
-      {Icon && <Icon size={10} style={{ color: t.muted }} />}
+    <div style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
+      {Icon && <Icon size={12} style={{ color: t.accent }} />}
       <span
         style={{
-          fontSize: 10,
-          fontWeight: 700,
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          color: t.muted,
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+          fontSize: 14,
+          fontWeight: 600,
+          letterSpacing: "-0.224px",
+          color: t.accent,
         }}
       >
         {children}

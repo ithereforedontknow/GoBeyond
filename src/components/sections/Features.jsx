@@ -1,72 +1,32 @@
-import SectionPill from "../ui/SectionPill";
 import { Zap } from "lucide-react";
 import { FEATURES } from "../../data/constants";
-import Label from "../mini/SectionLabel";
-import AccentLine from "../mini/AccentLine";
+import SectionHeader from "../mini/SectionHeader";
 import useInView from "../../hooks/useInView";
 
+// Apple tiles carry the section break via a surface-color change alone —
+// no border rule needed between this and the section above/below.
 function Features({ t }) {
   const [ref, inView] = useInView();
   return (
-    <section
-      id="features"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.altBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ marginBottom: 56 }}>
-          <Label t={t} icon={Zap}>
-            What We Deliver
-          </Label>
-          <AccentLine t={t} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              gap: 24,
-              flexWrap: "wrap",
-            }}
-          >
-            <h2
-              style={{
-                fontSize: "clamp(2rem,3.8vw,2.9rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
-                color: t.heading,
-                fontFamily: "Epilogue, sans-serif",
-                maxWidth: 320,
-              }}
-            >
+    <section id="features" style={{ padding: "64px 0", background: t.altBg }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
+        <SectionHeader
+          t={t}
+          label="What We Deliver"
+          labelIcon={Zap}
+          heading={
+            <>
               Why businesses
               <br />
               choose GoBeyond.
-            </h2>
-            <p
-              style={{
-                fontSize: 14,
-                lineHeight: 1.7,
-                color: t.muted,
-                maxWidth: 300,
-              }}
-            >
-              We don't simply deliver services — we create solutions that go
-              beyond expectations.
-            </p>
-          </div>
-        </div>
+            </>
+          }
+          subtext="We don't simply deliver services — we create solutions that go beyond expectations."
+        />
 
         <div
           ref={ref}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-          }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}
           className="card-grid"
         >
           {FEATURES.map((f, i) => (
@@ -75,47 +35,53 @@ function Features({ t }) {
               style={{
                 padding: "32px 28px",
                 border: `1px solid ${t.border}`,
-                borderRadius: 12,
+                borderRadius: 14,
                 background: t.cardBg,
-                transition: `opacity 0.65s ${i * 0.08}s, transform 0.65s ${i * 0.08}s`,
+                transition: `opacity 0.65s ${i * 0.08}s, transform 0.65s ${i * 0.08}s, box-shadow 0.2s`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(24px)",
                 cursor: "default",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = t.accent;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = t.border;
-              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.boxShadow =
+                  "rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0")
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
             >
               <div
                 style={{
-                  width: 42,
-                  height: 42,
-                  borderRadius: 10,
-                  background: `${t.accent}20`,
-                  border: `1px solid ${t.accent}40`,
+                  width: 40,
+                  height: 40,
+                  borderRadius: 8,
+                  background: t.tagBg,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   marginBottom: 20,
                 }}
               >
-                <f.icon size={20} style={{ color: t.accent }} />
+                <f.icon size={18} style={{ color: t.accent }} />
               </div>
               <h3
                 style={{
-                  fontSize: 15,
-                  fontWeight: 700,
+                  fontSize: 17,
+                  fontWeight: 600,
+                  letterSpacing: "-0.374px",
                   color: t.heading,
                   marginBottom: 8,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {f.title}
               </h3>
-              <p style={{ fontSize: 13, lineHeight: 1.65, color: t.muted }}>
+              <p
+                style={{
+                  fontSize: 14,
+                  lineHeight: 1.43,
+                  letterSpacing: "-0.224px",
+                  color: t.muted,
+                }}
+              >
                 {f.desc}
               </p>
             </div>

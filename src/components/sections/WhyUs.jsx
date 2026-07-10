@@ -6,14 +6,7 @@ import { WHY_US } from "../../data/constants";
 function WhyUs({ t }) {
   const [ref, inView] = useInView();
   return (
-    <section
-      id="whyus"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.pageBg,
-      }}
-    >
+    <section id="whyus" style={{ padding: "64px 0", background: t.pageBg }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader
           t={t}
@@ -44,27 +37,25 @@ function WhyUs({ t }) {
               style={{
                 padding: "30px 26px",
                 border: `1px solid ${t.border}`,
-                borderRadius: 12,
+                borderRadius: 14,
                 background: t.cardBg,
-                transition: `opacity 0.65s ${i * 0.08}s, transform 0.65s ${i * 0.08}s, border-color 0.2s`,
+                transition: `opacity 0.65s ${i * 0.08}s, transform 0.65s ${i * 0.08}s, box-shadow 0.2s`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(22px)",
                 cursor: "default",
               }}
               onMouseEnter={(e) =>
-                (e.currentTarget.style.borderColor = t.accent)
+                (e.currentTarget.style.boxShadow =
+                  "rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0")
               }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.borderColor = t.border)
-              }
+              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
             >
               <div
                 style={{
                   width: 40,
                   height: 40,
-                  borderRadius: 10,
-                  background: `${t.accent}18`,
-                  border: `1px solid ${t.accent}35`,
+                  borderRadius: 8,
+                  background: t.tagBg,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -75,16 +66,24 @@ function WhyUs({ t }) {
               </div>
               <h3
                 style={{
-                  fontSize: 14,
-                  fontWeight: 700,
+                  fontSize: 17,
+                  fontWeight: 600,
+                  letterSpacing: "-0.374px",
                   color: t.heading,
                   marginBottom: 8,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {w.title}
               </h3>
-              <p style={{ fontSize: 13, lineHeight: 1.65, color: t.muted }}>
+              <p
+                style={{
+                  fontSize: 14,
+                  lineHeight: 1.43,
+                  letterSpacing: "-0.224px",
+                  color: t.muted,
+                }}
+              >
                 {w.desc}
               </p>
             </div>

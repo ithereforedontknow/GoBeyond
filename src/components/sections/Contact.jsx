@@ -98,7 +98,7 @@ function ContactForm({ t }) {
     outline: "none",
     background: t.inputBg,
     color: t.body,
-    fontFamily: "Inter, sans-serif",
+    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
     transition: "border-color 0.2s",
     boxSizing: "border-box",
   });
@@ -136,7 +136,7 @@ function ContactForm({ t }) {
             fontWeight: 800,
             color: t.heading,
             marginBottom: 6,
-            fontFamily: "Epilogue, sans-serif",
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           }}
         >
           Message sent!
@@ -159,7 +159,7 @@ function ContactForm({ t }) {
             border: "none",
             cursor: "pointer",
             fontWeight: 600,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           }}
         >
           Send another message
@@ -176,7 +176,7 @@ function ContactForm({ t }) {
     fontWeight: 700,
     color: t.faint,
     marginBottom: 7,
-    fontFamily: "Inter, sans-serif",
+    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
   };
 
   return (
@@ -197,7 +197,7 @@ function ContactForm({ t }) {
             gap: 8,
             fontSize: 13,
             fontWeight: 600,
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             zIndex: 1000,
             animation: "slideIn 0.3s ease-out",
@@ -318,7 +318,7 @@ function ContactForm({ t }) {
           fontSize: 14,
           fontWeight: 700,
           cursor: isLoading ? "not-allowed" : "pointer",
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           transition: "background 0.2s",
           opacity: isLoading ? 0.7 : 1,
         }}
@@ -357,7 +357,7 @@ function ContactForm({ t }) {
           letterSpacing: "0.14em",
           fontWeight: 600,
           color: t.faint,
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
         }}
       >
         No spam, ever.
@@ -390,8 +390,7 @@ function Contact({ t }) {
     <section
       id="contact"
       style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
+        padding: "64px 0",
         background: t.altBg,
       }}
     >
@@ -418,7 +417,7 @@ function Contact({ t }) {
                 letterSpacing: "-0.025em",
                 color: t.heading,
                 marginBottom: 10,
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               }}
             >
               Let's build
@@ -468,7 +467,7 @@ function Contact({ t }) {
                         fontWeight: 700,
                         color: t.faint,
                         marginBottom: 2,
-                        fontFamily: "Inter, sans-serif",
+                        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                       }}
                     >
                       {c.label}
@@ -502,7 +501,7 @@ function Contact({ t }) {
                 fontWeight: 800,
                 color: t.heading,
                 marginBottom: 4,
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               }}
             >
               Send us a message

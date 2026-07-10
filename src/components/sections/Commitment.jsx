@@ -1,69 +1,29 @@
-import { Award } from "lucide-react";
+import { Award, ArrowRight } from "lucide-react";
 import useInView from "../../hooks/useInView";
-import Label from "../mini/SectionLabel";
-import AccentLine from "../mini/AccentLine";
+import SectionHeader from "../mini/SectionHeader";
 import { COMMITMENTS } from "../../data/constants";
+
 function Commitment({ t, scrollTo }) {
   const [ref, inView] = useInView();
   return (
-    <section
-      id="pricing"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.altBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
-        <div style={{ marginBottom: 56 }}>
-          <Label t={t} icon={Award}>
-            Our Commitment
-          </Label>
-          <AccentLine t={t} />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-end",
-              gap: 24,
-              flexWrap: "wrap",
-            }}
-          >
-            <h2
-              style={{
-                fontSize: "clamp(2rem,3.8vw,2.9rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
-                color: t.heading,
-                fontFamily: "Epilogue, sans-serif",
-                maxWidth: 340,
-              }}
-            >
+    <section id="pricing" style={{ padding: "64px 0", background: t.altBg }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
+        <SectionHeader
+          t={t}
+          label="Our Commitment"
+          labelIcon={Award}
+          heading={
+            <>
               What we stand
               <br />
               behind, always.
-            </h2>
-            <p
-              style={{
-                fontSize: 14,
-                lineHeight: 1.7,
-                color: t.muted,
-                maxWidth: 340,
-              }}
-            >
-              These aren't just values on a wall. They shape every decision we
-              make and every solution we deliver.
-            </p>
-          </div>
-        </div>
+            </>
+          }
+          subtext="These aren't just values on a wall. They shape every decision we make and every solution we deliver."
+        />
         <div
           ref={ref}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 16,
-          }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 16 }}
           className="card-grid"
         >
           {COMMITMENTS.map((c, i) => (
@@ -72,18 +32,17 @@ function Commitment({ t, scrollTo }) {
               style={{
                 padding: "36px 32px",
                 border: `1px solid ${t.border}`,
-                borderRadius: 12,
+                borderRadius: 14,
                 background: t.cardBg,
-                transition: `opacity 0.65s ${i * 0.1}s, transform 0.65s ${i * 0.1}s`,
+                transition: `opacity 0.65s ${i * 0.1}s, transform 0.65s ${i * 0.1}s, box-shadow 0.2s`,
                 opacity: inView ? 1 : 0,
                 transform: inView ? "translateY(0)" : "translateY(24px)",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = t.accent;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = t.border;
-              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.boxShadow =
+                  "rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0")
+              }
+              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
             >
               <div
                 style={{
@@ -97,15 +56,23 @@ function Commitment({ t, scrollTo }) {
               <h3
                 style={{
                   fontSize: 17,
-                  fontWeight: 800,
+                  fontWeight: 600,
+                  letterSpacing: "-0.374px",
                   color: t.heading,
                   marginBottom: 10,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {c.title}
               </h3>
-              <p style={{ fontSize: 13, lineHeight: 1.7, color: t.muted }}>
+              <p
+                style={{
+                  fontSize: 14,
+                  lineHeight: 1.43,
+                  letterSpacing: "-0.224px",
+                  color: t.muted,
+                }}
+              >
                 {c.desc}
               </p>
             </div>
@@ -122,17 +89,18 @@ function Commitment({ t, scrollTo }) {
               color: t.accentText,
               border: "none",
               borderRadius: 8,
-              padding: "14px 32px",
-              fontSize: 14,
-              fontWeight: 700,
+              padding: "11px 22px",
+              fontSize: 17,
+              fontWeight: 400,
+              letterSpacing: "-0.374px",
               cursor: "pointer",
-              fontFamily: "Inter, sans-serif",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               transition: "background 0.2s",
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = t.accentDark)
-            }
+            onMouseEnter={(e) => (e.currentTarget.style.background = t.accentDark)}
             onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
+            onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.95)")}
+            onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
           >
             Start a conversation <ArrowRight size={15} />
           </button>

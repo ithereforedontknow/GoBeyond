@@ -12,11 +12,11 @@ export default function TermsOfService() {
       style={{
         background: "#f7f7f7",
         minHeight: "100vh",
-        fontFamily: "Inter, sans-serif",
+        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
       }}
     >
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       `}</style>
 
@@ -48,25 +48,25 @@ export default function TermsOfService() {
             style={{
               width: 30,
               height: 30,
-              background: "#ccea4a",
+              background: "#0066cc",
               borderRadius: 6,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Blocks size={15} color="#0a0a0a" />
+            <Blocks size={15} color="#1d1d1f" />
           </div>
           <span
             style={{
               fontSize: 17,
               fontWeight: 800,
-              color: "#0a0a0a",
-              fontFamily: "Epilogue, sans-serif",
+              color: "#1d1d1f",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               letterSpacing: "-0.02em",
             }}
           >
-            Go<span style={{ color: "#ccea4a" }}>Beyond</span>
+            Go<span style={{ color: "#0066cc" }}>Beyond</span>
           </span>
         </Link>
         <Link
@@ -107,8 +107,8 @@ export default function TermsOfService() {
               fontSize: "clamp(2rem,4vw,2.8rem)",
               fontWeight: 800,
               letterSpacing: "-0.025em",
-              color: "#0a0a0a",
-              fontFamily: "Epilogue, sans-serif",
+              color: "#1d1d1f",
+              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               marginBottom: 16,
             }}
           >
@@ -122,7 +122,7 @@ export default function TermsOfService() {
             style={{
               width: 32,
               height: 3,
-              background: "#ccea4a",
+              background: "#0066cc",
               borderRadius: 2,
               marginTop: 24,
             }}
@@ -181,8 +181,8 @@ export default function TermsOfService() {
                 style={{
                   fontSize: 17,
                   fontWeight: 700,
-                  color: "#0a0a0a",
-                  fontFamily: "Epilogue, sans-serif",
+                  color: "#1d1d1f",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   marginBottom: 12,
                 }}
               >

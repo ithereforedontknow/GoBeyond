@@ -38,7 +38,7 @@ export const STATS = [
 ];
 
 export const MARQUEE_ITEMS = [
-  { name: "Digital Tools", color: "#ccea4a" },
+  { name: "Digital Tools", color: "#0066cc" },
   { name: "Automation Systems", color: "#60a5fa" },
   { name: "Web Development", color: "#f472b6" },
   { name: "Business Systems", color: "#34d399" },
@@ -302,42 +302,80 @@ export const FOOTER_COLS = [
 ];
 
 // ─── THEME ───────────────────────────────────────────────────────────────────
+// Apple-analysis design system (DESIGN-apple.md): one accent (Action Blue),
+// full-bleed tile alternation instead of bordered cards, hairlines instead of
+// glow-borders, a single reserved shadow, SF Pro-style tight tracking (Inter
+// as the off-system substitute per the doc's own guidance).
 
 export const T = {
   light: {
-    pageBg: "#f7f7f7",
-    altBg: "#ededed",
-    cardBg: "#ffffff",
-    border: "rgba(0,0,0,0.09)",
-    borderStrong: "rgba(0,0,0,0.16)",
-    heading: "#0a0a0a",
-    body: "#333333",
-    muted: "#666666",
-    faint: "#999999",
-    accent: "#ccea4a",
-    accentDark: "#b8d63a",
-    accentText: "#0a0a0a",
-    tagBg: "rgba(0,0,0,0.04)",
-    tagText: "#555",
-    navBg: "rgba(247,247,247,0.94)",
-    inputBg: "#efefef",
+    pageBg: "#ffffff", // colors.canvas
+    altBg: "#f5f5f7", // colors.canvas-parchment
+    cardBg: "#ffffff", // colors.canvas
+    border: "#e0e0e0", // colors.hairline
+    borderStrong: "#d6d6da",
+    heading: "#1d1d1f", // colors.ink
+    body: "#1d1d1f", // colors.body
+    muted: "#6e6e73", // between ink-muted-48/80, Apple's usual secondary-copy tone
+    faint: "#a1a1a6", // lighter derivative of ink-muted-48, disabled/legal family
+    accent: "#0066cc", // colors.primary — Action Blue, the only interactive color
+    accentDark: "#0071e3", // colors.primary-focus — hover/active
+    accentText: "#ffffff", // colors.on-primary
+    tagBg: "#f0f0f0", // colors.divider-soft
+    tagText: "#333333", // colors.ink-muted-80
+    navBg: "#000000", // colors.surface-black — global nav is always true black
+    inputBg: "#ffffff",
+    linkOnDark: "#2997ff", // colors.primary-on-dark — text links on dark tiles only
+    tile2: "#fafafc", // surface-pearl, for the rare third alternation
   },
   dark: {
-    pageBg: "#0a0a0a",
-    altBg: "#111111",
-    cardBg: "#141414",
-    border: "rgba(255,255,255,0.07)",
-    borderStrong: "rgba(255,255,255,0.13)",
-    heading: "#f7f7f7",
-    body: "#c8c8c8",
-    muted: "#888888",
-    faint: "#555555",
-    accent: "#ccea4a",
-    accentDark: "#b8d63a",
-    accentText: "#0a0a0a",
-    tagBg: "rgba(255,255,255,0.05)",
-    tagText: "#aaa",
-    navBg: "rgba(10,10,10,0.94)",
-    inputBg: "#1c1c1c",
+    pageBg: "#272729", // colors.surface-tile-1
+    altBg: "#2a2a2c", // colors.surface-tile-2
+    cardBg: "#252527", // colors.surface-tile-3
+    border: "rgba(255,255,255,0.11)",
+    borderStrong: "rgba(255,255,255,0.16)",
+    heading: "#ffffff", // colors.on-dark
+    body: "#ffffff",
+    muted: "#cccccc", // colors.body-muted
+    faint: "#8e8e93",
+    accent: "#0066cc", // Action Blue still works as a filled button on dark tiles
+    accentDark: "#0071e3",
+    accentText: "#ffffff",
+    tagBg: "rgba(255,255,255,0.08)",
+    tagText: "#cccccc",
+    navBg: "#000000",
+    inputBg: "#1c1c1e",
+    linkOnDark: "#2997ff",
+    tile2: "#2a2a2c",
   },
 };
+
+// Apple's single reserved shadow — product imagery resting on a surface only.
+// Never apply to cards, buttons, or text.
+export const PRODUCT_SHADOW = "rgba(0, 0, 0, 0.22) 3px 5px 30px 0";
+
+export const RADIUS = {
+  none: 0,
+  xs: 5,
+  sm: 8,
+  md: 11,
+  lg: 18,
+  pill: 9999,
+};
+
+export const SPACING = {
+  xxs: 4,
+  xs: 8,
+  sm: 12,
+  md: 17,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+  section: 80,
+};
+
+// Font stack per DESIGN-apple.md's "Note on Font Substitutes": Inter stands
+// in for SF Pro off-system, with tighter tracking on display sizes.
+export const FONT_DISPLAY =
+  "'Inter', system-ui, -apple-system, sans-serif";
+export const FONT_TEXT = "'Inter', system-ui, -apple-system, sans-serif";

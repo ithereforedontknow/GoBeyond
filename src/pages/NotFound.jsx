@@ -5,24 +5,24 @@ export default function NotFound() {
   return (
     <div
       style={{
-        background: "#0a0a0a",
+        background: "#1d1d1f",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "Inter, sans-serif",
+        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
         textAlign: "center",
         padding: "0 24px",
       }}
     >
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@800&family=Inter:wght@400;600&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');`}</style>
 
       <div
         style={{
           width: 48,
           height: 48,
-          background: "#ccea4a",
+          background: "#0066cc",
           borderRadius: 10,
           display: "flex",
           alignItems: "center",
@@ -30,7 +30,7 @@ export default function NotFound() {
           marginBottom: 32,
         }}
       >
-        <Blocks size={22} color="#0a0a0a" />
+        <Blocks size={22} color="#1d1d1f" />
       </div>
 
       <h1
@@ -38,7 +38,7 @@ export default function NotFound() {
           fontSize: "clamp(4rem,10vw,7rem)",
           fontWeight: 800,
           color: "#f7f7f7",
-          fontFamily: "Epilogue, sans-serif",
+          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           letterSpacing: "-0.04em",
           lineHeight: 1,
           marginBottom: 16,
@@ -63,8 +63,8 @@ export default function NotFound() {
           display: "inline-flex",
           alignItems: "center",
           gap: 8,
-          background: "#ccea4a",
-          color: "#0a0a0a",
+          background: "#0066cc",
+          color: "#1d1d1f",
           borderRadius: 8,
           padding: "12px 24px",
           fontSize: 14,

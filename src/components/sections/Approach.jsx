@@ -6,15 +6,8 @@ import { APPROACH } from "../../data/constants";
 function Approach({ t }) {
   const [ref, inView] = useInView();
   return (
-    <section
-      id="approach"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.altBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+    <section id="approach" style={{ padding: "64px 0", background: t.altBg }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader
           t={t}
           label="Our Approach"
@@ -55,10 +48,10 @@ function Approach({ t }) {
               <div
                 style={{
                   fontSize: "clamp(2.4rem,3.5vw,3.2rem)",
-                  fontWeight: 800,
+                  fontWeight: 600,
                   lineHeight: 1,
                   marginBottom: 24,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   letterSpacing: "-0.04em",
                   color: t.heading,
                   userSelect: "none",
@@ -70,9 +63,8 @@ function Approach({ t }) {
                 style={{
                   width: 40,
                   height: 40,
-                  borderRadius: 10,
-                  background: `${t.accent}25`,
-                  border: `1px solid ${t.accent}40`,
+                  borderRadius: 8,
+                  background: t.tagBg,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -83,16 +75,24 @@ function Approach({ t }) {
               </div>
               <h3
                 style={{
-                  fontSize: 20,
-                  fontWeight: 800,
+                  fontSize: 21,
+                  fontWeight: 600,
+                  letterSpacing: "0.231px",
                   color: t.heading,
                   marginBottom: 10,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {step.title}
               </h3>
-              <p style={{ fontSize: 12, lineHeight: 1.7, color: t.muted }}>
+              <p
+                style={{
+                  fontSize: 14,
+                  lineHeight: 1.43,
+                  letterSpacing: "-0.224px",
+                  color: t.muted,
+                }}
+              >
                 {step.desc}
               </p>
             </div>

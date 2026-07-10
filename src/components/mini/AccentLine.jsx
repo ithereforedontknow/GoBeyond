@@ -1,12 +1,14 @@
+// Apple's actual divider is a surface-color change, not a rule — this stays
+// only as a quiet bridge from the old layout, kept thin and low-contrast.
 function AccentLine({ t }) {
   return (
     <div
       style={{
-        width: 32,
-        height: 3,
+        width: 24,
+        height: 2,
         background: t.accent,
-        margin: "18px 0 22px",
-        borderRadius: 2,
+        margin: "10px 0 20px",
+        borderRadius: 0,
       }}
     />
   );

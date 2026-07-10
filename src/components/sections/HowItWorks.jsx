@@ -7,13 +7,7 @@ import AccentLine from "../mini/AccentLine";
 function HowItWorks({ t }) {
   const [ref, inView] = useInView();
   return (
-    <section
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.pageBg,
-      }}
-    >
+    <section style={{ padding: "64px 0", background: t.pageBg }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
         <div style={{ marginBottom: 56 }}>
           <Label t={t} icon={Zap}>
@@ -36,7 +30,7 @@ function HowItWorks({ t }) {
                 lineHeight: 1.05,
                 letterSpacing: "-0.025em",
                 color: t.heading,
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 maxWidth: 320,
               }}
             >
@@ -87,7 +81,7 @@ function HowItWorks({ t }) {
                   fontWeight: 800,
                   marginBottom: 28,
                   lineHeight: 1,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                   letterSpacing: "-0.04em",
                   opacity: 0.12,
                   userSelect: "none",
@@ -100,9 +94,8 @@ function HowItWorks({ t }) {
                 style={{
                   width: 44,
                   height: 44,
-                  borderRadius: 10,
-                  border: `1px solid ${t.border}`,
-                  background: `${t.accent}18`,
+                  borderRadius: 8,
+                  background: t.tagBg,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -117,7 +110,7 @@ function HowItWorks({ t }) {
                   fontWeight: 800,
                   color: t.heading,
                   marginBottom: 10,
-                  fontFamily: "Epilogue, sans-serif",
+                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                 }}
               >
                 {step.title}

@@ -7,15 +7,8 @@ import AccentLine from "../mini/AccentLine";
 function FAQ({ t }) {
   const [open, setOpen] = useState(null);
   return (
-    <section
-      id="faq"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.pageBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+    <section id="faq" style={{ padding: "64px 0", background: t.pageBg }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
         <div
           style={{
             display: "grid",
@@ -30,20 +23,20 @@ function FAQ({ t }) {
             <AccentLine t={t} />
             <h2
               style={{
-                fontSize: "clamp(2rem,3.5vw,2.8rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
+                fontSize: "clamp(1.9rem,3.4vw,2.5rem)",
+                fontWeight: 600,
+                lineHeight: 1.1,
+                letterSpacing: "-0.02em",
                 color: t.heading,
                 marginBottom: 14,
-                fontFamily: "Epilogue, sans-serif",
+                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
               }}
             >
               Got
               <br />
               questions?
             </h2>
-            <p style={{ fontSize: 14, lineHeight: 1.75, color: t.muted }}>
+            <p style={{ fontSize: 17, lineHeight: 1.47, letterSpacing: "-0.374px", color: t.muted }}>
               We've got answers. If something's still unclear, just reach out.
             </p>
           </div>
@@ -54,10 +47,10 @@ function FAQ({ t }) {
                 key={i}
                 style={{
                   border: `1px solid ${open === i ? t.accent : t.border}`,
-                  borderRadius: 10,
+                  borderRadius: 11,
                   overflow: "hidden",
-                  background: open === i ? `${t.accent}08` : t.cardBg,
-                  transition: "border-color 0.25s, background 0.25s",
+                  background: t.cardBg,
+                  transition: "border-color 0.25s",
                 }}
               >
                 <button
@@ -80,7 +73,7 @@ function FAQ({ t }) {
                       fontWeight: 600,
                       color: t.heading,
                       paddingRight: 24,
-                      fontFamily: "Inter, sans-serif",
+                      fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
                       lineHeight: 1.4,
                     }}
                   >

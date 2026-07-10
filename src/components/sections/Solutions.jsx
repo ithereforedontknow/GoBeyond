@@ -1,87 +1,83 @@
-import { useState } from "react";
 import { Award, ArrowRight } from "lucide-react";
 import SectionHeader from "../mini/SectionHeader";
-
 import { SOLUTIONS } from "../../data/constants";
 import useInView from "../../hooks/useInView";
 
-function SolutionCard({ s, i, inView, t, scrollTo }) {
-  const [hovered, setHovered] = useState(false);
-  const [btnHovered, setBtnHovered] = useState(false);
+const FONT = "'Inter', system-ui, -apple-system, sans-serif";
 
+function SolutionCard({ s, i, inView, t, scrollTo }) {
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       style={{
-        background: hovered ? t.cardBgHover : t.cardBg,
-        border: `1px solid ${hovered ? t.accentBorderHover : t.border}`,
-        borderRadius: 18,
+        background: t.cardBg,
+        border: `1px solid ${t.border}`,
+        borderRadius: 14,
         padding: "36px 32px 32px",
         display: "flex",
         flexDirection: "column",
-        transition: "background 0.25s, border-color 0.25s, transform 0.25s",
         opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(20px)",
+        transition: "opacity 0.6s, transform 0.6s, box-shadow 0.2s",
         transitionDelay: `${i * 0.12}s`,
       }}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.boxShadow =
+          "rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0")
+      }
+      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
     >
-      {/* Icon */}
       <div
         style={{
-          width: 52,
-          height: 52,
-          borderRadius: 14,
-          background: `${t.accent}25`,
-          border: `1px solid ${t.accent}40`,
+          width: 48,
+          height: 48,
+          borderRadius: 11,
+          background: t.tagBg,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          marginBottom: s.badge ? 16 : 28,
+          marginBottom: 28,
           flexShrink: 0,
         }}
       >
-        <s.icon size={22} style={{ color: t.accent }} />
+        <s.icon size={20} style={{ color: t.accent }} />
       </div>
 
-      {/* Name */}
       <h3
         style={{
-          fontFamily: "Epilogue, sans-serif",
-          fontSize: 22,
-          fontWeight: 800,
+          fontFamily: FONT,
+          fontSize: 21,
+          fontWeight: 600,
+          letterSpacing: "0.231px",
           color: t.heading,
-          lineHeight: 1.15,
+          lineHeight: 1.19,
           marginBottom: 14,
         }}
       >
         {s.name}
       </h3>
 
-      {/* Description */}
       <p
         style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: 13.5,
-          lineHeight: 1.8,
+          fontFamily: FONT,
+          fontSize: 14,
+          lineHeight: 1.43,
+          letterSpacing: "-0.224px",
           color: t.muted,
-          marginBottom: 32,
+          marginBottom: 28,
           flex: 1,
         }}
       >
         {s.desc}
       </p>
 
-      {/* Divider */}
       <div style={{ height: 1, background: t.border, marginBottom: 24 }} />
 
-      {/* Services */}
       <p
         style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: 10,
-          textTransform: "uppercase",
-          letterSpacing: "0.15em",
-          fontWeight: 700,
+          fontFamily: FONT,
+          fontSize: 12,
+          fontWeight: 600,
+          letterSpacing: "-0.224px",
           color: t.faint,
           marginBottom: 14,
         }}
@@ -89,21 +85,9 @@ function SolutionCard({ s, i, inView, t, scrollTo }) {
         Services Included
       </p>
 
-      <ul
-        style={{
-          listStyle: "none",
-          padding: 0,
-          display: "flex",
-          flexDirection: "column",
-          gap: 11,
-          marginBottom: 28,
-        }}
-      >
+      <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 11, marginBottom: 28 }}>
         {s.services.map((svc, j) => (
-          <li
-            key={j}
-            style={{ display: "flex", alignItems: "flex-start", gap: 11 }}
-          >
+          <li key={j} style={{ display: "flex", alignItems: "flex-start", gap: 11 }}>
             <div
               style={{
                 width: 5,
@@ -114,82 +98,51 @@ function SolutionCard({ s, i, inView, t, scrollTo }) {
                 flexShrink: 0,
               }}
             />
-            <span
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: 13,
-                color: t.body,
-                lineHeight: 1.55,
-              }}
-            >
+            <span style={{ fontFamily: FONT, fontSize: 14, color: t.body, lineHeight: 1.43, letterSpacing: "-0.224px" }}>
               {svc}
             </span>
           </li>
         ))}
       </ul>
 
-      {/* CTA */}
       <button
         onClick={() => scrollTo("contact")}
-        onMouseEnter={() => setBtnHovered(true)}
-        onMouseLeave={() => setBtnHovered(false)}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: 7,
           width: "100%",
-          padding: "12px 20px",
-          background: "none",
-          border: `1px solid ${btnHovered ? t.accent : t.faint}`,
-          borderRadius: 10,
-          fontFamily: "Inter, sans-serif",
-          fontSize: 13,
-          fontWeight: 600,
-          color: btnHovered ? t.accent : t.body,
+          padding: "11px 20px",
+          background: "transparent",
+          color: t.accent,
+          border: `1px solid ${t.accent}`,
+          borderRadius: 8,
+          fontFamily: FONT,
+          fontSize: 14,
+          fontWeight: 400,
           cursor: "pointer",
-          transition: "border-color 0.2s, color 0.2s",
           marginTop: "auto",
+          transition: "background 0.2s",
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = t.tagBg)}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+        onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.95)")}
+        onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
       >
         Inquire about this
-        <ArrowRight
-          size={13}
-          style={{
-            transition: "transform 0.2s",
-            transform: btnHovered ? "translateX(3px)" : "translateX(0)",
-          }}
-        />
+        <ArrowRight size={13} />
       </button>
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Solutions section
-// ---------------------------------------------------------------------------
 function Solutions({ t, scrollTo }) {
   const [ref, inView] = useInView();
 
-  // Extend your existing theme object with the two extra tokens this component needs.
-  // If t.cardBgHover / t.accentBorderHover are already defined, remove the fallbacks.
-  const theme = {
-    ...t,
-    cardBgHover:
-      t.cardBgHover ?? (t.cardBg === "#141414" ? "#181818" : "#fafaf8"),
-    accentBorderHover: t.accentBorderHover ?? `${t.accent}80`,
-  };
-
   return (
-    <section
-      id="solutions"
-      style={{
-        borderTop: `1px solid ${t.border}`,
-        padding: "100px 0",
-        background: t.pageBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
+    <section id="solutions" style={{ padding: "64px 0", background: t.pageBg }}>
+      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
         <SectionHeader
           t={t}
           label="Our Solutions"
@@ -204,24 +157,9 @@ function Solutions({ t, scrollTo }) {
           subtext="From intelligent digital tools to custom systems and building plans — GoBeyond covers the full spectrum of innovation, under one roof."
         />
 
-        <div
-          ref={ref}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-          }}
-          className="card-grid"
-        >
+        <div ref={ref} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="card-grid">
           {SOLUTIONS.map((s, i) => (
-            <SolutionCard
-              key={i}
-              s={s}
-              i={i}
-              inView={inView}
-              t={theme}
-              scrollTo={scrollTo}
-            />
+            <SolutionCard key={i} s={s} i={i} inView={inView} t={t} scrollTo={scrollTo} />
           ))}
         </div>
       </div>
