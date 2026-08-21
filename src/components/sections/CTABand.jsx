@@ -1,31 +1,30 @@
-import { Flame, ArrowRight, ExternalLink } from "lucide-react";
-import SectionLabel from "../mini/SectionLabel";
+import { ArrowRight, ExternalLink } from "lucide-react";
+import { FONT_DISPLAY, FONT_TEXT, HAIRLINE, SOFT_SHADOW_LIFT } from "../../data/constants";
 
-const FONT = "'Inter', system-ui, -apple-system, sans-serif";
-
-// Apple's environment-quote-card pattern: a dark full-bleed tile, centered
-// copy, single button-primary. No decorative gradients or dot-grids — those
-// were a SaaS habit this system explicitly avoids.
 function CTABand({ t, scrollTo }) {
   return (
-    <section style={{ padding: "64px 0", background: t.pageBg }}>
+    <section style={{ padding: "88px 32px", background: t.pageBg }} className="cta-band">
       <div
+        className="cta-band-panel"
         style={{
-          maxWidth: 720,
+          maxWidth: 960,
           margin: "0 auto",
-          padding: "0 24px",
+          padding: "72px 40px",
           textAlign: "center",
+          borderRadius: 28,
+          background: t.tagBg,
+          boxShadow: SOFT_SHADOW_LIFT,
         }}
       >
         <h2
           style={{
-            fontFamily: FONT,
+            fontFamily: FONT_DISPLAY,
             fontSize: "clamp(2.2rem,5vw,3.4rem)",
-            fontWeight: 600,
-            lineHeight: 1.1,
+            fontWeight: 700,
+            lineHeight: 1.12,
             letterSpacing: "-0.02em",
             color: t.heading,
-            margin: "20px 0 14px",
+            margin: "0 0 14px",
           }}
         >
           Have a project
@@ -34,10 +33,9 @@ function CTABand({ t, scrollTo }) {
         </h2>
         <p
           style={{
-            fontFamily: FONT,
+            fontFamily: FONT_TEXT,
             fontSize: 17,
-            lineHeight: 1.47,
-            letterSpacing: "-0.374px",
+            lineHeight: 1.5,
             color: t.muted,
             maxWidth: 420,
             margin: "0 auto 36px",
@@ -45,14 +43,7 @@ function CTABand({ t, scrollTo }) {
         >
           Tell us what you're trying to solve. We'll take it from there.
         </p>
-        <div
-          style={{
-            display: "flex",
-            gap: 12,
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           <button
             onClick={() => scrollTo("contact")}
             style={{
@@ -60,25 +51,18 @@ function CTABand({ t, scrollTo }) {
               alignItems: "center",
               gap: 8,
               background: t.accent,
-              color: t.accentText,
+              color: "#fff",
               border: "none",
-              borderRadius: 8,
-              padding: "11px 22px",
-              fontSize: 17,
-              fontWeight: 400,
-              letterSpacing: "-0.374px",
+              borderRadius: 999,
+              padding: "15px 28px",
+              fontSize: 16,
+              fontWeight: 600,
               cursor: "pointer",
-              fontFamily: FONT,
-              transition: "background 0.2s",
+              fontFamily: FONT_TEXT,
+              transition: "transform 0.15s, background 0.15s",
             }}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = t.accentDark)
-            }
-            onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
-            onMouseDown={(e) =>
-              (e.currentTarget.style.transform = "scale(0.95)")
-            }
-            onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            onMouseEnter={(e) => { e.currentTarget.style.background = t.accentDark; e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = t.accent; e.currentTarget.style.transform = "translateY(0)"; }}
           >
             Start a Conversation <ArrowRight size={16} />
           </button>
@@ -89,14 +73,18 @@ function CTABand({ t, scrollTo }) {
               alignItems: "center",
               gap: 7,
               background: "transparent",
-              color: t.accent,
-              border: "none",
-              padding: "11px 16px",
-              fontSize: 14,
-              fontWeight: 400,
+              color: t.heading,
+              border: `1.5px solid rgba(10,10,10,0.16)`,
+              borderRadius: 999,
+              padding: "15px 24px",
+              fontSize: 15,
+              fontWeight: 600,
               cursor: "pointer",
-              fontFamily: FONT,
+              fontFamily: FONT_TEXT,
+              transition: "background 0.15s",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.5)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
           >
             View Our Solutions <ExternalLink size={13} />
           </button>

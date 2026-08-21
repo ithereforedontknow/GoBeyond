@@ -1,16 +1,11 @@
-import { Sun, Moon } from "lucide-react";
 import { FOOTER_COLS } from "../../data/constants";
 import { Link } from "react-router-dom";
+import { FONT_DISPLAY, FONT_TEXT, HAIRLINE } from "../../data/constants";
 
-const FONT = "'Inter', system-ui, -apple-system, sans-serif";
-
-// Apple's footer: parchment surface, dense-link columns run at 17px body
-// size with a relaxed 2.41 line-height — the space between links, not
-// smaller type, is what makes a dense list scannable.
-function Footer({ t, dark, setDark, scrollTo }) {
+function Footer({ t, scrollTo }) {
   return (
-    <footer style={{ background: t.altBg, padding: "64px 0" }}>
-      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
+    <footer style={{ background: t.altBg, borderTop: `1px solid ${HAIRLINE}`, padding: "64px 0 40px" }}>
+      <div style={{ maxWidth: 1600, margin: "0 auto", padding: "0 32px" }}>
         <div
           style={{
             display: "grid",
@@ -26,7 +21,7 @@ function Footer({ t, dark, setDark, scrollTo }) {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 8,
+                gap: 9,
                 background: "none",
                 border: "none",
                 cursor: "pointer",
@@ -35,14 +30,14 @@ function Footer({ t, dark, setDark, scrollTo }) {
             >
               <div
                 style={{
-                  width: 24,
-                  height: 24,
+                  width: 26,
+                  height: 26,
                   background: t.accent,
                   borderRadius: 6,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontFamily: FONT,
+                  fontFamily: FONT_DISPLAY,
                   fontWeight: 700,
                   fontSize: 12,
                   color: "#ffffff",
@@ -52,75 +47,36 @@ function Footer({ t, dark, setDark, scrollTo }) {
               </div>
               <span
                 style={{
-                  fontSize: 15,
-                  fontWeight: 600,
+                  fontSize: 16,
+                  fontWeight: 700,
                   color: t.heading,
-                  fontFamily: FONT,
-                  letterSpacing: "-0.374px",
+                  fontFamily: FONT_DISPLAY,
+                  letterSpacing: "-0.01em",
                 }}
               >
                 Go<span style={{ color: t.accent }}>Beyond</span>
               </span>
             </button>
-            <p
-              style={{
-                fontSize: 12,
-                lineHeight: 1.43,
-                letterSpacing: "-0.224px",
-                color: t.faint,
-                marginBottom: 6,
-                fontFamily: FONT,
-              }}
-            >
+            <p style={{ fontSize: 12, lineHeight: 1.5, color: t.faint, marginBottom: 6, fontFamily: FONT_TEXT }}>
               Go Further. Go Smarter. Go Beyond.
             </p>
-            <p
-              style={{
-                fontSize: 12,
-                lineHeight: 1.43,
-                letterSpacing: "-0.224px",
-                color: t.faint,
-                fontFamily: FONT,
-              }}
-            >
+            <p style={{ fontSize: 12, lineHeight: 1.5, color: t.faint, fontFamily: FONT_TEXT }}>
               Innovation · Digital · Systems · Plans
             </p>
           </div>
+
           {FOOTER_COLS.map((col, i) => (
             <div key={i}>
-              <h4
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  letterSpacing: "-0.224px",
-                  color: t.body,
-                  marginBottom: 8,
-                  fontFamily: FONT,
-                }}
-              >
+              <h4 style={{ fontSize: 13, fontWeight: 700, color: t.body, marginBottom: 8, fontFamily: FONT_TEXT, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 {col.title}
               </h4>
-              <ul
-                style={{
-                  listStyle: "none",
-                  padding: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
+              <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column" }}>
                 {col.links.map((l) => (
                   <li key={l}>
                     {col.title === "Legal" ? (
                       <Link
                         to={l === "Privacy Policy" ? "/privacy-policy" : "/terms"}
-                        style={{
-                          fontSize: 17,
-                          lineHeight: 2.41,
-                          color: t.muted,
-                          textDecoration: "none",
-                          fontFamily: FONT,
-                          transition: "color 0.2s",
-                        }}
+                        style={{ fontSize: 15, lineHeight: 2.3, color: t.muted, textDecoration: "none", fontFamily: FONT_TEXT, transition: "color 0.15s" }}
                         onMouseEnter={(e) => (e.target.style.color = t.accent)}
                         onMouseLeave={(e) => (e.target.style.color = t.muted)}
                       >
@@ -129,14 +85,7 @@ function Footer({ t, dark, setDark, scrollTo }) {
                     ) : (
                       <a
                         href="#"
-                        style={{
-                          fontSize: 17,
-                          lineHeight: 2.41,
-                          color: t.muted,
-                          textDecoration: "none",
-                          fontFamily: FONT,
-                          transition: "color 0.2s",
-                        }}
+                        style={{ fontSize: 15, lineHeight: 2.3, color: t.muted, textDecoration: "none", fontFamily: FONT_TEXT, transition: "color 0.15s" }}
                         onMouseEnter={(e) => (e.target.style.color = t.accent)}
                         onMouseLeave={(e) => (e.target.style.color = t.muted)}
                       >
@@ -152,7 +101,7 @@ function Footer({ t, dark, setDark, scrollTo }) {
 
         <div
           style={{
-            borderTop: `1px solid ${t.border}`,
+            borderTop: `1px solid ${HAIRLINE}`,
             paddingTop: 24,
             display: "flex",
             alignItems: "center",
@@ -161,34 +110,9 @@ function Footer({ t, dark, setDark, scrollTo }) {
             gap: 14,
           }}
         >
-          <span
-            style={{
-              fontSize: 12,
-              lineHeight: 1,
-              letterSpacing: "-0.12px",
-              color: t.faint,
-              fontFamily: FONT,
-            }}
-          >
+          <span style={{ fontSize: 12, color: t.faint, fontFamily: FONT_TEXT }}>
             © 2025 GoBeyond · IT Solutions. All rights reserved.
           </span>
-          <button
-            onClick={() => setDark(!dark)}
-            style={{
-              width: 32,
-              height: 32,
-              borderRadius: 9999,
-              border: "none",
-              background: t.tagBg,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: t.body,
-            }}
-          >
-            {dark ? <Sun size={13} /> : <Moon size={13} />}
-          </button>
         </div>
       </div>
     </footer>

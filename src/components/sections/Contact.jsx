@@ -4,6 +4,7 @@ import { AlertCircle, CheckCircle2 } from "lucide-react";
 import { CONTACT_INFO } from "../../data/constants";
 import SectionLabel from "../mini/SectionLabel";
 import AccentLine from "../mini/AccentLine";
+import { FONT_DISPLAY, FONT_TEXT, HAIRLINE, ACC_DIM, SOFT_SHADOW } from "../../data/constants";
 import emailjs from "@emailjs/browser";
 
 function ContactForm({ t }) {
@@ -18,8 +19,7 @@ function ContactForm({ t }) {
     const e = {};
     if (!form.name.trim()) e.name = "Name is required.";
     if (!form.email.trim()) e.email = "Email is required.";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      e.email = "Enter a valid email.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Enter a valid email.";
     if (!form.msg.trim()) e.msg = "Message is required.";
     else if (form.msg.trim().length < 10) e.msg = "At least 10 characters.";
     return e;
@@ -42,10 +42,7 @@ function ContactForm({ t }) {
     setSendError(null);
 
     const now = new Date();
-    const formattedTime = now.toLocaleString("en-US", {
-      dateStyle: "full",
-      timeStyle: "short",
-    });
+    const formattedTime = now.toLocaleString("en-US", { dateStyle: "full", timeStyle: "short" });
 
     const templateParams = {
       title: `Let's build something great: ${form.name} wants to connect`,
@@ -53,8 +50,8 @@ function ContactForm({ t }) {
       email: form.email,
       message: form.msg,
       time: formattedTime,
-      accentColor: t.accent || "#6366f1",
-      accentDark: t.accentDark || "#4f46e5",
+      accentColor: t.accent || "#0a8a3f",
+      accentDark: t.accentDark || "#066a30",
       portfolioUrl: window.location.origin,
       currentYear: new Date().getFullYear().toString(),
     };
@@ -81,9 +78,7 @@ function ContactForm({ t }) {
         setSubmitted(false);
       }, 5000);
     } catch (error) {
-      setSendError(
-        error.message || "Failed to send message. Please try again later.",
-      );
+      setSendError(error.message || "Failed to send message. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -91,37 +86,27 @@ function ContactForm({ t }) {
 
   const inputStyle = (key) => ({
     width: "100%",
-    border: `1px solid ${errors[key] ? "#f87171" : t.borderStrong}`,
-    borderRadius: 8,
-    padding: "11px 14px",
+    border: `1.5px solid ${errors[key] ? "#dc2626" : HAIRLINE}`,
+    borderRadius: 10,
+    padding: "12px 14px",
     fontSize: 14,
     outline: "none",
     background: t.inputBg,
     color: t.body,
-    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+    fontFamily: FONT_TEXT,
     transition: "border-color 0.2s",
     boxSizing: "border-box",
   });
 
   if (submitted) {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "56px 0",
-          textAlign: "center",
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "56px 0", textAlign: "center" }}>
         <div
           style={{
             width: 60,
             height: 60,
-            borderRadius: 12,
-            background: `${t.accent}1a`,
-            border: `1px solid ${t.accent}45`,
+            borderRadius: 14,
+            background: ACC_DIM,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -130,18 +115,10 @@ function ContactForm({ t }) {
         >
           <CheckCircle2 size={26} style={{ color: t.accent }} />
         </div>
-        <h3
-          style={{
-            fontSize: 20,
-            fontWeight: 800,
-            color: t.heading,
-            marginBottom: 6,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-          }}
-        >
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: t.heading, marginBottom: 6, fontFamily: FONT_DISPLAY }}>
           Message sent!
         </h3>
-        <p style={{ fontSize: 13, color: t.muted, lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13, color: t.muted, lineHeight: 1.6, fontFamily: FONT_TEXT }}>
           We'll be in touch within one business day.
         </p>
         <button
@@ -159,7 +136,7 @@ function ContactForm({ t }) {
             border: "none",
             cursor: "pointer",
             fontWeight: 600,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+            fontFamily: FONT_TEXT,
           }}
         >
           Send another message
@@ -172,16 +149,15 @@ function ContactForm({ t }) {
     display: "block",
     fontSize: 10,
     textTransform: "uppercase",
-    letterSpacing: "0.14em",
-    fontWeight: 700,
+    letterSpacing: "0.13em",
+    fontWeight: 600,
     color: t.faint,
     marginBottom: 7,
-    fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+    fontFamily: FONT_TEXT,
   };
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-      {/* Toast Notification */}
       {showSuccessToast && (
         <div
           style={{
@@ -189,16 +165,16 @@ function ContactForm({ t }) {
             top: "24px",
             right: "24px",
             background: t.accent,
-            color: t.accentText,
-            padding: "12px 20px",
-            borderRadius: 8,
+            color: "#fff",
+            padding: "13px 20px",
+            borderRadius: 12,
             display: "flex",
             alignItems: "center",
             gap: 8,
             fontSize: 13,
             fontWeight: 600,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            fontFamily: FONT_TEXT,
+            boxShadow: SOFT_SHADOW,
             zIndex: 1000,
             animation: "slideIn 0.3s ease-out",
           }}
@@ -210,12 +186,7 @@ function ContactForm({ t }) {
 
       {[
         { label: "Full Name", key: "name", type: "text", ph: "Your full name" },
-        {
-          label: "Email Address",
-          key: "email",
-          type: "email",
-          ph: "Your email address",
-        },
+        { label: "Email Address", key: "email", type: "email", ph: "Your email address" },
       ].map((field) => (
         <div key={field.key}>
           <label style={lbl}>{field.label}</label>
@@ -225,30 +196,13 @@ function ContactForm({ t }) {
             onChange={(e) => handleChange(field.key, e.target.value)}
             placeholder={field.ph}
             style={inputStyle(field.key)}
-            onFocus={(e) =>
-              (e.target.style.borderColor = errors[field.key]
-                ? "#f87171"
-                : t.accent)
-            }
-            onBlur={(e) =>
-              (e.target.style.borderColor = errors[field.key]
-                ? "#f87171"
-                : t.borderStrong)
-            }
+            onFocus={(e) => (e.target.style.borderColor = errors[field.key] ? "#dc2626" : t.accent)}
+            onBlur={(e) => (e.target.style.borderColor = errors[field.key] ? "#dc2626" : HAIRLINE)}
           />
           {errors[field.key] && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 5,
-                marginTop: 6,
-              }}
-            >
-              <AlertCircle size={11} style={{ color: "#f87171" }} />
-              <span style={{ fontSize: 11, color: "#f87171" }}>
-                {errors[field.key]}
-              </span>
+            <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6 }}>
+              <AlertCircle size={11} style={{ color: "#dc2626" }} />
+              <span style={{ fontSize: 11, color: "#dc2626", fontFamily: FONT_TEXT }}>{errors[field.key]}</span>
             </div>
           )}
         </div>
@@ -261,26 +215,13 @@ function ContactForm({ t }) {
           onChange={(e) => handleChange("msg", e.target.value)}
           placeholder="Tell us about your project or inquiry..."
           style={{ ...inputStyle("msg"), resize: "none" }}
-          onFocus={(e) =>
-            (e.target.style.borderColor = errors.msg ? "#f87171" : t.accent)
-          }
-          onBlur={(e) =>
-            (e.target.style.borderColor = errors.msg
-              ? "#f87171"
-              : t.borderStrong)
-          }
+          onFocus={(e) => (e.target.style.borderColor = errors.msg ? "#dc2626" : t.accent)}
+          onBlur={(e) => (e.target.style.borderColor = errors.msg ? "#dc2626" : HAIRLINE)}
         />
         {errors.msg && (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 5,
-              marginTop: 6,
-            }}
-          >
-            <AlertCircle size={11} style={{ color: "#f87171" }} />
-            <span style={{ fontSize: 11, color: "#f87171" }}>{errors.msg}</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 6 }}>
+            <AlertCircle size={11} style={{ color: "#dc2626" }} />
+            <span style={{ fontSize: 11, color: "#dc2626", fontFamily: FONT_TEXT }}>{errors.msg}</span>
           </div>
         )}
       </div>
@@ -291,11 +232,12 @@ function ContactForm({ t }) {
             alignItems: "center",
             gap: 6,
             backgroundColor: "#fef2f2",
-            border: "1px solid #fecaca",
-            borderRadius: 6,
-            padding: "8px 12px",
+            border: "1px solid #fca5a5",
+            borderRadius: 10,
+            padding: "9px 13px",
             fontSize: 12,
-            color: "#b91c1c",
+            color: "#991b1b",
+            fontFamily: FONT_TEXT,
           }}
         >
           <AlertCircle size={12} />
@@ -311,23 +253,27 @@ function ContactForm({ t }) {
           justifyContent: "center",
           gap: 8,
           background: t.accent,
-          color: t.accentText,
+          color: "#fff",
           border: "none",
-          borderRadius: 8,
-          padding: "13px 0",
-          fontSize: 14,
-          fontWeight: 700,
+          borderRadius: 999,
+          padding: "15px 0",
+          fontSize: 15,
+          fontWeight: 600,
           cursor: isLoading ? "not-allowed" : "pointer",
-          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-          transition: "background 0.2s",
+          fontFamily: FONT_TEXT,
+          transition: "background 0.2s, transform 0.12s",
           opacity: isLoading ? 0.7 : 1,
         }}
-        onMouseEnter={(e) =>
-          !isLoading && (e.currentTarget.style.background = t.accentDark)
-        }
-        onMouseLeave={(e) =>
-          !isLoading && (e.currentTarget.style.background = t.accent)
-        }
+        onMouseEnter={(e) => {
+          if (isLoading) return;
+          e.currentTarget.style.background = t.accentDark;
+          e.currentTarget.style.transform = "translateY(-1px)";
+        }}
+        onMouseLeave={(e) => {
+          if (isLoading) return;
+          e.currentTarget.style.background = t.accent;
+          e.currentTarget.style.transform = "translateY(0)";
+        }}
       >
         {isLoading ? (
           <>
@@ -349,37 +295,13 @@ function ContactForm({ t }) {
           </>
         )}
       </button>
-      <p
-        style={{
-          fontSize: 10,
-          textAlign: "center",
-          textTransform: "uppercase",
-          letterSpacing: "0.14em",
-          fontWeight: 600,
-          color: t.faint,
-          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-        }}
-      >
+      <p style={{ fontSize: 10, textAlign: "center", textTransform: "uppercase", letterSpacing: "0.13em", fontWeight: 600, color: t.faint, fontFamily: FONT_TEXT }}>
         No spam, ever.
       </p>
 
       <style>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-
-        @keyframes spin {
-          to {
-            transform: rotate(360deg);
-          }
-        }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
     </div>
   );
@@ -387,23 +309,9 @@ function ContactForm({ t }) {
 
 function Contact({ t }) {
   return (
-    <section
-      id="contact"
-      style={{
-        padding: "64px 0",
-        background: t.altBg,
-      }}
-    >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 80,
-            alignItems: "start",
-          }}
-          className="contact-grid"
-        >
+    <section id="contact" style={{ padding: "88px 0", background: t.altBg }}>
+      <div style={{ maxWidth: 1600, margin: "0 auto", padding: "0 32px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }} className="contact-grid">
           <div>
             <SectionLabel t={t} icon={Mail}>
               Get In Touch
@@ -411,76 +319,46 @@ function Contact({ t }) {
             <AccentLine t={t} />
             <h2
               style={{
-                fontSize: "clamp(2rem,3.8vw,2.9rem)",
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: "-0.025em",
+                fontSize: "clamp(2.2rem,4vw,3.2rem)",
+                fontWeight: 700,
+                lineHeight: 1.08,
+                letterSpacing: "-0.02em",
                 color: t.heading,
                 marginBottom: 10,
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+                fontFamily: FONT_DISPLAY,
               }}
             >
               Let's build
               <br />
               <span style={{ color: t.accent }}>something great.</span>
             </h2>
-            <p
-              style={{
-                fontSize: 14,
-                lineHeight: 1.75,
-                color: t.muted,
-                maxWidth: 380,
-                marginBottom: 44,
-              }}
-            >
+            <p style={{ fontSize: 15, lineHeight: 1.75, color: t.muted, maxWidth: 380, marginBottom: 44, fontFamily: FONT_TEXT }}>
               Whether you have a project in mind, want to understand our
               services better, or simply want to explore what's possible — we'd
               love to hear from you.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
               {CONTACT_INFO.map((c, i) => (
-                <div
-                  key={i}
-                  style={{ display: "flex", alignItems: "center", gap: 14 }}
-                >
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 14 }}>
                   <div
                     style={{
-                      width: 42,
-                      height: 42,
-                      borderRadius: 10,
-                      border: `1px solid ${t.border}`,
-                      background: `${t.accent}14`,
+                      width: 46,
+                      height: 46,
+                      borderRadius: 12,
+                      background: ACC_DIM,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <c.icon size={16} style={{ color: t.accent }} />
+                    <c.icon size={18} style={{ color: t.accent }} />
                   </div>
                   <div>
-                    <div
-                      style={{
-                        fontSize: 10,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.14em",
-                        fontWeight: 700,
-                        color: t.faint,
-                        marginBottom: 2,
-                        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                      }}
-                    >
+                    <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.13em", fontWeight: 600, color: t.faint, marginBottom: 2, fontFamily: FONT_TEXT }}>
                       {c.label}
                     </div>
-                    <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 600,
-                        color: t.heading,
-                      }}
-                    >
-                      {c.value}
-                    </div>
+                    <div style={{ fontSize: 15, fontWeight: 600, color: t.heading, fontFamily: FONT_TEXT }}>{c.value}</div>
                   </div>
                 </div>
               ))}
@@ -489,24 +367,17 @@ function Contact({ t }) {
 
           <div
             style={{
-              border: `1px solid ${t.border}`,
-              borderRadius: 12,
-              padding: "36px 32px",
+              border: `1px solid ${HAIRLINE}`,
+              borderRadius: 20,
+              padding: "40px 36px",
               background: t.cardBg,
+              boxShadow: SOFT_SHADOW,
             }}
           >
-            <h3
-              style={{
-                fontSize: 17,
-                fontWeight: 800,
-                color: t.heading,
-                marginBottom: 4,
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              }}
-            >
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: t.heading, marginBottom: 4, fontFamily: FONT_DISPLAY }}>
               Send us a message
             </h3>
-            <p style={{ fontSize: 12, color: t.faint, marginBottom: 28 }}>
+            <p style={{ fontSize: 12, color: t.faint, marginBottom: 28, fontFamily: FONT_TEXT }}>
               All fields required. We respond within one business day.
             </p>
             <ContactForm t={t} />

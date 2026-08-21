@@ -1,37 +1,39 @@
 import { Award, ArrowRight } from "lucide-react";
 import SectionHeader from "../mini/SectionHeader";
 import { SOLUTIONS } from "../../data/constants";
+import { FONT_DISPLAY, FONT_TEXT, FONT_MONO, HAIRLINE, ACC_DIM, SOFT_SHADOW, SOFT_SHADOW_LIFT } from "../../data/constants";
 import useInView from "../../hooks/useInView";
-
-const FONT = "'Inter', system-ui, -apple-system, sans-serif";
 
 function SolutionCard({ s, i, inView, t, scrollTo }) {
   return (
     <div
       style={{
         background: t.cardBg,
-        border: `1px solid ${t.border}`,
-        borderRadius: 14,
+        border: `1px solid ${HAIRLINE}`,
+        borderRadius: 20,
         padding: "36px 32px 32px",
         display: "flex",
         flexDirection: "column",
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(20px)",
-        transition: "opacity 0.6s, transform 0.6s, box-shadow 0.2s",
-        transitionDelay: `${i * 0.12}s`,
+        boxShadow: SOFT_SHADOW,
+        transition: `opacity 0.6s ${i * 0.12}s, transform 0.6s ${i * 0.12}s, box-shadow 0.2s`,
       }}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.boxShadow =
-          "rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0")
-      }
-      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "none")}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = SOFT_SHADOW_LIFT;
+        e.currentTarget.style.transform = "translateY(-3px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = SOFT_SHADOW;
+        e.currentTarget.style.transform = inView ? "translateY(0)" : "translateY(20px)";
+      }}
     >
       <div
         style={{
-          width: 48,
-          height: 48,
-          borderRadius: 11,
-          background: t.tagBg,
+          width: 52,
+          height: 52,
+          borderRadius: 12,
+          background: ACC_DIM,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -39,17 +41,17 @@ function SolutionCard({ s, i, inView, t, scrollTo }) {
           flexShrink: 0,
         }}
       >
-        <s.icon size={20} style={{ color: t.accent }} />
+        <s.icon size={22} style={{ color: t.accent }} />
       </div>
 
       <h3
         style={{
-          fontFamily: FONT,
+          fontFamily: FONT_DISPLAY,
           fontSize: 21,
-          fontWeight: 600,
-          letterSpacing: "0.231px",
+          fontWeight: 700,
+          letterSpacing: "-0.01em",
           color: t.heading,
-          lineHeight: 1.19,
+          lineHeight: 1.22,
           marginBottom: 14,
         }}
       >
@@ -58,26 +60,26 @@ function SolutionCard({ s, i, inView, t, scrollTo }) {
 
       <p
         style={{
-          fontFamily: FONT,
-          fontSize: 14,
-          lineHeight: 1.43,
-          letterSpacing: "-0.224px",
+          fontFamily: FONT_TEXT,
+          fontSize: 15,
+          lineHeight: 1.55,
           color: t.muted,
-          marginBottom: 28,
+          marginBottom: 26,
           flex: 1,
         }}
       >
         {s.desc}
       </p>
 
-      <div style={{ height: 1, background: t.border, marginBottom: 24 }} />
+      <div style={{ height: 1, background: HAIRLINE, marginBottom: 22 }} />
 
       <p
         style={{
-          fontFamily: FONT,
-          fontSize: 12,
+          fontFamily: FONT_MONO,
+          fontSize: 11,
           fontWeight: 600,
-          letterSpacing: "-0.224px",
+          letterSpacing: "0.1em",
+          textTransform: "uppercase",
           color: t.faint,
           marginBottom: 14,
         }}
@@ -88,17 +90,17 @@ function SolutionCard({ s, i, inView, t, scrollTo }) {
       <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 11, marginBottom: 28 }}>
         {s.services.map((svc, j) => (
           <li key={j} style={{ display: "flex", alignItems: "flex-start", gap: 11 }}>
-            <div
+            <span
               style={{
                 width: 5,
                 height: 5,
                 borderRadius: "50%",
                 background: t.accent,
-                marginTop: 7,
+                marginTop: 8,
                 flexShrink: 0,
               }}
             />
-            <span style={{ fontFamily: FONT, fontSize: 14, color: t.body, lineHeight: 1.43, letterSpacing: "-0.224px" }}>
+            <span style={{ fontFamily: FONT_TEXT, fontSize: 14.5, color: t.body, lineHeight: 1.5 }}>
               {svc}
             </span>
           </li>
@@ -111,27 +113,25 @@ function SolutionCard({ s, i, inView, t, scrollTo }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 7,
+          gap: 8,
           width: "100%",
-          padding: "11px 20px",
+          padding: "13px 20px",
           background: "transparent",
-          color: t.accent,
-          border: `1px solid ${t.accent}`,
-          borderRadius: 8,
-          fontFamily: FONT,
-          fontSize: 14,
-          fontWeight: 400,
+          color: t.heading,
+          border: `1.5px solid ${HAIRLINE}`,
+          borderRadius: 999,
+          fontFamily: FONT_TEXT,
+          fontSize: 15,
+          fontWeight: 600,
           cursor: "pointer",
           marginTop: "auto",
-          transition: "background 0.2s",
+          transition: "background 0.15s, border-color 0.15s",
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = t.tagBg)}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-        onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.95)")}
-        onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+        onMouseEnter={(e) => { e.currentTarget.style.background = t.altBg; e.currentTarget.style.borderColor = "rgba(10,10,10,0.22)"; }}
+        onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = HAIRLINE; }}
       >
         Inquire about this
-        <ArrowRight size={13} />
+        <ArrowRight size={14} />
       </button>
     </div>
   );
@@ -141,8 +141,8 @@ function Solutions({ t, scrollTo }) {
   const [ref, inView] = useInView();
 
   return (
-    <section id="solutions" style={{ padding: "64px 0", background: t.pageBg }}>
-      <div style={{ maxWidth: 1440, margin: "0 auto", padding: "0 24px" }}>
+    <section id="solutions" style={{ padding: "88px 0", background: t.pageBg }}>
+      <div style={{ maxWidth: 1600, margin: "0 auto", padding: "0 32px" }}>
         <SectionHeader
           t={t}
           label="Our Solutions"
@@ -157,7 +157,7 @@ function Solutions({ t, scrollTo }) {
           subtext="From intelligent digital tools to custom systems and building plans — GoBeyond covers the full spectrum of innovation, under one roof."
         />
 
-        <div ref={ref} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="card-grid">
+        <div ref={ref} style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24 }} className="card-grid">
           {SOLUTIONS.map((s, i) => (
             <SolutionCard key={i} s={s} i={i} inView={inView} t={t} scrollTo={scrollTo} />
           ))}

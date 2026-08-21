@@ -1,25 +1,25 @@
 import { MARQUEE_ITEMS } from "../../data/constants";
-
-const FONT = "'Inter', system-ui, -apple-system, sans-serif";
+import { FONT_MONO, FONT_TEXT, HAIRLINE } from "../../data/constants";
 
 function MarqueeStrip({ t }) {
   const doubled = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS];
   return (
-    <div style={{ padding: "32px 0", overflow: "hidden", background: t.altBg }}>
+    <div style={{ padding: "40px 0", overflow: "hidden", background: t.altBg, borderTop: `1px solid ${HAIRLINE}`, borderBottom: `1px solid ${HAIRLINE}` }}>
       <p
         style={{
           textAlign: "center",
-          fontSize: 12,
+          fontSize: 11.5,
           fontWeight: 600,
-          letterSpacing: "-0.224px",
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
           color: t.faint,
-          marginBottom: 20,
-          fontFamily: FONT,
+          marginBottom: 24,
+          fontFamily: FONT_MONO,
         }}
       >
         What we work with
       </p>
-      <div style={{ display: "flex", gap: 14, width: "max-content", animation: "marquee 35s linear infinite" }}>
+      <div style={{ display: "flex", gap: 12, width: "max-content", animation: "marquee 35s linear infinite" }}>
         {doubled.map((item, i) => (
           <div
             key={i}
@@ -27,15 +27,15 @@ function MarqueeStrip({ t }) {
               display: "flex",
               alignItems: "center",
               gap: 9,
-              padding: "8px 16px",
-              borderRadius: 9999,
-              border: `1px solid ${t.border}`,
+              padding: "10px 18px",
+              borderRadius: 999,
+              border: `1px solid ${HAIRLINE}`,
               background: t.cardBg,
               whiteSpace: "nowrap",
             }}
           >
-            <span style={{ width: 8, height: 8, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
-            <span style={{ fontSize: 14, fontWeight: 400, letterSpacing: "-0.224px", color: t.body, fontFamily: FONT }}>
+            <span style={{ width: 7, height: 7, borderRadius: "50%", background: item.color, flexShrink: 0 }} />
+            <span style={{ fontSize: 14, fontWeight: 500, color: t.body, fontFamily: FONT_TEXT }}>
               {item.name}
             </span>
           </div>

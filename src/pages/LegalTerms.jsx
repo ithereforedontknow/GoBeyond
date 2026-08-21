@@ -48,7 +48,7 @@ export default function TermsOfService() {
             style={{
               width: 30,
               height: 30,
-              background: "#0066cc",
+              background: "#188c45",
               borderRadius: 6,
               display: "flex",
               alignItems: "center",
@@ -66,7 +66,7 @@ export default function TermsOfService() {
               letterSpacing: "-0.02em",
             }}
           >
-            Go<span style={{ color: "#0066cc" }}>Beyond</span>
+            Go<span style={{ color: "#188c45" }}>Beyond</span>
           </span>
         </Link>
         <Link
@@ -122,7 +122,7 @@ export default function TermsOfService() {
             style={{
               width: 32,
               height: 3,
-              background: "#0066cc",
+              background: "#188c45",
               borderRadius: 2,
               marginTop: 24,
             }}

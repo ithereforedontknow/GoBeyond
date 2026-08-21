@@ -307,48 +307,48 @@ export const FOOTER_COLS = [
 // glow-borders, a single reserved shadow, SF Pro-style tight tracking (Inter
 // as the off-system substitute per the doc's own guidance).
 
+// Light-only, brutalist-green theme. Replaces the old T = { light, dark }
+// object. Every component that destructured `t.` keeps working — just
+// import T directly instead of T.light / T.dark, and drop the `dark` prop
+// everywhere (Navbar, Footer, Hero, HeroShowcase, App.jsx no longer need
+// dark/setDark at all).
+
 export const T = {
-  light: {
-    pageBg: "#ffffff", // colors.canvas
-    altBg: "#f5f5f7", // colors.canvas-parchment
-    cardBg: "#ffffff", // colors.canvas
-    border: "#e0e0e0", // colors.hairline
-    borderStrong: "#d6d6da",
-    heading: "#1d1d1f", // colors.ink
-    body: "#1d1d1f", // colors.body
-    muted: "#6e6e73", // between ink-muted-48/80, Apple's usual secondary-copy tone
-    faint: "#a1a1a6", // lighter derivative of ink-muted-48, disabled/legal family
-    accent: "#0066cc", // colors.primary — Action Blue, the only interactive color
-    accentDark: "#0071e3", // colors.primary-focus — hover/active
-    accentText: "#ffffff", // colors.on-primary
-    tagBg: "#f0f0f0", // colors.divider-soft
-    tagText: "#333333", // colors.ink-muted-80
-    navBg: "#000000", // colors.surface-black — global nav is always true black
-    inputBg: "#ffffff",
-    linkOnDark: "#2997ff", // colors.primary-on-dark — text links on dark tiles only
-    tile2: "#fafafc", // surface-pearl, for the rare third alternation
-  },
-  dark: {
-    pageBg: "#272729", // colors.surface-tile-1
-    altBg: "#2a2a2c", // colors.surface-tile-2
-    cardBg: "#252527", // colors.surface-tile-3
-    border: "rgba(255,255,255,0.11)",
-    borderStrong: "rgba(255,255,255,0.16)",
-    heading: "#ffffff", // colors.on-dark
-    body: "#ffffff",
-    muted: "#cccccc", // colors.body-muted
-    faint: "#8e8e93",
-    accent: "#0066cc", // Action Blue still works as a filled button on dark tiles
-    accentDark: "#0071e3",
-    accentText: "#ffffff",
-    tagBg: "rgba(255,255,255,0.08)",
-    tagText: "#cccccc",
-    navBg: "#000000",
-    inputBg: "#1c1c1e",
-    linkOnDark: "#2997ff",
-    tile2: "#2a2a2c",
-  },
+  pageBg: "#ffffff",
+  altBg: "#f4f4ef",
+  cardBg: "#ffffff",
+  inputBg: "#ffffff",
+
+  heading: "#0a0a0a",
+  body: "#171717",
+  muted: "#525252",
+  faint: "#7a7a7a",
+
+  accent: "#0a8a3f",
+  accentDark: "#066a30",
+  accentText: "#ffffff",
+
+  border: "#1a1a1a",       // used for 1px hairlines that still want to read as "black"
+  borderStrong: "#000000", // used for the 2–3px brutalist rules
+  tagBg: "#eaf6ee",
+  tagText: "#0a0a0a",
 };
+
+// ── Shared surface tokens ────────────────────────────────────────────────
+// The whole "thick border + hard offset shadow" system is retired. Every
+// card, button, and panel across the site now pulls from this one set:
+// a hairline border and a soft blurred elevation shadow. ACC_DIM / ACC_BDR
+// are the green accent's tint and border forms — used for icon chips,
+// active states, and badges instead of a second color.
+
+export const HAIRLINE = "rgba(10,10,10,0.10)";
+export const HAIRLINE_SOFT = "rgba(10,10,10,0.07)";
+export const ACC_DIM = "rgba(10,138,63,0.09)";
+export const ACC_BDR = "rgba(10,138,63,0.28)";
+export const SOFT_SHADOW = "0 1px 2px rgba(10,10,10,0.04), 0 12px 28px rgba(10,10,10,0.07)";
+export const SOFT_SHADOW_LIFT = "0 4px 10px rgba(10,10,10,0.05), 0 20px 40px rgba(10,10,10,0.10)";
+
+export const PHOTO_SHADOW = "0 22px 50px rgba(0,0,0,0.16)";
 
 // Apple's single reserved shadow — product imagery resting on a surface only.
 // Never apply to cards, buttons, or text.
@@ -374,8 +374,10 @@ export const SPACING = {
   section: 80,
 };
 
-// Font stack per DESIGN-apple.md's "Note on Font Substitutes": Inter stands
-// in for SF Pro off-system, with tighter tracking on display sizes.
-export const FONT_DISPLAY =
-  "'Inter', system-ui, -apple-system, sans-serif";
-export const FONT_TEXT = "'Inter', system-ui, -apple-system, sans-serif";
+// Brand type system: IBM Plex end to end. Sans handles both display and
+// body copy — weight and size do the differentiating instead of mixing
+// families — and Mono is reserved for small system-y labels: figure tags,
+// pricing pills, eyebrows. A quiet nod to the "Systems" division.
+export const FONT_DISPLAY = "'IBM Plex Sans', system-ui, -apple-system, sans-serif";
+export const FONT_TEXT = "'IBM Plex Sans', system-ui, -apple-system, sans-serif";
+export const FONT_MONO = "'IBM Plex Mono', 'SF Mono', monospace";

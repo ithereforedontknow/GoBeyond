@@ -1,9 +1,10 @@
 import SectionLabel from "./SectionLabel";
 import AccentLine from "./AccentLine";
+import { FONT_DISPLAY, FONT_TEXT } from "../../data/constants";
 
 function SectionHeader({ t, label, labelIcon, heading, subtext }) {
   return (
-    <div style={{ marginBottom: 64 }}>
+    <div style={{ marginBottom: 72 }}>
       <SectionLabel t={t} icon={labelIcon}>
         {label}
       </SectionLabel>
@@ -19,13 +20,13 @@ function SectionHeader({ t, label, labelIcon, heading, subtext }) {
       >
         <h2
           style={{
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-            fontSize: "clamp(1.9rem,3.4vw,2.5rem)",
-            fontWeight: 600,
+            fontFamily: FONT_DISPLAY,
+            fontSize: "clamp(2.3rem,4.2vw,3.2rem)",
+            fontWeight: 700,
             lineHeight: 1.1,
             letterSpacing: "-0.02em",
             color: t.heading,
-            maxWidth: 380,
+            maxWidth: 480,
           }}
         >
           {heading}
@@ -33,12 +34,11 @@ function SectionHeader({ t, label, labelIcon, heading, subtext }) {
         {subtext && (
           <p
             style={{
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+              fontFamily: FONT_TEXT,
               fontSize: 17,
-              lineHeight: 1.47,
-              letterSpacing: "-0.374px",
+              lineHeight: 1.55,
               color: t.muted,
-              maxWidth: 360,
+              maxWidth: 380,
               fontWeight: 400,
             }}
           >

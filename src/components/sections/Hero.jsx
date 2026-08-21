@@ -1,1108 +1,135 @@
-import { useEffect, useRef, useState, useCallback } from "react";
-import {
-  LayoutDashboard,
-  ArrowRight,
-  Play,
-  FileText,
-  Star,
-  BookOpen,
-  Monitor,
-  Users,
-  Clock,
-  Activity,
-} from "lucide-react";
-import { STATS } from "../../data/constants";
-import DotGrid from "../effects/DotGrid";
-// ─── constants ────────────────────────────────────────────────────────────────
+import { useEffect, useState } from "react";
+import { ArrowRight, ChevronRight } from "lucide-react";
+import RotatingText from "./RotatingText";
+import { T } from "../../data/constants";
 
-const SLIDE_DURATION = 4200;
-const ACC = "#0066cc";
-const ACC_DIM = "rgba(0,102,204,0.10)";
-const ACC_BDR = "rgba(0,102,204,0.22)";
+const STATS = [
+  { value: "3", label: "Solution Divisions" },
+  { value: "5", label: "Steps to Delivery" },
+  { value: "1", label: "Dedicated Partner" },
+  { value: "∞", label: "Room to Grow" },
+];
 
-// ─── theme builder ────────────────────────────────────────────────────────────
+const FONT_DISPLAY = "'IBM Plex Sans', sans-serif";
+const FONT_TEXT = "'IBM Plex Sans', sans-serif";
 
-function buildTheme(dark) {
-  return {
-    bg: dark ? "#0e0e0e" : "#ffffff",
-    panel: dark ? "#141414" : "#f7f7f7",
-    card: dark ? "#1a1a1a" : "#f0f0f0",
-    bdr: dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.08)",
-    bdrFlt: dark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.11)",
-    txt: dark ? "#f0f0f0" : "#111111",
-    muted: dark ? "#555555" : "#999999",
-    faint: dark ? "#444444" : "#bbbbbb",
-    urlTxt: dark ? "#444444" : "#aaaaaa",
-    barBg: dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.06)",
-    chipName: dark ? "#c8c8c8" : "#333333",
-    badgeBg: dark ? "#141414" : "#ffffff",
-    badgeShadow: dark
-      ? "0 10px 30px rgba(0,0,0,0.7)"
-      : "0 10px 30px rgba(0,0,0,0.10)",
-    shadow: dark
-      ? "0 48px 96px rgba(0,0,0,0.88), 0 0 0 1px rgba(0,102,204,0.04)"
-      : "0 48px 96px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.04)",
-  };
-}
-
-// ─── shared sub-components ────────────────────────────────────────────────────
-
-function Pill({ label }) {
-  return (
-    <div
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "5px 11px",
-        borderRadius: 20,
-        alignSelf: "flex-start",
-        background: ACC_DIM,
-        border: `1px solid ${ACC_BDR}`,
-        fontSize: 9,
-        fontWeight: 700,
-        letterSpacing: "0.13em",
-        textTransform: "uppercase",
-        color: ACC,
-        marginBottom: 18,
-        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-      }}
-    >
-      <span
-        style={{
-          width: 5,
-          height: 5,
-          borderRadius: "50%",
-          background: ACC,
-          flexShrink: 0,
-        }}
-      />
-      {label}
-    </div>
-  );
-}
-
-function SlideTitle({ m, children }) {
-  return (
-    <h3
-      style={{
-        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-        fontSize: 18,
-        fontWeight: 800,
-        color: m.txt,
-        lineHeight: 1.2,
-        marginBottom: 8,
-        transition: "color 0.3s",
-      }}
-    >
-      {children}
-    </h3>
-  );
-}
-
-function SlideDesc({ m, children }) {
-  return (
-    <p
-      style={{
-        fontSize: 11.5,
-        color: m.muted,
-        lineHeight: 1.65,
-        marginBottom: 24,
-        fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-        transition: "color 0.3s",
-      }}
-    >
-      {children}
-    </p>
-  );
-}
-
-// ─── Slide 0 — Digital Solutions ─────────────────────────────────────────────
-
-function DigitalSlide({ m }) {
-  const chips = [
-    {
-      Icon: Star,
-      color: "#60a5fa",
-      bg: "rgba(96,165,250,.12)",
-      name: "Invitation Kit",
-      tag: "Event",
-    },
-    {
-      Icon: BookOpen,
-      color: "#f472b6",
-      bg: "rgba(244,114,182,.12)",
-      name: "Story Book",
-      tag: "Kids",
-    },
-    {
-      Icon: FileText,
-      color: "#fb923c",
-      bg: "rgba(251,146,60,.12)",
-      name: "Menu Poster",
-      tag: "Food",
-    },
-  ];
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <Pill label="Digital Solutions" />
-      <SlideTitle m={m}>Creative assets, ready to use</SlideTitle>
-      <SlideDesc m={m}>
-        Templates and digital products — buy once, deploy instantly.
-      </SlideDesc>
-
-      {/* featured card */}
-      <div
-        style={{
-          borderRadius: 12,
-          border: `1px solid ${m.bdr}`,
-          background: m.card,
-          padding: "16px 18px",
-          marginBottom: 10,
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          transition: "background 0.3s, border-color 0.3s",
-        }}
-      >
-        <div
-          style={{
-            width: 48,
-            height: 48,
-            borderRadius: 10,
-            background: m.panel,
-            border: `1px solid ${m.bdr}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            transition: "background 0.3s",
-          }}
-        >
-          <LayoutDashboard size={20} style={{ color: ACC }} />
-        </div>
-        <div style={{ flex: 1 }}>
-          <div
-            style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: m.txt,
-              marginBottom: 3,
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              transition: "color 0.3s",
-            }}
-          >
-            Professional CV Kit
-          </div>
-          <div
-            style={{
-              fontSize: 10,
-              color: m.muted,
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              transition: "color 0.3s",
-            }}
-          >
-            Resume · Career Tools
-          </div>
-        </div>
-        <div
-          style={{
-            fontSize: 9,
-            fontWeight: 700,
-            padding: "4px 10px",
-            borderRadius: 20,
-            background: ACC_DIM,
-            border: `1px solid ${ACC_BDR}`,
-            color: ACC,
-            whiteSpace: "nowrap",
-            flexShrink: 0,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-            letterSpacing: "0.08em",
-          }}
-        >
-          Most Popular
-        </div>
-      </div>
-
-      {/* chip row */}
-      <div style={{ display: "flex", gap: 8 }}>
-        {chips.map(({ Icon, color, bg, name, tag }) => (
-          <div
-            key={name}
-            style={{
-              flex: 1,
-              borderRadius: 9,
-              border: `1px solid ${m.bdr}`,
-              background: m.card,
-              padding: "12px 13px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 5,
-              transition: "background 0.3s, border-color 0.3s",
-            }}
-          >
-            <div
-              style={{
-                width: 24,
-                height: 24,
-                borderRadius: 6,
-                background: bg,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginBottom: 2,
-              }}
-            >
-              <Icon size={12} style={{ color }} />
-            </div>
-            <div
-              style={{
-                fontSize: 10.5,
-                fontWeight: 600,
-                color: m.chipName,
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                transition: "color 0.3s",
-              }}
-            >
-              {name}
-            </div>
-            <div
-              style={{
-                fontSize: 9,
-                color: m.faint,
-                textTransform: "uppercase",
-                letterSpacing: "0.07em",
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                transition: "color 0.3s",
-              }}
-            >
-              {tag}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─── Slide 1 — Systems & Web ──────────────────────────────────────────────────
-
-function SystemsSlide({ m }) {
-  const kpis = [
-    { val: "98%", label: "Uptime", color: ACC },
-    { val: "12", label: "Active Projects", color: "#4ade80" },
-    { val: "4.9", label: "Client Rating", color: "#60a5fa" },
-  ];
-
-  const items = [
-    {
-      Icon: Monitor,
-      iconColor: ACC,
-      iconBg: ACC_DIM,
-      name: "Inventory Management System",
-      status: "Live",
-      statusColor: "#4ade80",
-      statusBg: "rgba(74,222,128,0.10)",
-      statusBdr: "rgba(74,222,128,0.20)",
-    },
-    {
-      Icon: Users,
-      iconColor: "#60a5fa",
-      iconBg: "rgba(96,165,250,0.10)",
-      name: "Client Portal — Acme Corp",
-      status: "In Dev",
-      statusColor: "#60a5fa",
-      statusBg: "rgba(96,165,250,0.10)",
-      statusBdr: "rgba(96,165,250,0.20)",
-    },
-    {
-      Icon: Clock,
-      iconColor: "#fb923c",
-      iconBg: "rgba(251,146,60,0.10)",
-      name: "Payroll Automation — SME Pack",
-      status: "Scoping",
-      statusColor: "#fb923c",
-      statusBg: "rgba(251,146,60,0.10)",
-      statusBdr: "rgba(251,146,60,0.20)",
-    },
-  ];
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <Pill label="Systems & Web" />
-      <SlideTitle m={m}>Your workflow, fully digitized</SlideTitle>
-      <SlideDesc m={m}>
-        Custom dashboards, portals, and automations — built around how you work.
-      </SlideDesc>
-
-      {/* KPI row */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
-        {kpis.map(({ val, label, color }) => (
-          <div
-            key={label}
-            style={{
-              flex: 1,
-              borderRadius: 10,
-              border: `1px solid ${m.bdr}`,
-              background: m.card,
-              padding: "13px 14px",
-              transition: "background 0.3s, border-color 0.3s",
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                fontSize: 20,
-                fontWeight: 800,
-                color,
-                lineHeight: 1,
-              }}
-            >
-              {val}
-            </div>
-            <div
-              style={{
-                fontSize: 9,
-                color: m.faint,
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
-                marginTop: 5,
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                transition: "color 0.3s",
-              }}
-            >
-              {label}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* project list */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-        {items.map(
-          ({
-            Icon,
-            iconColor,
-            iconBg,
-            name,
-            status,
-            statusColor,
-            statusBg,
-            statusBdr,
-          }) => (
-            <div
-              key={name}
-              style={{
-                borderRadius: 10,
-                border: `1px solid ${m.bdr}`,
-                background: m.card,
-                padding: "12px 15px",
-                display: "flex",
-                alignItems: "center",
-                gap: 11,
-                transition: "background 0.3s, border-color 0.3s",
-              }}
-            >
-              <div
-                style={{
-                  width: 30,
-                  height: 30,
-                  borderRadius: 8,
-                  background: iconBg,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  flexShrink: 0,
-                }}
-              >
-                <Icon size={14} style={{ color: iconColor }} />
-              </div>
-              <div
-                style={{
-                  fontSize: 11.5,
-                  fontWeight: 600,
-                  color: m.txt,
-                  flex: 1,
-                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                  transition: "color 0.3s",
-                }}
-              >
-                {name}
-              </div>
-              <div
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  padding: "3px 9px",
-                  borderRadius: 10,
-                  background: statusBg,
-                  border: `1px solid ${statusBdr}`,
-                  color: statusColor,
-                  whiteSpace: "nowrap",
-                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                }}
-              >
-                {status}
-              </div>
-            </div>
-          ),
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── Slide 2 — Building Plans ─────────────────────────────────────────────────
-
-function BuildingSlide({ m }) {
-  const stats = [
-    { val: "120", unit: "m²", label: "Floor Area" },
-    { val: "2", label: "Bedrooms" },
-    { val: "1", label: "Bath" },
-    { val: "2-Storey", label: "Type", accent: true },
-  ];
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <Pill label="Building Plans" />
-      <SlideTitle m={m}>From vision to ready-to-build</SlideTitle>
-      <SlideDesc m={m}>
-        Residential & commercial — precise layouts, space planning, consultation
-        included.
-      </SlideDesc>
-
-      {/* floor plan */}
-      <div
-        style={{
-          borderRadius: 12,
-          border: `1px solid ${m.bdr}`,
-          background: m.card,
-          padding: "14px 14px 10px",
-          marginBottom: 10,
-          flex: 1,
-          transition: "background 0.3s, border-color 0.3s",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginBottom: 10,
-          }}
-        >
-          <span
-            style={{
-              fontSize: 9,
-              fontWeight: 700,
-              color: m.muted,
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              transition: "color 0.3s",
-            }}
-          >
-            Floor Plan — Lot 4 Block 3
-          </span>
-          <span
-            style={{
-              fontSize: 9,
-              fontWeight: 700,
-              color: ACC,
-              background: ACC_DIM,
-              border: `1px solid ${ACC_BDR}`,
-              padding: "3px 9px",
-              borderRadius: 10,
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-            }}
-          >
-            Approved
-          </span>
-        </div>
-
-        <svg viewBox="0 0 340 130" width="100%" style={{ display: "block" }}>
-          <rect
-            x="4"
-            y="4"
-            width="332"
-            height="122"
-            rx="3"
-            fill="none"
-            stroke={m.bdr}
-            strokeWidth="1"
-          />
-          <rect
-            x="14"
-            y="10"
-            width="312"
-            height="112"
-            rx="2"
-            fill="none"
-            stroke={ACC}
-            strokeWidth="1.8"
-          />
-          <line
-            x1="145"
-            y1="10"
-            x2="145"
-            y2="90"
-            stroke={ACC}
-            strokeWidth="1.1"
-            strokeDasharray="4 3"
-            opacity="0.55"
-          />
-          <line
-            x1="14"
-            y1="72"
-            x2="145"
-            y2="72"
-            stroke={ACC}
-            strokeWidth="1.1"
-            strokeDasharray="4 3"
-            opacity="0.55"
-          />
-          <line
-            x1="145"
-            y1="62"
-            x2="326"
-            y2="62"
-            stroke={ACC}
-            strokeWidth="1.1"
-            strokeDasharray="4 3"
-            opacity="0.55"
-          />
-          <line
-            x1="240"
-            y1="62"
-            x2="240"
-            y2="122"
-            stroke={ACC}
-            strokeWidth="1.1"
-            strokeDasharray="4 3"
-            opacity="0.55"
-          />
-          <path
-            d="M145 32 Q128 32 128 49"
-            fill="none"
-            stroke="rgba(0,102,204,0.3)"
-            strokeWidth="0.9"
-          />
-          <path
-            d="M14 96  Q30 96  30 80"
-            fill="none"
-            stroke="rgba(0,102,204,0.3)"
-            strokeWidth="0.9"
-          />
-          {[
-            { x: 76, y: 42, text: "Living Room" },
-            { x: 76, y: 84, text: "Bedroom 1" },
-            { x: 232, y: 38, text: "Kitchen / Dining" },
-            { x: 190, y: 94, text: "Bedroom 2" },
-            { x: 285, y: 94, text: "Bathroom" },
-          ].map(({ x, y, text }) => (
-            <text
-              key={text}
-              x={x}
-              y={y}
-              fontSize="7.5"
-              fill={m.muted}
-              textAnchor="middle"
-              fontFamily="Inter, sans-serif"
-              fontWeight="500"
-            >
-              {text}
-            </text>
-          ))}
-          <text
-            x="312"
-            y="22"
-            fontSize="8"
-            fill={ACC}
-            textAnchor="middle"
-            fontFamily="Inter, sans-serif"
-            fontWeight="700"
-          >
-            N
-          </text>
-          <line
-            x1="312"
-            y1="24"
-            x2="312"
-            y2="32"
-            stroke={ACC}
-            strokeWidth="1"
-          />
-          <polygon points="308,32 312,38 316,32" fill={ACC} opacity="0.7" />
-        </svg>
-      </div>
-
-      {/* stats row */}
-      <div style={{ display: "flex", gap: 7 }}>
-        {stats.map(({ val, unit, label, accent }) => (
-          <div
-            key={label}
-            style={{
-              flex: 1,
-              borderRadius: 9,
-              border: `1px solid ${m.bdr}`,
-              background: m.card,
-              padding: "11px 12px",
-              transition: "background 0.3s, border-color 0.3s",
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                fontSize: accent ? 12 : 16,
-                fontWeight: 800,
-                color: accent ? ACC : m.txt,
-                lineHeight: 1,
-                transition: "color 0.3s",
-              }}
-            >
-              {val}
-              {unit && (
-                <span style={{ fontSize: 9, fontWeight: 400, color: m.faint }}>
-                  {unit}
-                </span>
-              )}
-            </div>
-            <div
-              style={{
-                fontSize: 8.5,
-                color: m.faint,
-                textTransform: "uppercase",
-                letterSpacing: "0.07em",
-                marginTop: 4,
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                transition: "color 0.3s",
-              }}
-            >
-              {label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─── HeroMockup ───────────────────────────────────────────────────────────────
-
-function HeroMockup({ dark, maxWidth = 420 }) {
-  const m = buildTheme(dark);
-
-  const SLIDES = [
-    { component: <DigitalSlide m={m} /> },
-    { component: <SystemsSlide m={m} /> },
-    { component: <BuildingSlide m={m} /> },
-  ];
-
-  const [cur, setCur] = useState(0);
-  const [phase, setPhase] = useState("idle");
-  const [progKey, setProgKey] = useState(0);
-  const timerRef = useRef(null);
-
-  const goTo = useCallback(
-    (idx) => {
-      if (idx === cur) return;
-      clearInterval(timerRef.current);
-      setPhase("out");
-      setTimeout(() => {
-        setCur(idx);
-        setPhase("in");
-        setProgKey((k) => k + 1);
-        setTimeout(() => setPhase("idle"), 30);
-      }, 420);
-    },
-    [cur],
-  );
-
-  const advance = useCallback(() => {
-    goTo((cur + 1) % SLIDES.length);
-  }, [cur, goTo, SLIDES.length]);
+function Hero({ scrollTo }) {
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    timerRef.current = setInterval(advance, SLIDE_DURATION);
-    return () => clearInterval(timerRef.current);
-  }, [advance]);
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
-  const handleDotClick = (idx) => {
-    clearInterval(timerRef.current);
-    goTo(idx);
-    setTimeout(() => {
-      timerRef.current = setInterval(advance, SLIDE_DURATION);
-    }, 450);
-  };
+  const reveal = (delay) => ({
+    opacity: mounted ? 1 : 0,
+    transform: mounted ? "translateY(0)" : "translateY(16px)",
+    transition: `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+  });
 
-  const slideWrapStyle = {
-    transition:
-      "opacity 0.42s cubic-bezier(.4,0,.2,1), transform 0.42s cubic-bezier(.4,0,.2,1)",
-    opacity: phase === "out" ? 0 : 1,
-    transform:
-      phase === "out"
-        ? "translateY(-14px)"
-        : phase === "in"
-          ? "translateY(14px)"
-          : "translateY(0)",
-  };
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: "100%",
-        maxWidth,
-        margin: "0 auto",
-        userSelect: "none",
-      }}
-    >
-      {/* glow */}
-      <div
-        style={{
-          position: "absolute",
-          inset: -40,
-          background: `radial-gradient(ellipse at 55% 50%, ${ACC}1e 0%, transparent 65%)`,
-          filter: "blur(20px)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* outer frame — locked to 16:9 regardless of width */}
-      <div
-        style={{
-          position: "relative",
-          borderRadius: 14,
-          overflow: "hidden",
-          border: `1px solid ${m.bdr}`,
-          background: m.bg,
-          boxShadow: m.shadow,
-          transition: "background 0.3s, border-color 0.3s, box-shadow 0.3s",
-          display: "flex",
-          flexDirection: "column",
-          aspectRatio: "16 / 9",
-        }}
-      >
-        {/* chrome bar */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 7,
-            padding: "11px 16px",
-            borderBottom: `1px solid ${m.bdr}`,
-            background: m.panel,
-            transition: "background 0.3s, border-color 0.3s",
-            flexShrink: 0,
-          }}
-        >
-          {["#ff5f57", "#ffbd2e", "#28ca41"].map((bg, i) => (
-            <span
-              key={i}
-              style={{
-                width: 11,
-                height: 11,
-                borderRadius: "50%",
-                background: bg,
-              }}
-            />
-          ))}
-          <div
-            style={{
-              marginLeft: 10,
-              flex: 1,
-              height: 20,
-              borderRadius: 5,
-              background: m.barBg,
-              display: "flex",
-              alignItems: "center",
-              padding: "0 10px",
-              transition: "background 0.3s",
-            }}
-          >
-            <span
-              style={{
-                fontSize: 9,
-                color: m.urlTxt,
-                fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                letterSpacing: "0.02em",
-                transition: "color 0.3s",
-              }}
-            >
-              app.gobeyond.ph
-            </span>
-          </div>
-        </div>
-
-        {/* progress bar */}
-        <div
-          style={{
-            height: 2,
-            background: m.barBg,
-            overflow: "hidden",
-            transition: "background 0.3s",
-            flexShrink: 0,
-          }}
-        >
-          <div
-            key={progKey}
-            style={{
-              height: "100%",
-              background: ACC,
-              animation: `gbProgFill ${SLIDE_DURATION}ms linear forwards`,
-            }}
-          />
-        </div>
-
-        {/* slide area — fills whatever room the 16:9 frame leaves, instead
-            of a fixed pixel height that broke proportions at other widths */}
-        <div
-          style={{
-            padding: "24px 24px 16px",
-            flex: 1,
-            minHeight: 0,
-            overflow: "hidden",
-            background: m.bg,
-            transition: "background 0.3s",
-          }}
-        >
-          <div style={slideWrapStyle}>{SLIDES[cur].component}</div>
-        </div>
-
-        {/* dot nav */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: 7,
-            padding: "10px 0 14px",
-            background: m.bg,
-            transition: "background 0.3s",
-            flexShrink: 0,
-          }}
-        >
-          {SLIDES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => handleDotClick(i)}
-              style={{
-                width: i === cur ? 18 : 6,
-                height: 6,
-                borderRadius: 3,
-                border: "none",
-                padding: 0,
-                background: i === cur ? ACC : m.faint,
-                cursor: "pointer",
-                transition: "width 0.3s, background 0.25s",
-              }}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* floating badge — bottom right */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: -18,
-          right: -22,
-          borderRadius: 13,
-          border: `1px solid ${m.bdrFlt}`,
-          padding: "10px 15px",
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-          background: m.badgeBg,
-          boxShadow: m.badgeShadow,
-          transition: "background 0.3s, border-color 0.3s",
-        }}
-      >
-        <div
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: ACC,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          <Activity size={15} style={{ color: "#ffffff" }} />
-        </div>
-        <div>
-          <div
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              color: m.txt,
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              transition: "color 0.3s",
-            }}
-          >
-            3 Divisions. 1 Partner.
-          </div>
-          <div
-            style={{
-              fontSize: 9,
-              color: "#4ade80",
-              fontWeight: 600,
-              marginTop: 2,
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-            }}
-          >
-            ● All projects on track
-          </div>
-        </div>
-      </div>
-
-      {/* floating badge — top left */}
-      <div
-        style={{
-          position: "absolute",
-          top: -16,
-          left: -20,
-          borderRadius: 10,
-          border: `1px solid ${m.bdrFlt}`,
-          padding: "8px 13px",
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          background: m.badgeBg,
-          boxShadow: m.badgeShadow,
-          transition: "background 0.3s, border-color 0.3s",
-        }}
-      >
-        <span
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: "50%",
-            background: ACC,
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
-            fontSize: 10.5,
-            fontWeight: 600,
-            color: m.txt,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-            transition: "color 0.3s",
-          }}
-        >
-          New project kicked off
-        </span>
-      </div>
-
-      <style>{`
-        @keyframes gbProgFill {
-          from { width: 0%; }
-          to   { width: 100%; }
-        }
-      `}</style>
-    </div>
-  );
-}
-
-// ─── HERO ─────────────────────────────────────────────────────────────────────
-
-function Hero({ t, dark, scrollTo }) {
   return (
     <section
       id="hero"
+      className="gbHero"
       style={{
-        position: "relative",
+        background: T.pageBg,
+        minHeight: "100dvh",
+        width: "100%",
         display: "flex",
         alignItems: "center",
-        overflow: "hidden",
-        background: t.pageBg,
-        padding: "168px 24px 96px",
+        justifyContent: "center",
+        padding: "clamp(64px, 12vh, 120px) 24px",
+        boxSizing: "border-box",
+        position: "relative",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0,
-        }}
-      >
-        <DotGrid
-          dotSize={4}
-          gap={26}
-          baseColor={dark ? "#3a3a3c" : "#e3e3e6"}
-          activeColor={t.accent}
-          proximity={130}
-          shockRadius={220}
-          shockStrength={3}
-          resistance={750}
-          returnDuration={1.5}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .gbHero { padding: 56px 20px !important; }
+          .gbHero h1 { font-size: clamp(2.3rem, 10.5vw, 3.4rem) !important; margin-bottom: 20px !important; }
+          .gbHero .gbSubtitle { margin-bottom: 32px !important; }
+          .gbHero .gbCtas { margin-bottom: 44px !important; gap: 10px !important; flex-direction: column !important; }
+          .gbHero .gbCtas button { width: 100% !important; justify-content: center !important; padding: 16px 24px !important; }
+          .gbHero .gbStats { gap: 18px !important; grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-height: 700px) and (min-width: 641px) {
+          .gbHero { padding: 40px 24px !important; }
+          .gbHero h1 { margin-bottom: 18px !important; }
+          .gbHero .gbSubtitle { margin-bottom: 28px !important; }
+          .gbHero .gbCtas { margin-bottom: 32px !important; }
+        }
+      `}</style>
+      <div className="gbHeroInner" style={{ maxWidth: 1080, width: "100%", margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
 
-      <div
-        style={{
-          maxWidth: 760,
-          margin: "0 auto",
-          width: "100%",
-          position: "relative",
-          zIndex: 1,
-          textAlign: "center",
-        }}
-      >
+        {/* Main Headline — split into two independently-centered lines so the
+            rotating word never pushes the static text sideways. Sized larger
+            per the latest pass; the mobile media query above scales it down
+            faster (steeper vw) than clamp alone would, to limit wrapping on
+            narrow phones. */}
         <h1
           style={{
-            fontSize: "clamp(2.6rem,5.2vw,4.2rem)",
-            fontWeight: 600,
-            lineHeight: 1.06,
+            fontSize: "clamp(3.4rem, 7vw, 6.75rem)",
+            fontWeight: 800,
+            lineHeight: 1.08,
             letterSpacing: "-0.03em",
-            color: t.heading,
-            marginBottom: 10,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+            color: T.heading,
+            fontFamily: FONT_DISPLAY,
+            maxWidth: 1100,
+            margin: "0 auto 32px",
+            ...reveal(0.08),
           }}
         >
-          Go Further.
-          <br />
-          Go Smarter.
-        </h1>
-        <h1
-          style={{
-            fontSize: "clamp(2.6rem,5.2vw,4.2rem)",
-            fontWeight: 600,
-            lineHeight: 1.06,
-            letterSpacing: "-0.03em",
-            color: t.accent,
-            marginBottom: 24,
-            fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-          }}
-        >
-          Go Beyond.
+          <span style={{ display: "block" }}>Whatever's next,</span>
+          <span
+            style={{
+              display: "block",
+              color: T.accent,
+            }}
+          >
+            <RotatingText
+              texts={["we design it.", "we automate it.", "we draft it."]}
+              mainClassName="inline-flex items-center justify-center overflow-hidden"
+              splitLevelClassName="overflow-hidden"
+              elementLevelClassName="inline-block"
+              style={{
+                color: T.accent,
+                fontWeight: 800,
+              }}
+              staggerFrom="first"
+              staggerDuration={0.02}
+              rotationInterval={2800}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            />
+          </span>
         </h1>
 
+        {/* Subtitle */}
         <p
           style={{
-            fontSize: 18,
-            lineHeight: 1.5,
-            letterSpacing: "-0.32px",
-            color: t.muted,
-            maxWidth: 480,
-            margin: "0 auto 40px",
+            fontSize: "clamp(1.15rem, 1.8vw, 1.35rem)",
+            lineHeight: 1.6,
+            color: T.muted,
+            maxWidth: 680,
+            margin: "0 auto 44px",
+            fontFamily: FONT_TEXT,
+            ...reveal(0.16),
           }}
         >
-          We build digital tools, custom systems, and building plans —
-          whatever your problem needs, under one roof.
+          One partner, one clear scope, and a timeline you agreed to going in — no matter what you're building.
         </p>
 
+        {/* Call-to-Action Buttons */}
         <div
           style={{
             display: "flex",
-            gap: 12,
-            flexWrap: "wrap",
             justifyContent: "center",
-            marginBottom: 56,
+            alignItems: "center",
+            gap: 14,
+            flexWrap: "wrap",
+            margin: "0 auto 68px",
+            width: "100%",
+            maxWidth: "540px",
+            ...reveal(0.22),
           }}
         >
           <button
@@ -1111,58 +138,76 @@ function Hero({ t, dark, scrollTo }) {
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              background: t.accent,
-              color: t.accentText,
+              background: T.accent,
+              color: "#fff",
               border: "none",
-              borderRadius: 8,
-              padding: "14px 28px",
-              fontSize: 16,
-              fontWeight: 500,
+              borderRadius: 999,
+              padding: "18px 36px",
+              fontSize: 17,
+              fontWeight: 600,
               cursor: "pointer",
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              transition: "background 0.2s",
+              fontFamily: FONT_TEXT,
+              transition: "transform 0.15s, background 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = t.accentDark)}
-            onMouseLeave={(e) => (e.currentTarget.style.background = t.accent)}
-            onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.96)")}
-            onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = T.accentDark || T.accent;
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = T.accent;
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
-            Explore Solutions <ArrowRight size={16} />
+            Explore Divisions <ArrowRight size={18} />
           </button>
+
           <button
             onClick={() => scrollTo("approach")}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 8,
-              background: "transparent",
-              color: t.body,
-              border: `1px solid ${t.borderStrong}`,
-              borderRadius: 8,
-              padding: "14px 28px",
-              fontSize: 16,
-              fontWeight: 500,
+              gap: 6,
+              background: T.altBg,
+              color: T.heading,
+              border: "none",
+              borderRadius: 999,
+              padding: "18px 30px",
+              fontSize: 17,
+              fontWeight: 600,
               cursor: "pointer",
-              fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-              transition: "border-color 0.2s",
+              fontFamily: FONT_TEXT,
+              transition: "background 0.15s, transform 0.15s",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.borderColor = t.accent)}
-            onMouseLeave={(e) => (e.currentTarget.style.borderColor = t.borderStrong)}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-1px)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+            }}
           >
-            <Play size={13} style={{ fill: "currentColor" }} /> Our Approach
+            Our Approach <ChevronRight size={18} />
           </button>
         </div>
 
-        <div style={{ display: "flex", gap: 36, flexWrap: "wrap", justifyContent: "center" }}>
+        {/* Stats Row */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+            gap: 28,
+            maxWidth: 920,
+            margin: "0 auto",
+            ...reveal(0.34),
+          }}
+        >
           {STATS.map((s, i) => (
-            <div key={i}>
+            <div key={i} style={{ textAlign: "center" }}>
               <div
                 style={{
-                  fontSize: "clamp(1.5rem,2.5vw,1.9rem)",
-                  fontWeight: 600,
-                  color: t.heading,
-                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
-                  letterSpacing: "-0.02em",
+                  fontSize: "3rem",
+                  fontWeight: 800,
+                  color: T.heading,
+                  fontFamily: FONT_DISPLAY,
                   lineHeight: 1,
                 }}
               >
@@ -1170,12 +215,11 @@ function Hero({ t, dark, scrollTo }) {
               </div>
               <div
                 style={{
-                  fontSize: 12,
-                  fontWeight: 400,
-                  letterSpacing: "-0.224px",
-                  color: t.faint,
-                  marginTop: 6,
-                  fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: T.muted,
+                  marginTop: 8,
+                  fontFamily: FONT_TEXT,
                 }}
               >
                 {s.label}
@@ -1183,10 +227,10 @@ function Hero({ t, dark, scrollTo }) {
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
 }
 
 export default Hero;
-export { HeroMockup };
